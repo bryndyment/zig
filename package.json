@@ -43,17 +43,10 @@
     "web-vitals": "2.1.4"
   },
   "scripts": {
-    "eslint": "eslint --ext .js,.jsx,.ts,.tsx .",
-    "eslint:fix": "npm run eslint -- --fix",
+    "eslint": "eslint --ext .js,.jsx,.ts,.tsx --fix .",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
