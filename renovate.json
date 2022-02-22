@@ -1,0 +1,12 @@
+{
+  "automerge": true,
+  "baseBranches": [
+    "dev"
+  ],
+  "extends": [
+    "config:base"
+  ],
+  "major": {
+    "automerge": false
+  }
+}
