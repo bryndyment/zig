@@ -1,5 +1,6 @@
 import { Box, Grid, Paper } from '@mui/material'
 import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { useMobileMediaQuery } from '../hooks/mobileMediaQuery'
 
 // constants
 
@@ -23,15 +24,20 @@ const styles = {
     borderRadius: '43%',
     color: '#fff',
     display: 'flex',
-    fontSize: 16,
+    fontSize: [13, 16],
     fontWeight: 'bold',
     height: `${100 / size}%`,
     justifyContent: 'center',
     transition: 'color 200ms',
-
     width: `${100 / size}%`
   },
-  paper: { display: 'flex', flexWrap: 'wrap', height: 660, p: 10, width: 660 }
+  paper: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    height: ['100vw', 660],
+    p: [1, 10],
+    width: ['100vw', 660]
+  }
 }
 
 // components
@@ -53,9 +59,11 @@ const Board = () => {
 // exported components
 
 export const Zig = () => {
+  const isMobile = useMobileMediaQuery()
+
   const [areNumbersHidden, setAreNumbersHidden] = useState(false)
 
-  const context = useMemo(() => ({ areNumbersHidden, setAreNumbersHidden }), [areNumbersHidden])
+  const context = useMemo(() => ({ areNumbersHidden }), [areNumbersHidden])
 
   useEffect(() => {
     const handleKeyDown = event => {
@@ -67,13 +75,13 @@ export const Zig = () => {
     document.addEventListener('keydown', handleKeyDown)
 
     return () => document.removeEventListener('keydown', handleKeyDown)
-  })
+  }, [])
 
   return (
     <Context.Provider value={context}>
       <Grid container height="100%" justifyContent="center">
         <Grid alignItems="center" display="flex" item justifyContent="center" xs={12}>
-          <Paper sx={styles.paper}>
+          <Paper elevation={isMobile ? 0 : 1} square={isMobile} sx={styles.paper}>
             <Board />
           </Paper>
         </Grid>
