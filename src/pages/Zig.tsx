@@ -77,7 +77,6 @@ const styles = {
     display: 'flex',
     fontSize: [13, 16],
     fontWeight: 'bold',
-    height: '100%',
     justifyContent: 'center',
     transition: 'background-color 150ms, color 150ms',
     width: '100%'
@@ -91,7 +90,7 @@ const styles = {
     flexWrap: 'wrap',
     height: ['100vw', 660],
     p: [1, 10],
-    position: 'absolute',
+    position: 'relative',
     userSelect: 'none',
     width: ['100vw', 660]
   }
