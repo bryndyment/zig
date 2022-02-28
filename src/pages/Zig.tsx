@@ -67,17 +67,20 @@ const Context = createContext<ContextInterface | null>(null)
 // styles
 
 const styles = {
-  box: {
+  cell: {
     alignItems: 'center',
-    backgroundColor: YELLOW,
     borderRadius: '43%',
     color: '#fff',
     display: 'flex',
     fontSize: [13, 16],
     fontWeight: 'bold',
-    height: `${100 / SIZE}%`,
+    height: '100%',
     justifyContent: 'center',
     transition: 'background-color 150ms, color 150ms',
+    width: '100%'
+  },
+  cellWrapper: {
+    display: 'flex',
     width: `${100 / SIZE}%`
   },
   paper: {
@@ -92,60 +95,51 @@ const styles = {
 
 // functions
 
-const getBottomLeftValidIndices = (index: number) => {
+const updateValidIndices = (index: number, origin: Origin, setValidIndices: Dispatch<SetStateAction<ValidIndices>>) => {
   const validIndices: ValidIndices = new Set()
 
-  if (index + 1 > SIZE) {
-    validIndices.add(index - SIZE)
+  switch (origin) {
+    case Origins.TOP_LEFT:
+      if (index + SIZE < SIZE_SQUARED) {
+        validIndices.add(index + SIZE)
+      }
+
+      if ((index + 1) % SIZE) {
+        validIndices.add(index + 1)
+      }
+      break
+
+    case Origins.TOP_RIGHT:
+      if (index + SIZE < SIZE_SQUARED) {
+        validIndices.add(index + SIZE)
+      }
+
+      if (index % SIZE) {
+        validIndices.add(index - 1)
+      }
+      break
+
+    case Origins.BOTTOM_LEFT:
+      if (index + 1 > SIZE) {
+        validIndices.add(index - SIZE)
+      }
+
+      if ((index + 1) % SIZE) {
+        validIndices.add(index + 1)
+      }
+      break
+
+    case Origins.BOTTOM_RIGHT:
+      if (index + 1 > SIZE) {
+        validIndices.add(index - SIZE)
+      }
+
+      if (index % SIZE) {
+        validIndices.add(index - 1)
+      }
   }
 
-  if ((index + 1) % SIZE) {
-    validIndices.add(index + 1)
-  }
-
-  return new Set(validIndices)
-}
-
-const getBottomRightValidIndices = (index: number) => {
-  const validIndices: ValidIndices = new Set()
-
-  if (index + 1 > SIZE) {
-    validIndices.add(index - SIZE)
-  }
-
-  if (index % SIZE) {
-    validIndices.add(index - 1)
-  }
-
-  return new Set(validIndices)
-}
-
-const getTopLeftValidIndices = (index: number) => {
-  const validIndices: ValidIndices = new Set()
-
-  if (index + SIZE < SIZE_SQUARED) {
-    validIndices.add(index + SIZE)
-  }
-
-  if ((index + 1) % SIZE) {
-    validIndices.add(index + 1)
-  }
-
-  return new Set(validIndices)
-}
-
-const getTopRightValidIndices = (index: number) => {
-  const validIndices: ValidIndices = new Set()
-
-  if (index + SIZE < SIZE_SQUARED) {
-    validIndices.add(index + SIZE)
-  }
-
-  if (index % SIZE) {
-    validIndices.add(index - 1)
-  }
-
-  return new Set(validIndices)
+  setValidIndices(validIndices)
 }
 
 // hooks
@@ -162,26 +156,18 @@ const useLocalContext = () => {
 
 // components
 
-const Board: FC = () => (
-  <>
-    {BOARD.map((cell, index) => (
-      <Cell cell={cell} index={index} key={cell} />
-    ))}
-  </>
-)
-
 const Cell: FC<CellProps> = ({ cell, index }) => {
   const { areNumbersHidden, isAnswerVisible, origin, path, setOrigin, setPath, setValidIndices, validIndices } = useLocalContext()
 
   const handleMouseDown = (event?: MouseEvent) => {
-    const corner = FOUR_CORNERS.get(index)
+    const origin = FOUR_CORNERS.get(index)
 
-    if (corner) {
-      setOrigin(corner)
+    if (origin) {
+      setOrigin(origin)
 
       setPath([cell])
 
-      updateValidIndices(corner, index)
+      updateValidIndices(index, origin, setValidIndices)
     }
 
     event?.stopPropagation()
@@ -193,42 +179,28 @@ const Cell: FC<CellProps> = ({ cell, index }) => {
     } else if (validIndices.has(index)) {
       setPath([...path, cell])
 
-      updateValidIndices(origin!, index)
-    }
-  }
+      updateValidIndices(index, origin!, setValidIndices)
+    } else if (path.includes(cell)) {
+      setPath(path.slice(0, path.findIndex(number => number === cell) + 1))
 
-  const updateValidIndices = (origin: Origin, index: number) => {
-    switch (origin) {
-      case Origins.TOP_LEFT:
-        setValidIndices(getTopLeftValidIndices(index))
-        break
-
-      case Origins.TOP_RIGHT:
-        setValidIndices(getTopRightValidIndices(index))
-        break
-
-      case Origins.BOTTOM_LEFT:
-        setValidIndices(getBottomLeftValidIndices(index))
-        break
-
-      default:
-        setValidIndices(getBottomRightValidIndices(index))
+      updateValidIndices(index, origin!, setValidIndices)
     }
   }
 
   return (
-    <Box
-      onMouseDown={handleMouseDown}
-      onMouseOver={handleMouseOver}
-      sx={{
-        ...styles.box,
-        ...{ backgroundColor: isAnswerVisible ? (ANSWER.includes(cell) ? ORANGE : YELLOW) : path.includes(cell) ? ORANGE : YELLOW },
-        ...(areNumbersHidden && { color: 'transparent' }),
-        ...(!isAnswerVisible && validIndices.has(index) && { cursor: 'pointer' }),
-        opacity: (cell / BOARD.length) * 0.75 + 0.25
-      }}
-    >
-      {cell}
+    <Box onMouseOver={handleMouseOver} sx={styles.cellWrapper}>
+      <Box
+        onMouseDown={handleMouseDown}
+        sx={{
+          ...styles.cell,
+          ...{ backgroundColor: isAnswerVisible ? (ANSWER.includes(cell) ? ORANGE : YELLOW) : path.includes(cell) ? ORANGE : YELLOW },
+          ...(areNumbersHidden && { color: 'transparent' }),
+          ...(!isAnswerVisible && validIndices.has(index) && { cursor: 'pointer' }),
+          opacity: (cell / BOARD.length) * 0.75 + 0.25
+        }}
+      >
+        {cell}
+      </Box>
     </Box>
   )
 }
@@ -267,16 +239,14 @@ export const Zig: FC = () => {
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [])
 
-  const handleMouseDown = (event: MouseEvent) => {
-    setPath([])
-  }
-
   return (
     <Context.Provider value={context}>
-      <Grid container height="100%" justifyContent="center">
+      <Grid container height="100%" justifyContent="center" onMouseDown={() => setPath([])}>
         <Grid alignItems="center" display="flex" item justifyContent="center" xs={12}>
-          <Paper elevation={isMobile ? 0 : 1} onMouseDown={handleMouseDown} square={isMobile} sx={styles.paper}>
-            <Board />
+          <Paper elevation={isMobile ? 0 : 1} square={isMobile} sx={styles.paper}>
+            {BOARD.map((cell, index) => (
+              <Cell cell={cell} index={index} key={cell} />
+            ))}
           </Paper>
         </Grid>
       </Grid>
