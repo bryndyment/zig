@@ -1,5 +1,5 @@
 import { Box, Grid, Paper } from '@mui/material'
-import { Dispatch, FC, MouseEvent, SetStateAction, createContext, useContext, useEffect, useMemo, useState } from 'react'
+import { Dispatch, FC, SetStateAction, createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { isEmpty } from 'lodash'
 import { useMobileMediaQuery } from '../hooks/mobileMediaQuery'
 
@@ -15,6 +15,7 @@ interface ContextInterface {
   isAnswerVisible: boolean
   origin: Origin | null
   path: number[]
+  score: number
   setOrigin: Dispatch<SetStateAction<Origin | null>>
   setPath: Dispatch<SetStateAction<number[]>>
   setValidIndices: Dispatch<SetStateAction<ValidIndices>>
@@ -44,6 +45,8 @@ const BOARD = [
   103, 53, 68, 46, 95, 140, 26, 15, 142, 92, 62, 4, 65, 81, 42, 121, 1, 66, 131, 115, 30, 139, 97, 75, 77, 132, 72, 135, 107, 129, 49, 109, 73, 61, 54, 45, 122,
   41, 100, 124, 113, 106, 89, 7, 133, 141, 82, 57, 70, 94, 50, 35, 36, 118, 23, 125, 32, 51, 117, 127, 27, 60, 116, 5, 111, 134, 88, 120, 76
 ]
+
+const GOAL = ANSWER.reduce((accumulator, cell) => accumulator + cell, 0)
 
 const SIZE = Math.sqrt(BOARD.length)
 
@@ -88,6 +91,7 @@ const styles = {
     flexWrap: 'wrap',
     height: ['100vw', 660],
     p: [1, 10],
+    position: 'absolute',
     userSelect: 'none',
     width: ['100vw', 660]
   }
@@ -159,7 +163,7 @@ const useLocalContext = () => {
 const Cell: FC<CellProps> = ({ cell, index }) => {
   const { areNumbersHidden, isAnswerVisible, origin, path, setOrigin, setPath, setValidIndices, validIndices } = useLocalContext()
 
-  const handleMouseDown = (event?: MouseEvent) => {
+  const handleMouseDown = () => {
     const origin = FOUR_CORNERS.get(index)
 
     if (origin) {
@@ -169,8 +173,6 @@ const Cell: FC<CellProps> = ({ cell, index }) => {
 
       updateValidIndices(index, origin, setValidIndices)
     }
-
-    event?.stopPropagation()
   }
 
   const handleMouseOver = () => {
@@ -188,7 +190,7 @@ const Cell: FC<CellProps> = ({ cell, index }) => {
   }
 
   return (
-    <Box onMouseOver={handleMouseOver} sx={styles.cellWrapper}>
+    <Box onMouseDown={event => event.stopPropagation()} onMouseOver={handleMouseOver} sx={styles.cellWrapper}>
       <Box
         onMouseDown={handleMouseDown}
         sx={{
@@ -203,6 +205,18 @@ const Cell: FC<CellProps> = ({ cell, index }) => {
       </Box>
     </Box>
   )
+}
+
+const Goal: FC = () => {
+  const { score } = useLocalContext()
+
+  return <Box sx={{ bottom: 8, color: GOAL === score ? ORANGE : YELLOW, fontWeight: 'bold', position: 'absolute', right: 12 }}>{GOAL}</Box>
+}
+
+const Score: FC = () => {
+  const { score } = useLocalContext()
+
+  return <Box sx={{ bottom: 8, color: ORANGE, fontWeight: 'bold', left: 12, position: 'absolute' }}>{score}</Box>
 }
 
 // exports
@@ -220,9 +234,11 @@ export const Zig: FC = () => {
 
   const [validIndices, setValidIndices] = useState<ValidIndices>(new Set())
 
+  const score = useMemo(() => path.reduce((accumulator, cell) => accumulator + cell, 0), [path])
+
   const context = useMemo(
-    () => ({ areNumbersHidden, isAnswerVisible, origin, path, setOrigin, setPath, setValidIndices, validIndices }),
-    [areNumbersHidden, isAnswerVisible, origin, path, validIndices]
+    () => ({ areNumbersHidden, isAnswerVisible, origin, path, score, setOrigin, setPath, setValidIndices, validIndices }),
+    [areNumbersHidden, isAnswerVisible, origin, path, score, validIndices]
   )
 
   useEffect(() => {
@@ -247,6 +263,10 @@ export const Zig: FC = () => {
             {BOARD.map((cell, index) => (
               <Cell cell={cell} index={index} key={cell} />
             ))}
+
+            <Goal />
+
+            <Score />
           </Paper>
         </Grid>
       </Grid>
