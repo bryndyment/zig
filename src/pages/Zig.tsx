@@ -1,4 +1,4 @@
-import { ANSWERS, BOARDS } from '../boards'
+import { ANSWERS, BOARDS } from '../const'
 import { Box, Grid, Paper } from '@mui/material'
 import { Dispatch, FC, SetStateAction, createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { isEmpty } from 'lodash'
