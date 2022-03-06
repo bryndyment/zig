@@ -1,3 +1,4 @@
+import { ANSWERS, BOARDS } from '../boards'
 import { Box, Grid, Paper } from '@mui/material'
 import { Dispatch, FC, SetStateAction, createContext, useContext, useEffect, useMemo, useState } from 'react'
 import { isEmpty } from 'lodash'
@@ -37,14 +38,11 @@ enum Origins {
 
 // constants
 
-const ANSWER = [39, 91, 40, 86, 137, 52, 136, 93, 130, 103, 65, 81, 132, 72, 135, 124, 113, 106, 118, 134, 88, 120, 76]
+const RANDOM = Math.floor(Math.random() * 350)
 
-const BOARD = [
-  39, 91, 87, 104, 10, 13, 143, 83, 56, 31, 2, 108, 3, 40, 14, 64, 138, 28, 48, 63, 33, 101, 17, 96, 21, 86, 137, 52, 105, 110, 74, 18, 37, 8, 25, 11, 20, 55,
-  6, 136, 43, 22, 123, 9, 79, 144, 84, 67, 85, 90, 34, 93, 44, 98, 114, 58, 12, 71, 16, 38, 29, 128, 59, 130, 69, 19, 24, 47, 102, 112, 78, 99, 126, 80, 119,
-  103, 53, 68, 46, 95, 140, 26, 15, 142, 92, 62, 4, 65, 81, 42, 121, 1, 66, 131, 115, 30, 139, 97, 75, 77, 132, 72, 135, 107, 129, 49, 109, 73, 61, 54, 45, 122,
-  41, 100, 124, 113, 106, 89, 7, 133, 141, 82, 57, 70, 94, 50, 35, 36, 118, 23, 125, 32, 51, 117, 127, 27, 60, 116, 5, 111, 134, 88, 120, 76
-]
+const ANSWER = ANSWERS[RANDOM]
+
+const BOARD = BOARDS[RANDOM]
 
 const GOAL = ANSWER.reduce((accumulator, cell) => accumulator + cell, 0)
 
