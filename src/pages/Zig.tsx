@@ -38,7 +38,7 @@ enum Origins {
 
 // constants
 
-const RANDOM = Math.floor(Math.random() * 350)
+const RANDOM = 0 && Math.floor(Math.random() * 350)
 
 const ANSWER = ANSWERS[RANDOM]
 
