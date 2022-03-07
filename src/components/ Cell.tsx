@@ -1,5 +1,5 @@
-import { ANSWER, BOARD, CORNERS, ORANGE, YELLOW } from '../const'
-import { Box } from '@mui/material'
+import { ANSWER, BACKDROP, BOARD, CORNERS, GOAL, ORANGE, YELLOW } from '../const'
+import { Box, keyframes } from '@mui/material'
 import { CellProps } from '../type'
 import { FC } from 'react'
 import { isEmpty } from 'lodash'
@@ -10,7 +10,7 @@ import { useContext } from '../hooks/context'
 // exports
 
 export const Cell: FC<CellProps> = ({ cell, index }) => {
-  const { areNumbersHidden, isAnswerVisible, origin, path, setOrigin, setPath, setValidIndices, validIndices } = useContext()
+  const { areNumbersHidden, isAnswerVisible, origin, path, score, setOrigin, setPath, setValidIndices, validIndices } = useContext()
 
   const handleMouseDown = () => {
     const origin = CORNERS.get(index)
@@ -38,6 +38,17 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
     }
   }
 
+  const SEQUENCE = BACKDROP.findIndex(backdrop => backdrop === cell)
+
+  const animation = keyframes`
+  0% {
+    opacity: 0.2
+  }
+  100% {
+    opacity: 0.8
+  }
+  `
+
   return (
     <Box onMouseDown={event => event.stopPropagation()} onMouseOver={handleMouseOver} sx={styles.cellWrapper}>
       <Box
@@ -47,6 +58,7 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
           ...{ backgroundColor: isAnswerVisible ? (ANSWER.includes(cell) ? ORANGE : YELLOW) : path.includes(cell) ? ORANGE : YELLOW },
           ...(areNumbersHidden && { color: 'transparent' }),
           ...(!isAnswerVisible && validIndices.has(index) && { cursor: 'pointer' }),
+          ...(!path.includes(cell) && score === GOAL && { animation: `${animation} 1s ${SEQUENCE / 5}s infinite alternate` }),
           opacity: (cell / BOARD.length) * 0.75 + 0.25
         }}
       >
