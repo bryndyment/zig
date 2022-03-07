@@ -38,7 +38,7 @@ enum Origins {
 
 // constants
 
-const RANDOM = Math.floor(Math.random() * 350)
+const RANDOM = Number(new Date().toISOString().slice(0, 10).replace(/\D/g, '')) - 20220301
 
 const ANSWER = ANSWERS[RANDOM]
 
@@ -84,13 +84,15 @@ const styles = {
     width: `${100 / SIZE}%`
   },
   paper: {
+    boxSizing: ['content-box', 'border-box'],
     display: 'flex',
     flexWrap: 'wrap',
     height: ['100vw', 660],
-    p: [1, 10],
     position: 'relative',
+    px: [1, 10],
+    py: [5, 10],
     userSelect: 'none',
-    width: ['100vw', 660]
+    width: ['auto', 660]
   }
 } as any
 
