@@ -1,4 +1,8 @@
-export const ANSWERS = [
+import { Origins } from './enum'
+
+// constants
+
+const ANSWERS = [
   [28, 13, 30, 32, 31, 36, 22, 19, 34, 21, 10],
   [12, 24, 10, 40, 47, 46, 38, 37, 29, 48, 44, 27, 31],
   [29, 47, 59, 60, 57, 43, 54, 22, 50, 32, 58, 45, 49, 53, 10],
@@ -351,7 +355,7 @@ export const ANSWERS = [
   [73, 108, 34, 143, 116, 66, 95, 112, 74, 85, 144, 92, 119, 127, 130, 140, 129, 118, 17, 94, 133, 38, 56]
 ]
 
-export const BOARDS = [
+const BOARDS = [
   [7, 12, 2, 30, 13, 28, 1, 18, 4, 32, 9, 15, 24, 26, 36, 31, 14, 8, 17, 3, 22, 6, 35, 11, 21, 34, 19, 33, 25, 16, 10, 5, 23, 20, 29, 27],
   [
     12, 24, 17, 6, 5, 25, 4, 20, 10, 8, 30, 34, 15, 3, 1, 40, 47, 46, 38, 37, 14, 33, 43, 13, 39, 11, 29, 28, 2, 22, 35, 9, 49, 48, 23, 16, 19, 42, 21, 18, 44,
@@ -1890,3 +1894,28 @@ export const BOARDS = [
     70, 121, 127, 115, 50, 75, 62, 106, 7, 135, 78, 63, 123, 71, 130, 126, 61, 28, 111, 51, 37, 84, 102, 26, 65, 82, 140, 129, 118, 17, 94, 133, 38, 56
   ]
 ]
+
+const RANDOM = Number(new Date().toLocaleString('sv').slice(0, 10).replace(/\D/g, '')) - 20220307
+
+// exports
+
+export const ANSWER = ANSWERS[RANDOM]
+
+export const BOARD = BOARDS[RANDOM]
+
+export const GOAL = ANSWER.reduce((accumulator, cell) => accumulator + cell, 0)
+
+export const ORANGE = '#ff5c00'
+
+export const SIZE = Math.sqrt(BOARD.length)
+
+export const SIZE_SQUARED = SIZE ** 2
+
+export const YELLOW = '#ffbc00'
+
+export const CORNERS = new Map([
+  [0, Origins.TOP_LEFT],
+  [SIZE - 1, Origins.TOP_RIGHT],
+  [SIZE_SQUARED - SIZE, Origins.BOTTOM_LEFT],
+  [SIZE_SQUARED - 1, Origins.BOTTOM_RIGHT]
+])
