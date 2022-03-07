@@ -38,7 +38,7 @@ enum Origins {
 
 // constants
 
-const RANDOM = Number(new Date().toLocaleString('sv').slice(0, 10).replace(/\D/g, '')) - 20220300
+const RANDOM = Number(new Date().toLocaleString('sv').slice(0, 10).replace(/\D/g, '')) - 20220307
 
 const ANSWER = ANSWERS[RANDOM]
 
