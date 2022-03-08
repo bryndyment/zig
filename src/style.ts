@@ -11,7 +11,7 @@ export const styles = {
     fontWeight: 'bold',
     justifyContent: 'center',
     opacity: 1,
-    transition: 'background-color 250ms, border-radius 500ms, color 125ms, opacity 1s',
+    transition: 'background-color 500ms, border-radius 500ms, color 125ms, opacity 1s',
     width: '100%'
   },
   cellWrapper: {
