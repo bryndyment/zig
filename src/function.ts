@@ -5,6 +5,8 @@ import { SIZE, SIZE_SQUARED } from './const'
 
 // exports
 
+export const gtag = (...args: any[]) => (window as any).gtag?.('event', ...args)
+
 export const updateValidIndices = (index: number, origin: Origin, setValidIndices: Dispatch<SetStateAction<ValidIndices>>) => {
   const validIndices: ValidIndices = new Set()
 
