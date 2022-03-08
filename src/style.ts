@@ -3,6 +3,14 @@ import { SIZE } from './const'
 // exports
 
 export const styles = {
+  board: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    height: ['100vw', 500],
+    overflow: 'hidden',
+    transition: 'border-radius 0.5s, transform 0.5s 1s',
+    width: ['auto', 500]
+  },
   cell: {
     alignItems: 'center',
     color: 'transparent',
@@ -10,8 +18,7 @@ export const styles = {
     fontSize: [13, 16],
     fontWeight: 'bold',
     justifyContent: 'center',
-    opacity: 1,
-    transition: 'background-color 500ms, border-radius 500ms, color 500ms, opacity 500ms',
+    transition: 'background-color 0.5s, border-radius 0.5s, color 0.5s, opacity 0.5s',
     width: '100%'
   },
   cellWrapper: {
@@ -20,13 +27,10 @@ export const styles = {
   },
   paper: {
     boxSizing: ['content-box', 'border-box'],
-    display: 'flex',
-    flexWrap: 'wrap',
-    height: ['100vw', 660],
     position: 'relative',
-    px: [1, 10],
-    py: [5, 10],
-    userSelect: 'none',
-    width: ['auto', 660]
+    px: [1, 8],
+    py: [5, 8],
+    transition: 'border-radius 500ms 1s',
+    userSelect: 'none'
   }
 } as any
