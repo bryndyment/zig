@@ -9,8 +9,9 @@ export interface CellProps {
 }
 
 export interface ContextInterface {
-  areNumbersHidden: boolean
+  areNumbersVisible: boolean
   isAnswerVisible: boolean
+  isPuzzleSolved: boolean
   origin: Origin | null
   path: number[]
   score: number

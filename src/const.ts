@@ -1909,8 +1909,6 @@ export const SIZE = Math.sqrt(BOARD.length)
 export const SIZE_SQUARED = SIZE ** 2
 export const YELLOW = '#ffbc00'
 
-export const BACKDROP = BOARD.filter(cell => !ANSWER.includes(cell))
-
 export const CORNERS = new Map([
   [0, Origins.TOP_LEFT],
   [SIZE - 1, Origins.TOP_RIGHT],

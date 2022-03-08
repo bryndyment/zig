@@ -5,13 +5,13 @@ import { SIZE } from './const'
 export const styles = {
   cell: {
     alignItems: 'center',
-    borderRadius: '43%',
-    color: '#fff',
+    color: 'transparent',
     display: 'flex',
     fontSize: [13, 16],
     fontWeight: 'bold',
     justifyContent: 'center',
-    transition: 'background-color 150ms, color 150ms',
+    opacity: 1,
+    transition: 'background-color 500ms, border-radius 500ms, color 500ms, opacity 500ms',
     width: '100%'
   },
   cellWrapper: {

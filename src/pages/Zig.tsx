@@ -1,5 +1,5 @@
 import { BOARD, GOAL, TODAY } from '../const'
-import { Cell } from '../components/ Cell'
+import { Cell } from '../components/Cell'
 import { Context } from '../context'
 import { FC, useEffect, useMemo, useState } from 'react'
 import { Goal } from '../components/Goal'
@@ -15,7 +15,7 @@ import { useMobileMediaQuery } from '../hooks/mobileMediaQuery'
 export const Zig: FC = () => {
   const isMobile = useMobileMediaQuery()
 
-  const [areNumbersHidden, setAreNumbersHidden] = useState(false)
+  const [areNumbersVisible, setAreNumbersVisible] = useState(false)
 
   const [isAnswerVisible, setIsAnswerVisible] = useState(false)
 
@@ -28,14 +28,14 @@ export const Zig: FC = () => {
   const score = useMemo(() => path.reduce((accumulator, cell) => accumulator + cell, 0), [path])
 
   const context = useMemo(
-    () => ({ areNumbersHidden, isAnswerVisible, origin, path, score, setOrigin, setPath, setValidIndices, validIndices }),
-    [areNumbersHidden, isAnswerVisible, origin, path, score, validIndices]
+    () => ({ areNumbersVisible, isAnswerVisible, isPuzzleSolved: score === GOAL, origin, path, score, setOrigin, setPath, setValidIndices, validIndices }),
+    [areNumbersVisible, isAnswerVisible, origin, path, score, validIndices]
   )
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.code === 'KeyC') {
-        setAreNumbersHidden(areNumbersHidden => !areNumbersHidden)
+        setAreNumbersVisible(areNumbersVisible => !areNumbersVisible)
       } else if (event.code === 'KeyA') {
         setIsAnswerVisible(isAnswerVisible => !isAnswerVisible)
       }
