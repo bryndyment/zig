@@ -17,6 +17,8 @@ const mulberry32 = (seed: any) => {
 
 // exports
 
+export const getDay = () => Number(new Date().toLocaleString('sv').slice(8, 10))
+
 export const gtag = (...args: any[]) => (window as any).gtag?.('event', ...args)
 
 export const randomize = (date: string) => (Math.floor(mulberry32(date) * 100000) % 4) + 1
