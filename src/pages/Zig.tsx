@@ -1,9 +1,9 @@
 import { BOARD, GOAL, TODAY } from '../const'
+import { Box, Grid, Paper } from '@mui/material'
 import { Cell } from '../components/Cell'
 import { Context } from '../context'
 import { FC, useEffect, useMemo, useState } from 'react'
 import { Goal } from '../components/Goal'
-import { Grid, Paper } from '@mui/material'
 import { Origin, ValidIndices } from '../type'
 import { Score } from '../components/Score'
 import { gtag } from '../function'
@@ -15,7 +15,7 @@ import { useMobileMediaQuery } from '../hooks/mobileMediaQuery'
 export const Zig: FC = () => {
   const isMobile = useMobileMediaQuery()
 
-  const [areNumbersVisible, setAreNumbersVisible] = useState(false)
+  const [areNumbersVisible, setAreNumbersVisible] = useState(true)
 
   const [isAnswerVisible, setIsAnswerVisible] = useState(false)
 
@@ -27,9 +27,11 @@ export const Zig: FC = () => {
 
   const score = useMemo(() => path.reduce((accumulator, cell) => accumulator + cell, 0), [path])
 
+  const isPuzzleSolved = useMemo(() => score === GOAL, [score])
+
   const context = useMemo(
-    () => ({ areNumbersVisible, isAnswerVisible, isPuzzleSolved: score === GOAL, origin, path, score, setOrigin, setPath, setValidIndices, validIndices }),
-    [areNumbersVisible, isAnswerVisible, origin, path, score, validIndices]
+    () => ({ areNumbersVisible, isAnswerVisible, isPuzzleSolved, origin, path, score, setOrigin, setPath, setValidIndices, validIndices }),
+    [areNumbersVisible, isAnswerVisible, isPuzzleSolved, origin, path, score, validIndices]
   )
 
   useEffect(() => {
@@ -60,10 +62,24 @@ export const Zig: FC = () => {
     <Context.Provider value={context}>
       <Grid container height="100%" justifyContent="center" onMouseDown={() => setPath([])}>
         <Grid alignItems="center" display="flex" item justifyContent="center" xs={12}>
-          <Paper elevation={isMobile ? 0 : 1} square={isMobile} sx={styles.paper}>
-            {BOARD.map((cell, index) => (
-              <Cell cell={cell} index={index} key={cell} />
-            ))}
+          <Paper
+            elevation={0}
+            square={isMobile}
+            sx={{
+              ...styles.paper,
+              ...(isPuzzleSolved && { borderRadius: '43%' })
+            }}
+          >
+            <Box
+              sx={{
+                ...styles.board,
+                ...(isPuzzleSolved && { borderRadius: '43%', transform: 'rotate(90deg)' })
+              }}
+            >
+              {BOARD.map((cell, index) => (
+                <Cell cell={cell} index={index} key={cell} />
+              ))}
+            </Box>
 
             <Goal />
 

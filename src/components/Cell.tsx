@@ -45,9 +45,10 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
         sx={{
           ...styles.cell,
           ...(!isAnswerVisible && validIndices.has(index) && { cursor: 'pointer' }),
-          ...(!isPuzzleSolved && { borderRadius: '43%', opacity: (cell / BOARD.length) * 0.75 + 0.25 }),
+          ...(!isPuzzleSolved && { borderRadius: '43%' }),
           ...(!isPuzzleSolved && areNumbersVisible && { color: '#fff' }),
-          ...{ backgroundColor: isAnswerVisible ? (ANSWER.includes(cell) ? ORANGE : YELLOW) : path.includes(cell) ? ORANGE : YELLOW }
+          ...{ backgroundColor: isAnswerVisible ? (ANSWER.includes(cell) ? ORANGE : YELLOW) : path.includes(cell) ? ORANGE : YELLOW },
+          opacity: (cell / BOARD.length) * 0.75 + 0.25
         }}
       >
         {cell}
