@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import { FC } from 'react'
-import { ORANGE, YELLOW } from '../const'
+import { ORANGE } from '../const'
 import { useContext } from '../hooks/context'
 
 // exports
@@ -12,13 +12,13 @@ export const Score: FC = () => {
     <Box
       sx={{
         bottom: 8,
-        color: score ? ORANGE : YELLOW,
+        color: ORANGE,
         fontWeight: 'bold',
         left: 12,
         position: 'absolute',
-        transition: 'color 0.5s, opacity 0.5s 1s',
-        ...(!areNumbersVisible && { opacity: 0 }),
-        ...(isPuzzleSolved && { opacity: 0 })
+        transition: 'color 0.5s',
+        ...(!areNumbersVisible && { color: 'transparent' }),
+        ...(isPuzzleSolved && { color: 'transparent' })
       }}
     >
       {score}
