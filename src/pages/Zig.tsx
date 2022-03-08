@@ -1,4 +1,4 @@
-import { BOARD, GOAL, TODAY } from '../const'
+import { BOARD, GOAL, RANDOM, TODAY } from '../const'
 import { Box, Grid, Paper } from '@mui/material'
 import { Cell } from '../components/Cell'
 import { Context } from '../context'
@@ -7,8 +7,28 @@ import { Goal } from '../components/Goal'
 import { Origin, ValidIndices } from '../type'
 import { Score } from '../components/Score'
 import { gtag } from '../function'
-import { styles } from '../style'
 import { useMobileMediaQuery } from '../hooks/mobileMediaQuery'
+
+// styles
+
+const styles = {
+  board: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    height: ['100vw', 500],
+    overflow: 'hidden',
+    width: ['auto', 500]
+  },
+
+  paper: {
+    boxSizing: ['content-box', 'border-box'],
+    position: 'relative',
+    px: [1, 8],
+    py: [5, 8],
+    transition: 'border-radius 500ms 1s',
+    userSelect: 'none'
+  }
+} as any
 
 // exports
 
@@ -67,13 +87,17 @@ export const Zig: FC = () => {
             square={isMobile}
             sx={{
               ...styles.paper,
-              ...(isPuzzleSolved && { borderRadius: '43%' })
+              ...(isPuzzleSolved && { borderRadius: '35%' })
             }}
           >
             <Box
               sx={{
                 ...styles.board,
-                ...(isPuzzleSolved && { borderRadius: '43%', transform: 'rotate(90deg)' })
+                ...(isPuzzleSolved && {
+                  borderRadius: '35%',
+                  transform: `rotate(${RANDOM * 90}deg)`,
+                  transition: `border-radius 0.5s 1s, transform ${RANDOM * 0.5}s 2s`
+                })
               }}
             >
               {BOARD.map((cell, index) => (
