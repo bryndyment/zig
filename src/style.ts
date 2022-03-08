@@ -8,7 +8,7 @@ export const styles = {
     flexWrap: 'wrap',
     height: ['100vw', 500],
     overflow: 'hidden',
-    transition: 'border-radius 0.5s, transform 0.5s 1s',
+    transition: 'border-radius 0.5s 1s, transform 0.5s 2s',
     width: ['auto', 500]
   },
   cell: {

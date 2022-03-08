@@ -47,6 +47,7 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
           ...(!isAnswerVisible && validIndices.has(index) && { cursor: 'pointer' }),
           ...(!isPuzzleSolved && { borderRadius: '43%' }),
           ...(!isPuzzleSolved && areNumbersVisible && { color: '#fff' }),
+          ...(isPuzzleSolved && areNumbersVisible && { transition: 'background-color 0.5s, border-radius 0.5s, color 0.5s 1s, opacity 0.5s' }),
           ...{ backgroundColor: isAnswerVisible ? (ANSWER.includes(cell) ? ORANGE : YELLOW) : path.includes(cell) ? ORANGE : YELLOW },
           opacity: (cell / BOARD.length) * 0.75 + 0.25
         }}
