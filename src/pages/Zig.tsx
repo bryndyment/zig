@@ -1,4 +1,4 @@
-import { BOARD } from '../const'
+import { BOARD, GOAL, TODAY } from '../const'
 import { Cell } from '../components/ Cell'
 import { Context } from '../context'
 import { FC, useEffect, useMemo, useState } from 'react'
@@ -6,6 +6,7 @@ import { Goal } from '../components/Goal'
 import { Grid, Paper } from '@mui/material'
 import { Origin, ValidIndices } from '../type'
 import { Score } from '../components/Score'
+import { gtag } from '../function'
 import { styles } from '../style'
 import { useMobileMediaQuery } from '../hooks/mobileMediaQuery'
 
@@ -44,6 +45,16 @@ export const Zig: FC = () => {
 
     return () => document.removeEventListener('keydown', handleKeyDown)
   }, [])
+
+  useEffect(() => {
+    if (score === GOAL) {
+      if (!localStorage.getItem(TODAY)) {
+        gtag(TODAY, { event_category: 'general' })
+
+        localStorage.setItem(TODAY, '✓')
+      }
+    }
+  }, [score])
 
   return (
     <Context.Provider value={context}>

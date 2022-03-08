@@ -1895,22 +1895,18 @@ const BOARDS = [
   ]
 ]
 
-const RANDOM = Number(new Date().toLocaleString('sv').slice(0, 10).replace(/\D/g, '')) - 20220307
-
 // exports
 
-export const ANSWER = ANSWERS[RANDOM]
+export const TODAY = new Date().toLocaleString('sv').slice(0, 10).replace(/\D/g, '')
 
-export const BOARD = BOARDS[RANDOM]
+export const INDEX = Number(TODAY) - 20220307
 
+export const ANSWER = ANSWERS[INDEX]
+export const BOARD = BOARDS[INDEX]
 export const GOAL = ANSWER.reduce((accumulator, cell) => accumulator + cell, 0)
-
 export const ORANGE = '#ff5c00'
-
 export const SIZE = Math.sqrt(BOARD.length)
-
 export const SIZE_SQUARED = SIZE ** 2
-
 export const YELLOW = '#ffbc00'
 
 export const BACKDROP = BOARD.filter(cell => !ANSWER.includes(cell))
