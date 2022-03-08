@@ -16,7 +16,7 @@ export const Score: FC = () => {
         fontWeight: 'bold',
         left: 12,
         position: 'absolute',
-        transition: 'opacity 0.5s 1s',
+        transition: 'color 0.5s, opacity 0.5s 1s',
         ...(!areNumbersVisible && { opacity: 0 }),
         ...(isPuzzleSolved && { opacity: 0 })
       }}
