@@ -1,4 +1,5 @@
 import { Origins } from './enum'
+import { randomize } from './function'
 
 // constants
 
@@ -1905,6 +1906,7 @@ export const ANSWER = ANSWERS[INDEX]
 export const BOARD = BOARDS[INDEX]
 export const GOAL = ANSWER.reduce((accumulator, cell) => accumulator + cell, 0)
 export const ORANGE = '#ff5c00'
+export const RANDOM = randomize(TODAY)
 export const SIZE = Math.sqrt(BOARD.length)
 export const SIZE_SQUARED = SIZE ** 2
 export const YELLOW = '#ffbc00'

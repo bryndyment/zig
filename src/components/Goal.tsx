@@ -16,9 +16,9 @@ export const Goal: FC = () => {
         fontWeight: 'bold',
         position: 'absolute',
         right: 12,
-        transition: 'opacity 0.5s',
-        ...(!areNumbersVisible && { opacity: 0 }),
-        ...(isPuzzleSolved && { opacity: 0 })
+        transition: 'color 0.5s',
+        ...(!areNumbersVisible && { color: 'transparent' }),
+        ...(isPuzzleSolved && { color: 'transparent' })
       }}
     >
       {GOAL}
