@@ -6,19 +6,19 @@ import { useContext } from '../hooks/context'
 // exports
 
 export const Score: FC = () => {
-  const { areNumbersVisible, isPuzzleSolved, score } = useContext()
+  const { score } = useContext()
 
   return (
     <Box
       sx={{
+        '-webkit-text-stroke': '2px #fff',
         bottom: 8,
         color: ORANGE,
+        fontSize: 32,
         fontWeight: 'bold',
-        left: 12,
-        position: 'absolute',
-        transition: 'color 0.5s',
-        ...(!areNumbersVisible && { color: 'transparent' }),
-        ...(isPuzzleSolved && { color: 'transparent' })
+        left: 20,
+        letterSpacing: -3,
+        position: 'absolute'
       }}
     >
       {score}
