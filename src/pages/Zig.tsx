@@ -20,13 +20,12 @@ const styles = {
     overflow: 'hidden',
     width: ['auto', 500]
   },
-
   paper: {
     boxSizing: ['content-box', 'border-box'],
     position: 'relative',
     px: [1, 8],
     py: [5, 8],
-    transition: 'border-radius 500ms 1s',
+    transition: 'border-radius 0.5s 1s',
     userSelect: 'none'
   }
 } as any
@@ -37,21 +36,15 @@ export const Zig: FC = () => {
   const isMobile = useMobileMediaQuery()
 
   const [areNumbersVisible, setAreNumbersVisible] = useState(true)
-
-  const [day] = useState<number>(getDay)
-
+  const [day] = useState(getDay)
   const [isAnswerVisible, setIsAnswerVisible] = useState(false)
-
   const [origin, setOrigin] = useState<Origin | null>(null)
-
   const [path, setPath] = useState<number[]>([])
-
   const [validIndices, setValidIndices] = useState<ValidIndices>(new Set())
 
   useConstructor(() => setInterval(() => getDay() !== day && location.reload(), 1000))
 
   const score = useMemo(() => path.reduce((accumulator, cell) => accumulator + cell, 0), [path])
-
   const isPuzzleSolved = useMemo(() => score === GOAL, [score])
 
   const context = useMemo(
@@ -84,12 +77,6 @@ export const Zig: FC = () => {
       }
     }
   }, [score])
-
-  // useInterval(() => {
-  //   if (getDay() !== day) {
-  //     location.reload()
-  //   }
-  // }, 1000)
 
   return (
     <Context.Provider value={context}>
