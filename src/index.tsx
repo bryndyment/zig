@@ -1,6 +1,6 @@
+import { App } from './pages/App'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { CssBaseline, ThemeProvider } from '@mui/material'
-import { Zig } from './pages/Zig'
 import { theme } from './theme'
 import React from 'react'
 import ReactDOM from 'react-dom'
@@ -12,7 +12,7 @@ ReactDOM.render(
         <CssBaseline />
 
         <Routes>
-          <Route element={<Zig />} path="/" />
+          <Route element={<App />} path="/" />
         </Routes>
       </ThemeProvider>
     </BrowserRouter>
