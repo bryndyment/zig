@@ -1906,6 +1906,8 @@ export const ANSWER = ANSWERS[INDEX]
 export const BOARD = BOARDS[INDEX]
 export const GOAL = ANSWER.reduce((accumulator, cell) => accumulator + cell, 0)
 export const ORANGE = '#ff5c00'
+export const OUTLINE =
+  'rgb(255, 255, 255) 2px 0 0, rgb(255, 255, 255) 1.75517px 0.958851px 0, rgb(255, 255, 255) 1.0806px 1.68294px 0, rgb(255, 255, 255) 0.141474px 1.99499px 0, rgb(255, 255, 255) -0.832294px 1.81859px 0, rgb(255, 255, 255) -1.60229px 1.19694px 0, rgb(255, 255, 255) -1.97998px 0.28224px 0, rgb(255, 255, 255) -1.87291px -0.701566px 0, rgb(255, 255, 255) -1.30729px -1.5136px 0, rgb(255, 255, 255) -0.421592px -1.95506px 0, rgb(255, 255, 255) 0.567324px -1.91785px 0, rgb(255, 255, 255) 1.41734px -1.41108px 0, rgb(255, 255, 255) 1.92034px -0.558831px 0'
 export const RANDOM = randomize(TODAY)
 export const SIZE = Math.sqrt(BOARD.length)
 export const SIZE_SQUARED = SIZE ** 2

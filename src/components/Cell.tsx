@@ -16,7 +16,7 @@ const styles = {
     fontSize: [13, 16],
     fontWeight: 'bold',
     justifyContent: 'center',
-    transition: 'background-color 0.5s, border-radius 1s, color 0.5s, opacity 0.5s',
+    transition: 'background-color 0.5s, border-radius 0.7s, color 0.5s, opacity 0.5s',
     width: '100%'
   },
   cellWrapper: {
