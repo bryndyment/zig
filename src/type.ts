@@ -17,10 +17,10 @@ export interface ContextInterface {
   score: number
   setOrigin: Dispatch<SetStateAction<Origin | null>>
   setPath: Dispatch<SetStateAction<number[]>>
-  setValidIndices: Dispatch<SetStateAction<ValidIndices>>
-  validIndices: ValidIndices
+  setValidCells: Dispatch<SetStateAction<ValidCells>>
+  validCells: ValidCells
 }
 
 export type Origin = Origins
 
-export type ValidIndices = Set<number>
+export type ValidCells = Set<number>
