@@ -1,7 +1,7 @@
 import { Box, Link } from '@mui/material'
 import { FC } from 'react'
 import { HelpDialog } from './dialogs/Help'
-import { ORANGE, OUTLINE } from '../const'
+import { ORANGE } from '../const'
 import { useOpening } from '../hooks/opening'
 import MenuIcon from '@mui/icons-material/Menu'
 
@@ -12,19 +12,9 @@ export const Menu: FC = () => {
 
   return (
     <>
-      <Box
-        sx={{
-          fontSize: 24,
-          fontWeight: 'bold',
-          left: 15,
-          position: 'absolute',
-          textShadow: OUTLINE,
-          textTransform: 'uppercase',
-          top: 15
-        }}
-      >
-        <Link onClick={opening.open} sx={{ color: ORANGE, cursor: 'pointer', textDecoration: 'none' }}>
-          <MenuIcon />
+      <Box sx={{ left: 16, position: 'absolute', top: 11.5 }}>
+        <Link onClick={opening.open} sx={{ color: ORANGE, cursor: 'pointer', display: 'none', textDecoration: 'none' }}>
+          <MenuIcon fontSize="large" />
         </Link>
       </Box>
 

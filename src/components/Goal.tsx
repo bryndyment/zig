@@ -1,19 +1,18 @@
 import { Box } from '@mui/material'
 import { FC } from 'react'
-import { GOAL, ORANGE, OUTLINE } from '../const'
+import { GOAL, ORANGE } from '../const'
 
 // exports
 
 export const Goal: FC = () => (
   <Box
     sx={{
-      bottom: 11,
+      bottom: 9.5,
       color: ORANGE,
-      fontSize: 24,
-      fontWeight: 'bold',
+      fontSize: 25,
+      fontWeight: 500,
       position: 'absolute',
-      right: 19,
-      textShadow: OUTLINE
+      right: 18.5
     }}
   >
     {GOAL}

@@ -3,4 +3,4 @@ import { useMediaQuery } from '@mui/material'
 
 // exported hooks
 
-export const useMobileMediaQuery = (breakpoint: any = 'desktop') => useMediaQuery(theme.breakpoints.down(breakpoint))
+export const useMobileMediaQuery = (breakpoint: any = 'xl') => useMediaQuery(theme.breakpoints.down(breakpoint))
