@@ -32,14 +32,16 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
 
   const handleMouseDown = () => {
     if (!isPuzzleSolved) {
-      const origin = CORNERS.get(index)
+      if (!validIndices.has(index)) {
+        const origin = CORNERS.get(index)
 
-      if (origin) {
-        setOrigin(origin)
+        if (origin) {
+          setOrigin(origin)
 
-        setPath([cell])
+          setPath([cell])
 
-        updateValidIndices(index, origin, setValidIndices)
+          updateValidIndices(index, origin, setValidIndices)
+        }
       }
     }
   }
