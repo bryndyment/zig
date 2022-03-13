@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import { FC } from 'react'
-import { ORANGE, OUTLINE } from '../const'
+import { ORANGE } from '../const'
 
 // exports
 
@@ -8,13 +8,12 @@ export const Zig: FC = () => (
   <Box
     sx={{
       color: ORANGE,
-      fontSize: 24,
-      fontWeight: 'bold',
-      left: 19,
+      fontSize: 25,
+      fontWeight: 500,
       position: 'absolute',
-      textShadow: OUTLINE,
+      right: 18.5,
       textTransform: 'uppercase',
-      top: 12
+      top: 11
     }}
   >
     Zig

@@ -1,3 +1,4 @@
+import { ORANGE, YELLOW } from './const'
 import { createTheme } from '@mui/material/styles'
 
 // exporteds
@@ -5,8 +6,16 @@ import { createTheme } from '@mui/material/styles'
 export const theme = createTheme({
   breakpoints: {
     values: {
-      desktop: 660,
-      mobile: 0
+      xl: 660,
+      xs: 0
+    }
+  },
+  palette: {
+    primary: {
+      main: ORANGE
+    },
+    secondary: {
+      main: YELLOW
     }
   }
 })

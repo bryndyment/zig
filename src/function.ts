@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction } from 'react'
+import { ORANGE, SIZE, SIZE_SQUARED, YELLOW } from './const'
 import { Origin, ValidCells } from './type'
 import { Origins } from './enum'
-import { SIZE, SIZE_SQUARED } from './const'
+import confetti from 'canvas-confetti'
 
 // functions
 
@@ -22,6 +23,33 @@ export const getDay = () => Number(new Date().toLocaleString('sv').slice(8, 10))
 export const gtag = (...args: any[]) => (window as any).gtag?.('event', ...args)
 
 export const randomize = (date: string) => (Math.floor(mulberry32(date) * 100000) % 4) + 1
+
+export const showConfetti = () => {
+  const colors = [ORANGE, YELLOW]
+
+  const end = Date.now() + 5 * 1000
+
+  ;(function frame() {
+    confetti({
+      angle: 60,
+      colors,
+      origin: { x: 0, y: 0.65 },
+      particleCount: 2,
+      spread: 55
+    })
+    confetti({
+      angle: 120,
+      colors,
+      origin: { x: 1, y: 0.65 },
+      particleCount: 2,
+      spread: 55
+    })
+
+    if (Date.now() < end) {
+      requestAnimationFrame(frame)
+    }
+  })()
+}
 
 export const updateValidCells = (index: number, origin: Origin, setValidCells: Dispatch<SetStateAction<ValidCells>>) => {
   const validCells: ValidCells = new Set()

@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import { FC } from 'react'
-import { ORANGE, OUTLINE } from '../const'
+import { ORANGE } from '../const'
 import { useContext } from '../hooks/context'
 
 // exports
@@ -11,13 +11,12 @@ export const Score: FC = () => {
   return (
     <Box
       sx={{
-        bottom: 11,
+        bottom: 9.5,
         color: ORANGE,
-        fontSize: 24,
-        fontWeight: 'bold',
+        fontSize: 25,
+        fontWeight: 500,
         left: 19,
-        position: 'absolute',
-        textShadow: OUTLINE
+        position: 'absolute'
       }}
     >
       {score}
