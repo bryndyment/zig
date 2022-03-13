@@ -5,7 +5,7 @@ import { Context } from '../context'
 import { FC, useEffect, useMemo, useState } from 'react'
 import { Goal } from '../components/Goal'
 import { Help } from '../components/Help'
-import { Origin, ValidIndices } from '../type'
+import { Origin, ValidCells } from '../type'
 import { Score } from '../components/Score'
 import { Zig } from '../components/Zig'
 import { getDay, gtag } from '../function'
@@ -41,7 +41,7 @@ export const App: FC = () => {
   const [isAnswerVisible, setIsAnswerVisible] = useState(false)
   const [origin, setOrigin] = useState<Origin | null>(null)
   const [path, setPath] = useState<number[]>([])
-  const [validIndices, setValidIndices] = useState<ValidIndices>(new Set())
+  const [validCells, setValidCells] = useState<ValidCells>(new Set())
 
   useConstructor(() => setInterval(() => getDay() !== day && location.reload(), 1000))
 
@@ -49,8 +49,8 @@ export const App: FC = () => {
   const isPuzzleSolved = useMemo(() => score === GOAL, [score])
 
   const context = useMemo(
-    () => ({ areNumbersVisible, isAnswerVisible, isPuzzleSolved, origin, path, score, setOrigin, setPath, setValidIndices, validIndices }),
-    [areNumbersVisible, isAnswerVisible, isPuzzleSolved, origin, path, score, validIndices]
+    () => ({ areNumbersVisible, isAnswerVisible, isPuzzleSolved, origin, path, score, setOrigin, setPath, setValidCells, validCells }),
+    [areNumbersVisible, isAnswerVisible, isPuzzleSolved, origin, path, score, validCells]
   )
 
   useEffect(() => {
