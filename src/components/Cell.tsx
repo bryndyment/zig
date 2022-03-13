@@ -30,7 +30,7 @@ const styles = {
 export const Cell: FC<CellProps> = ({ cell, index }) => {
   const { areNumbersVisible, isAnswerVisible, isPuzzleSolved, origin, path, setOrigin, setPath, setValidCells, validCells } = useContext()
 
-  let previousValidCells: ValidCells
+  let previousValidCells: ValidCells = new Set()
 
   const handleMouseDown = () => {
     if (!isPuzzleSolved) {
