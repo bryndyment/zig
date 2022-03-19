@@ -1900,7 +1900,7 @@ const BOARDS = [
 
 export const TODAY = new Date().toLocaleString('sv').slice(0, 10).replace(/\D/g, '')
 
-export const INDEX = Number(TODAY) - 20220307
+export const INDEX = Number(TODAY) - 20220307 - 5
 
 export const ANSWER = ANSWERS[INDEX]
 export const BOARD = BOARDS[INDEX]
