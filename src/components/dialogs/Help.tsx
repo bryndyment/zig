@@ -23,23 +23,23 @@ const styles = {
 
 export const HelpDialog: FC<HelpDialogParams> = ({ opening }) => {
   return (
-    <Dialog fullWidth maxWidth="xl" onClose={opening.close} open={opening.isOpen}>
-      <DialogTitle sx={styles.title}>Zig</DialogTitle>
+    <Dialog fullWidth maxWidth="xs" onClose={opening.close} open={opening.isOpen}>
+      <DialogTitle sx={styles.title}>Zig!</DialogTitle>
 
       <DialogContent sx={styles.content}>
         <Divider sx={styles.divider} />
 
-        <Typography>Choose a corner.</Typography>
+        <Typography>Hover over any corner. It will highlight.</Typography>
 
-        <Typography sx={styles.p}>Zig to the opposite corner, trying to get the score displayed at the bottom right.</Typography>
+        <Typography sx={styles.p}>Move toward the diagonally opposite corner. As you move, your path highlights.</Typography>
 
-        <Typography sx={styles.p}>There is only one solution.</Typography>
+        <Typography sx={styles.p}>The sum of the highlighted cells is displayed at the bottom-left.</Typography>
 
-        <Typography sx={styles.p}></Typography>
+        <Typography sx={styles.p}>Aim for the highest possible sum, displayed at the bottom-right.</Typography>
       </DialogContent>
 
       <DialogActions sx={styles.actions}>
-        <Button color="primary" variant="contained">
+        <Button color="primary" onClick={opening.close} variant="contained">
           OK
         </Button>
       </DialogActions>
