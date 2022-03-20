@@ -2,6 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Typ
 import { FC } from 'react'
 import { ORANGE } from '../../const'
 import { Opening } from '../../hooks/opening'
+import { useMobileMediaQuery } from '../../hooks/mobileMediaQuery'
 
 // types
 
@@ -22,6 +23,8 @@ const styles = {
 // components
 
 export const HelpDialog: FC<HelpDialogParams> = ({ opening }) => {
+  const isMobile = useMobileMediaQuery()
+
   return (
     <Dialog fullWidth maxWidth="xs" onClose={opening.close} open={opening.isOpen}>
       <DialogTitle sx={styles.title}>Zig!</DialogTitle>
@@ -29,9 +32,9 @@ export const HelpDialog: FC<HelpDialogParams> = ({ opening }) => {
       <DialogContent sx={styles.content}>
         <Divider sx={styles.divider} />
 
-        <Typography>Hover over any corner. It will highlight.</Typography>
+        <Typography>{isMobile ? 'Tap on' : 'Hover over'} any corner. It will highlight.</Typography>
 
-        <Typography sx={styles.p}>Move toward the diagonally opposite corner. As you move, your path highlights.</Typography>
+        <Typography sx={styles.p}>{isMobile ? 'Tap' : 'Hover'} toward the diagonally opposite corner. As you move, your path highlights.</Typography>
 
         <Typography sx={styles.p}>The sum of the highlighted cells is displayed bottom-left.</Typography>
 
