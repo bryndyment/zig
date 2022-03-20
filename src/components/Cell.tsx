@@ -33,7 +33,7 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
 
   const isMobile = useMobileMediaQuery()
 
-  const handleMouseDown = () => {
+  const handleCorner = () => {
     if (!isPuzzleSolved) {
       const origin = CORNERS.get(index)
 
@@ -47,7 +47,7 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
     }
   }
 
-  const handleMouseOver = () => {
+  const handlePath = () => {
     if (!isPuzzleSolved) {
       if (validCells.has(index)) {
         setPath([...path, cell])
@@ -58,15 +58,15 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
 
         updateValidCells(index, origin!, setValidCells)
       } else if (isEmpty(path) || isMobile) {
-        handleMouseDown()
+        handleCorner()
       }
     }
   }
 
   return (
-    <Box onMouseDown={event => event.stopPropagation()} onMouseOver={isMobile ? undefined : handleMouseOver} sx={styles.cellWrapper}>
+    <Box onMouseDown={event => event.stopPropagation()} onMouseOver={isMobile ? undefined : handlePath} sx={styles.cellWrapper}>
       <Box
-        onMouseDown={isMobile ? handleMouseOver : handleMouseDown}
+        onMouseDown={isMobile ? handlePath : handleCorner}
         sx={{
           ...styles.cell,
           ...(!isAnswerVisible && (validCells.has(index) || path.includes(cell)) && { cursor: 'pointer' }),
