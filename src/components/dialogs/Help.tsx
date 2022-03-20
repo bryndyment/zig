@@ -33,9 +33,9 @@ export const HelpDialog: FC<HelpDialogParams> = ({ opening }) => {
 
         <Typography sx={styles.p}>Move toward the diagonally opposite corner. As you move, your path highlights.</Typography>
 
-        <Typography sx={styles.p}>The sum of the highlighted cells is displayed at the bottom-left.</Typography>
+        <Typography sx={styles.p}>The sum of the highlighted cells is displayed bottom-left.</Typography>
 
-        <Typography sx={styles.p}>Aim for the highest possible sum, displayed at the bottom-right.</Typography>
+        <Typography sx={styles.p}>Aim for the highest possible sum, displayed bottom-right.</Typography>
       </DialogContent>
 
       <DialogActions sx={styles.actions}>
