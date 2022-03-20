@@ -34,7 +34,9 @@ export const HelpDialog: FC<HelpDialogParams> = ({ opening }) => {
 
         <Typography>{isMobile ? 'Tap on' : 'Hover over'} any corner. It will highlight.</Typography>
 
-        <Typography sx={styles.p}>{isMobile ? 'Tap' : 'Hover'} toward the diagonally opposite corner. As you move, your path highlights.</Typography>
+        <Typography sx={styles.p}>
+          {isMobile ? 'Tap' : 'Hover'} toward the diagonally opposite corner. As you {isMobile ? 'tap' : 'hover'}, your path highlights.
+        </Typography>
 
         <Typography sx={styles.p}>The sum of the highlighted cells is displayed bottom-left.</Typography>
 
