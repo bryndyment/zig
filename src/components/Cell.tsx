@@ -1,10 +1,11 @@
 import { ANSWER, BOARD, CORNERS, ORANGE, SIZE, YELLOW } from '../const'
 import { Box } from '@mui/material'
-import { CellProps, ValidCells } from '../type'
+import { CellProps } from '../type'
 import { FC } from 'react'
 import { isEmpty } from 'lodash'
 import { updateValidCells } from '../function'
 import { useContext } from '../hooks/context'
+import { useMobileMediaQuery } from '../hooks/mobileMediaQuery'
 
 // styles
 
@@ -30,46 +31,42 @@ const styles = {
 export const Cell: FC<CellProps> = ({ cell, index }) => {
   const { areNumbersVisible, isAnswerVisible, isPuzzleSolved, origin, path, setOrigin, setPath, setValidCells, validCells } = useContext()
 
-  let previousValidCells: ValidCells = new Set()
+  const isMobile = useMobileMediaQuery()
 
   const handleMouseDown = () => {
     if (!isPuzzleSolved) {
-      if (!previousValidCells.has(index)) {
-        const origin = CORNERS.get(index)
+      const origin = CORNERS.get(index)
 
-        if (origin) {
-          setOrigin(origin)
+      if (origin) {
+        setOrigin(origin)
 
-          setPath([cell])
+        setPath([cell])
 
-          updateValidCells(index, origin, setValidCells)
-        }
+        updateValidCells(index, origin, setValidCells)
       }
     }
   }
 
   const handleMouseOver = () => {
     if (!isPuzzleSolved) {
-      if (isEmpty(path)) {
-        handleMouseDown()
-      } else if (validCells.has(index)) {
+      if (validCells.has(index)) {
         setPath([...path, cell])
-
-        previousValidCells = new Set(validCells)
 
         updateValidCells(index, origin!, setValidCells)
       } else if (path.includes(cell)) {
         setPath(path.slice(0, path.findIndex(number => number === cell) + 1))
 
         updateValidCells(index, origin!, setValidCells)
+      } else if (isEmpty(path) || isMobile) {
+        handleMouseDown()
       }
     }
   }
 
   return (
-    <Box onMouseDown={event => event.stopPropagation()} onMouseOver={handleMouseOver} sx={styles.cellWrapper}>
+    <Box onMouseDown={event => event.stopPropagation()} onMouseOver={isMobile ? undefined : handleMouseOver} sx={styles.cellWrapper}>
       <Box
-        onMouseDown={handleMouseDown}
+        onMouseDown={isMobile ? handleMouseOver : handleMouseDown}
         sx={{
           ...styles.cell,
           ...(!isAnswerVisible && (validCells.has(index) || path.includes(cell)) && { cursor: 'pointer' }),
