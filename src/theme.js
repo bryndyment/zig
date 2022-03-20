@@ -1,7 +1,7 @@
 import { ORANGE, YELLOW } from './const'
 import { createTheme } from '@mui/material/styles'
 
-// exporteds
+// constants
 
 export const theme = createTheme({
   breakpoints: {

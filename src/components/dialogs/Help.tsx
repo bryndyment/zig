@@ -1,6 +1,6 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
-import { Close } from '../Close'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Typography } from '@mui/material'
 import { FC } from 'react'
+import { ORANGE } from '../../const'
 import { Opening } from '../../hooks/opening'
 
 // types
@@ -12,27 +12,37 @@ interface HelpDialogParams {
 // styles
 
 const styles = {
-  actions: { pb: 2, pl: 0, pr: 2, pt: 4 },
-  content: { pl: 2 },
-  title: { borderBottom: '1px solid #d8d8d8', mb: 1, mt: 0, mx: 2, pl: 0 }
+  actions: { p: 2 },
+  content: { p: 2 },
+  divider: { mb: 1.5 },
+  p: { mt: 1 },
+  title: { color: ORANGE, mt: 0.5, px: 2, py: 1, textTransform: 'uppercase' }
 }
 
 // components
 
 export const HelpDialog: FC<HelpDialogParams> = ({ opening }) => {
   return (
-    <Dialog maxWidth="xl" onClose={opening.close} open={opening.isOpen}>
-      <DialogTitle sx={styles.title}>Are you sure?</DialogTitle>
+    <Dialog fullWidth maxWidth="xs" onClose={opening.close} open={opening.isOpen}>
+      <DialogTitle sx={styles.title}>Zig!</DialogTitle>
 
-      <DialogContent sx={styles.content}>Content</DialogContent>
+      <DialogContent sx={styles.content}>
+        <Divider sx={styles.divider} />
+
+        <Typography>Hover over any corner. It will highlight.</Typography>
+
+        <Typography sx={styles.p}>Move toward the diagonally opposite corner. As you move, your path highlights.</Typography>
+
+        <Typography sx={styles.p}>The sum of the highlighted cells is displayed at the bottom-left.</Typography>
+
+        <Typography sx={styles.p}>Aim for the highest possible sum, displayed at the bottom-right.</Typography>
+      </DialogContent>
 
       <DialogActions sx={styles.actions}>
-        <Button color="primary" variant="contained">
+        <Button color="primary" onClick={opening.close} variant="contained">
           OK
         </Button>
       </DialogActions>
-
-      <Close callback={opening.close} />
     </Dialog>
   )
 }
