@@ -40,7 +40,7 @@ export const HelpDialog: FC<HelpDialogParams> = ({ opening }) => {
 
       <DialogActions sx={styles.actions}>
         <Button color="primary" onClick={opening.close} variant="contained">
-          OK
+          OK!
         </Button>
       </DialogActions>
     </Dialog>

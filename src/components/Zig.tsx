@@ -16,6 +16,6 @@ export const Zig: FC = () => (
       top: 11
     }}
   >
-    Zig
+    Zig!
   </Box>
 )
