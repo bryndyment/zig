@@ -2,6 +2,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Typ
 import { FC } from 'react'
 import { ORANGE } from '../../const'
 import { Opening } from '../../hooks/opening'
+import { useMobileMediaQuery } from '../../hooks/mobileMediaQuery'
 
 // types
 
