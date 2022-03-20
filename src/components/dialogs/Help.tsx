@@ -1,6 +1,5 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Divider, Typography } from '@mui/material'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material'
 import { FC } from 'react'
-import { ORANGE } from '../../const'
 import { Opening } from '../../hooks/opening'
 import { useMobileMediaQuery } from '../../hooks/mobileMediaQuery'
 
@@ -10,19 +9,6 @@ interface HelpDialogParams {
   opening: Opening
 }
 
-// styles
-
-const styles = {
-  actions: {
-    '&': { p: 2 },
-    '& .MuiButton-root': { fontFamily: 'bungee' }
-  },
-  content: { p: 2 },
-  divider: { mb: 1.5 },
-  p: { mt: 1 },
-  title: { color: ORANGE, fontFamily: 'bungee', mt: 0.5, px: 2, py: 1, textTransform: 'uppercase' }
-}
-
 // components
 
 export const HelpDialog: FC<HelpDialogParams> = ({ opening }) => {
@@ -30,23 +16,27 @@ export const HelpDialog: FC<HelpDialogParams> = ({ opening }) => {
 
   return (
     <Dialog fullWidth maxWidth="xs" onClose={opening.close} open={opening.isOpen}>
-      <DialogTitle sx={styles.title}>Zig!</DialogTitle>
+      <DialogTitle>Zig!</DialogTitle>
 
-      <DialogContent sx={styles.content}>
-        <Divider sx={styles.divider} />
-
+      <DialogContent>
         <Typography>{isMobile ? 'Tap on' : 'Hover over'} any corner. It will highlight.</Typography>
 
-        <Typography sx={styles.p}>
-          {isMobile ? 'Tap' : 'Hover'} toward the diagonally opposite corner. As you {isMobile ? 'tap' : 'hover'}, your path highlights.
-        </Typography>
+        <Typography>{isMobile ? 'Tap' : 'Move'} horizontally and vertically toward the diagonally opposite corner.</Typography>
 
-        <Typography sx={styles.p}>The sum of the highlighted cells is displayed bottom-left.</Typography>
+        <Typography></Typography>
 
-        <Typography sx={styles.p}>Aim for the highest possible sum, displayed bottom-right.</Typography>
+        <Typography>As you {isMobile ? 'tap' : 'move'}, your path will highlight.</Typography>
+
+        <Typography>The sum of the highlighted cells is displayed bottom-left.</Typography>
+
+        <Typography>Aim for the highest sum, displayed bottom-right.</Typography>
+
+        <Typography>There’s a new puzzle each day.</Typography>
+
+        <Typography>That’s it!</Typography>
       </DialogContent>
 
-      <DialogActions sx={styles.actions}>
+      <DialogActions>
         <Button color="primary" onClick={opening.close} variant="contained">
           OK!
         </Button>
