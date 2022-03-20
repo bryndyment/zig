@@ -1,20 +1,19 @@
 import { FC } from 'react'
 import { HelpDialog } from './dialogs/Help'
 import { Link } from '@mui/material'
-import { ORANGE } from '../const'
+import { ReactComponent as MenuIcon } from '../assets/images/menu.svg'
 import { useOpening } from '../hooks/opening'
-import MenuIcon from '@mui/icons-material/Menu'
 
 // styles
 
 const styles = {
   link: {
-    color: ORANGE,
     cursor: 'pointer',
-    left: 16,
+    height: 24.5,
+    left: 21,
     position: 'absolute',
     textDecoration: 'none',
-    top: 11.5
+    top: 20
   }
 }
 
@@ -26,7 +25,7 @@ export const Menu: FC = () => {
   return (
     <>
       <Link onClick={opening.open} sx={styles.link}>
-        <MenuIcon fontSize="large" />
+        <MenuIcon />
       </Link>
 
       <HelpDialog opening={opening} />
