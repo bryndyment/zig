@@ -13,11 +13,14 @@ interface HelpDialogParams {
 // styles
 
 const styles = {
-  actions: { p: 2 },
+  actions: {
+    '&': { p: 2 },
+    '& .MuiButton-root': { fontFamily: 'bungee' }
+  },
   content: { p: 2 },
   divider: { mb: 1.5 },
   p: { mt: 1 },
-  title: { color: ORANGE, mt: 0.5, px: 2, py: 1, textTransform: 'uppercase' }
+  title: { color: ORANGE, fontFamily: 'bungee', mt: 0.5, px: 2, py: 1, textTransform: 'uppercase' }
 }
 
 // components

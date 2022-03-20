@@ -8,6 +8,7 @@ export const Zig: FC = () => (
   <Box
     sx={{
       color: ORANGE,
+      fontFamily: 'bungee',
       fontSize: 25,
       fontWeight: 500,
       position: 'absolute',

@@ -8,6 +8,7 @@ const styles = {
   box: {
     bottom: 9.5,
     color: ORANGE,
+    fontFamily: 'bungee',
     fontSize: 25,
     fontWeight: 500,
     position: 'absolute',
