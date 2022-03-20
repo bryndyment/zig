@@ -83,7 +83,7 @@ export const App: FC = () => {
 
   return (
     <Context.Provider value={context}>
-      <Grid container height="100%" justifyContent="center" onMouseDown={() => setPath([])}>
+      <Grid container height="100%" justifyContent="center" onMouseDown={isMobile ? undefined : () => setPath([])}>
         <Grid alignItems="center" display="flex" item justifyContent="center" xs={12}>
           <Paper elevation={3} square={isMobile} sx={styles.paper}>
             <Box sx={styles.board}>
