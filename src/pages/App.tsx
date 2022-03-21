@@ -4,12 +4,13 @@ import { Cell } from '../components/Cell'
 import { Context } from '../context'
 import { FC, useEffect, useMemo, useState } from 'react'
 import { Goal } from '../components/Goal'
-import { Menu } from '../components/Menu'
+import { MenuButton } from '../components/MenuButton'
 import { Origin, ValidCells } from '../type'
 import { Score } from '../components/Score'
 import { Zig } from '../components/Zig'
 import { getDay, gtag, showConfetti } from '../function'
 import { useConstructor } from '../hooks/constructor'
+import { useContext } from '../hooks/context'
 import { useMobileMediaQuery } from '../hooks/mobileMediaQuery'
 
 // styles
@@ -31,12 +32,25 @@ const styles = {
   }
 } as any
 
-// exports
+// components
+
+const GlobalStyleHandler: FC = () => {
+  const { color } = useContext()
+
+  useEffect(() => {
+    document.querySelector('html')!.style.filter = `grayscale(${(100 - color) / 100})`
+
+    localStorage.setItem('color', String(color))
+  }, [color])
+
+  return null
+}
 
 export const App: FC = () => {
   const isMobile = useMobileMediaQuery()
 
   const [areNumbersVisible, setAreNumbersVisible] = useState(true)
+  const [color, setColor] = useState(Number(localStorage.getItem('color')) || 100)
   const [day] = useState(getDay)
   const [isAnswerVisible] = useState(false)
   const [origin, setOrigin] = useState<Origin | null>(null)
@@ -49,8 +63,8 @@ export const App: FC = () => {
   const isPuzzleSolved = useMemo(() => score === GOAL, [score])
 
   const context = useMemo(
-    () => ({ areNumbersVisible, isAnswerVisible, isPuzzleSolved, origin, path, score, setOrigin, setPath, setValidCells, validCells }),
-    [areNumbersVisible, isAnswerVisible, isPuzzleSolved, origin, path, score, validCells]
+    () => ({ areNumbersVisible, color, isAnswerVisible, isPuzzleSolved, origin, path, score, setColor, setOrigin, setPath, setValidCells, validCells }),
+    [areNumbersVisible, color, isAnswerVisible, isPuzzleSolved, origin, path, score, validCells]
   )
 
   useEffect(() => {
@@ -83,6 +97,8 @@ export const App: FC = () => {
 
   return (
     <Context.Provider value={context}>
+      <GlobalStyleHandler />
+
       <Grid container height="100%" justifyContent="center" onMouseDown={isMobile ? undefined : () => setPath([])}>
         <Grid alignItems="center" display="flex" item justifyContent="center" xs={12}>
           <Paper elevation={3} square={isMobile} sx={styles.paper}>
@@ -94,7 +110,7 @@ export const App: FC = () => {
 
             <Goal />
 
-            <Menu />
+            <MenuButton />
 
             <Score />
 

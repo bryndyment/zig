@@ -10,11 +10,13 @@ export interface CellProps {
 
 export interface ContextInterface {
   areNumbersVisible: boolean
+  color: number
   isAnswerVisible: boolean
   isPuzzleSolved: boolean
   origin: Origin | null
   path: number[]
   score: number
+  setColor: Dispatch<SetStateAction<number>>
   setOrigin: Dispatch<SetStateAction<Origin | null>>
   setPath: Dispatch<SetStateAction<number[]>>
   setValidCells: Dispatch<SetStateAction<ValidCells>>

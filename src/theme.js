@@ -43,6 +43,19 @@ export const theme = createTheme({
       styleOverrides: {
         root: { marginBottom: '12px' }
       }
+    },
+    MuiMenuItem: {
+      styleOverrides: {
+        root: {
+          '&': { color: ORANGE, fontFamily: 'bungee' },
+          '&:hover': { backgroundColor: '#fdefcf' }
+        }
+      }
+    },
+    MuiTypography: {
+      styleOverrides: {
+        h2: { color: YELLOW, fontFamily: 'bungee', fontSize: 16 }
+      }
     }
   },
   palette: {
