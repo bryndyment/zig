@@ -64,9 +64,9 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
   }
 
   return (
-    <Box onMouseDown={event => event.stopPropagation()} onMouseOver={isMobile ? undefined : handlePath} sx={styles.cellWrapper}>
+    <Box onClick={event => event.stopPropagation()} onMouseOver={isMobile ? undefined : handlePath} sx={styles.cellWrapper}>
       <Box
-        onMouseDown={isMobile ? handlePath : handleCorner}
+        onClick={isMobile ? handlePath : handleCorner}
         sx={{
           ...styles.cell,
           ...(!isAnswerVisible && (validCells.has(index) || path.includes(cell)) && { cursor: 'pointer' }),

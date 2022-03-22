@@ -34,7 +34,7 @@ const styles = {
 
 // components
 
-const GlobalStyleHandler: FC = () => {
+const Prefs: FC = () => {
   const { color } = useContext()
 
   useEffect(() => {
@@ -97,11 +97,11 @@ export const App: FC = () => {
 
   return (
     <Context.Provider value={context}>
-      <GlobalStyleHandler />
+      <Prefs />
 
-      <Grid container height="100%" justifyContent="center" onMouseDown={isMobile ? undefined : () => setPath([])}>
+      <Grid container height="100%" justifyContent="center" onClick={() => setPath([])}>
         <Grid alignItems="center" display="flex" item justifyContent="center" xs={12}>
-          <Paper elevation={3} square={isMobile} sx={styles.paper}>
+          <Paper elevation={3} onClick={event => event.stopPropagation()} square={isMobile} sx={styles.paper}>
             <Box sx={styles.board}>
               {BOARD.map((cell, index) => (
                 <Cell cell={cell} index={index} key={cell} />
