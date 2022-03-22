@@ -34,7 +34,7 @@ export const theme = createTheme({
           fontFamily: 'bungee',
           fontSize: 25,
           margin: '8px 16px 4px',
-          padding: '0 0 8px',
+          padding: '0 0 6px',
           textTransform: 'uppercase'
         }
       }
@@ -48,7 +48,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           '&': { color: ORANGE, fontFamily: 'bungee' },
-          '&:hover': { backgroundColor: '#fdefcf' }
+          '&:hover, &.Mui-focusVisible': { backgroundColor: '#fdefcf' }
         }
       }
     },
