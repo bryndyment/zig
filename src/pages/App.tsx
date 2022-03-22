@@ -11,7 +11,6 @@ import { Zig } from '../components/Zig'
 import { getDay, gtag, showConfetti } from '../function'
 import { useConstructor } from '../hooks/constructor'
 import { useContext } from '../hooks/context'
-import { useMobileMediaQuery } from '../hooks/mobileMediaQuery'
 
 // styles
 
@@ -19,14 +18,12 @@ const styles = {
   board: {
     display: 'flex',
     flexWrap: 'wrap',
-    height: ['100vw', 500],
+    height: ['calc(100vw - 16px)', 500],
     overflow: 'hidden',
     width: ['auto', 500]
   },
   paper: {
-    boxSizing: ['content-box', 'border-box'],
-    px: [1, 8],
-    py: [5, 8],
+    p: [1, 8],
     transition: 'border-radius 0.5s 1s',
     userSelect: 'none'
   }
@@ -47,8 +44,6 @@ const Prefs: FC = () => {
 }
 
 export const App: FC = () => {
-  const isMobile = useMobileMediaQuery()
-
   const [areNumbersVisible, setAreNumbersVisible] = useState(true)
   const [color, setColor] = useState(Number(localStorage.getItem('color')) || 100)
   const [day] = useState(getDay)
@@ -101,7 +96,7 @@ export const App: FC = () => {
 
       <Grid container height="100%" justifyContent="center" onClick={() => setPath([])}>
         <Grid alignItems="center" display="flex" item justifyContent="center" xs={12}>
-          <Paper elevation={3} onClick={event => event.stopPropagation()} square={isMobile} sx={styles.paper}>
+          <Paper elevation={3} onClick={event => event.stopPropagation()} sx={styles.paper}>
             <Box sx={styles.board}>
               {BOARD.map((cell, index) => (
                 <Cell cell={cell} index={index} key={cell} />
