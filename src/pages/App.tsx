@@ -45,7 +45,7 @@ const Prefs: FC = () => {
 
 export const App: FC = () => {
   const [areNumbersVisible, setAreNumbersVisible] = useState(true)
-  const [color, setColor] = useState(Number(localStorage.getItem('color')) || 100)
+  const [color, setColor] = useState('color' in localStorage ? Number(localStorage.getItem('color')) : 100)
   const [day] = useState(getDay)
   const [isAnswerVisible] = useState(false)
   const [origin, setOrigin] = useState<Origin | null>(null)
