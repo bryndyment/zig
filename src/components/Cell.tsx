@@ -64,16 +64,16 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
   }
 
   return (
-    <Box onMouseDown={event => event.stopPropagation()} onMouseOver={isMobile ? undefined : handlePath} sx={styles.cellWrapper}>
+    <Box onClick={event => event.stopPropagation()} onMouseOver={isMobile ? undefined : handlePath} sx={styles.cellWrapper}>
       <Box
-        onMouseDown={isMobile ? handlePath : handleCorner}
+        onClick={isMobile ? handlePath : handleCorner}
         sx={{
           ...styles.cell,
           ...(!isAnswerVisible && (validCells.has(index) || path.includes(cell)) && { cursor: 'pointer' }),
           ...(!isPuzzleSolved && { borderRadius: '35%' }),
           ...(areNumbersVisible && { color: '#fff' }),
           ...{ backgroundColor: isAnswerVisible ? (ANSWER.includes(cell) ? ORANGE : YELLOW) : path.includes(cell) ? ORANGE : YELLOW },
-          opacity: (cell / BOARD.length) * 0.75 + 0.25
+          opacity: (cell / BOARD.length) * 0.65 + 0.35
         }}
       >
         {cell}

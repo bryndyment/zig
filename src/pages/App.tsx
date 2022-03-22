@@ -99,7 +99,7 @@ export const App: FC = () => {
     <Context.Provider value={context}>
       <GlobalStyleHandler />
 
-      <Grid container height="100%" justifyContent="center" onMouseDown={isMobile ? undefined : () => setPath([])}>
+      <Grid container height="100%" justifyContent="center" onClick={isMobile ? undefined : () => setPath([])}>
         <Grid alignItems="center" display="flex" item justifyContent="center" xs={12}>
           <Paper elevation={3} square={isMobile} sx={styles.paper}>
             <Box sx={styles.board}>
