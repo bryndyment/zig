@@ -44,6 +44,14 @@ export const theme = createTheme({
         root: { marginBottom: '12px' }
       }
     },
+    MuiLink: {
+      styleOverrides: {
+        root: {
+          '&': { cursor: 'pointer', fontFamily: 'bungee', textDecoration: 'none', textTransform: 'uppercase' },
+          '&:hover': { textDecoration: 'underline' }
+        }
+      }
+    },
     MuiMenuItem: {
       styleOverrides: {
         root: {

@@ -37,6 +37,7 @@ export const MenuButton: FC = () => {
       <Menu
         anchorEl={menuOpening.anchor}
         anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+        onClick={menuOpening.close}
         onClose={menuOpening.close}
         open={menuOpening.isOpen}
         transformOrigin={{ horizontal: 'right', vertical: 'top' }}
@@ -48,7 +49,7 @@ export const MenuButton: FC = () => {
         {/* <MenuItem onClick={statsOpening.open}>Stats</MenuItem> */}
       </Menu>
 
-      <AboutDialog opening={aboutOpening} />
+      <AboutDialog opening={aboutOpening} prefsOpening={prefsOpening} />
 
       <PrefsDialog opening={prefsOpening} />
     </>
