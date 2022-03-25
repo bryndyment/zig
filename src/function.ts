@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react'
-import { ORANGE, SIZE, SIZE_SQUARED, YELLOW } from './const'
+import { ORANGE, YELLOW } from './const'
 import { Origin, ValidCells } from './type'
 import { Origins } from './enum'
 import confetti from 'canvas-confetti'
@@ -17,6 +17,16 @@ const mulberry32 = (seed: any) => {
 }
 
 // exports
+
+export const calcCorners = (size: number) =>
+  new Map([
+    [0, Origins.TOP_LEFT],
+    [size - 1, Origins.TOP_RIGHT],
+    [size ** 2 - size, Origins.BOTTOM_LEFT],
+    [size ** 2 - 1, Origins.BOTTOM_RIGHT]
+  ])
+
+export const calcPuzzleIndex = (size: number, today: string) => Math.floor((Number(today) - 20220317) / 7) + size - 7
 
 export const getDay = () => Number(new Date().toLocaleString('sv').slice(8, 10))
 
@@ -51,46 +61,46 @@ export const showConfetti = () => {
   })()
 }
 
-export const updateValidCells = (index: number, origin: Origin, setValidCells: Dispatch<SetStateAction<ValidCells>>) => {
+export const updateValidCells = (index: number, origin: Origin, setValidCells: Dispatch<SetStateAction<ValidCells>>, size: number) => {
   const validCells: ValidCells = new Set()
 
   switch (origin) {
     case Origins.TOP_LEFT:
-      if (index + SIZE < SIZE_SQUARED) {
-        validCells.add(index + SIZE)
+      if (index + size < size ** 2) {
+        validCells.add(index + size)
       }
 
-      if ((index + 1) % SIZE) {
+      if ((index + 1) % size) {
         validCells.add(index + 1)
       }
       break
 
     case Origins.TOP_RIGHT:
-      if (index + SIZE < SIZE_SQUARED) {
-        validCells.add(index + SIZE)
+      if (index + size < size ** 2) {
+        validCells.add(index + size)
       }
 
-      if (index % SIZE) {
+      if (index % size) {
         validCells.add(index - 1)
       }
       break
 
     case Origins.BOTTOM_LEFT:
-      if (index + 1 > SIZE) {
-        validCells.add(index - SIZE)
+      if (index + 1 > size) {
+        validCells.add(index - size)
       }
 
-      if ((index + 1) % SIZE) {
+      if ((index + 1) % size) {
         validCells.add(index + 1)
       }
       break
 
     case Origins.BOTTOM_RIGHT:
-      if (index + 1 > SIZE) {
-        validCells.add(index - SIZE)
+      if (index + 1 > size) {
+        validCells.add(index - size)
       }
 
-      if (index % SIZE) {
+      if (index % size) {
         validCells.add(index - 1)
       }
   }

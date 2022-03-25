@@ -1,6 +1,7 @@
 import { Box } from '@mui/material'
 import { FC } from 'react'
-import { GOAL, ORANGE } from '../const'
+import { ORANGE } from '../const'
+import { useContext } from '../hooks/context'
 
 // styles
 
@@ -18,4 +19,8 @@ const styles = {
 
 // exports
 
-export const Goal: FC = () => <Box sx={styles.box}>{GOAL}</Box>
+export const Goal: FC = () => {
+  const { goal } = useContext()
+
+  return <Box sx={styles.box}>{goal}</Box>
+}

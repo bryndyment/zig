@@ -12,13 +12,21 @@ interface PrefsDialogParams {
 // components
 
 export const PrefsDialog: FC<PrefsDialogParams> = ({ opening }) => {
-  const { color, setColor } = useContext()
+  const { color, setColor, setSize, size } = useContext()
 
   return (
     <Dialog fullWidth maxWidth="xs" onClose={opening.close} open={opening.isOpen}>
       <DialogTitle>Prefs!</DialogTitle>
 
       <DialogContent>
+        <Box sx={{ py: 2 }}>
+          <Typography variant="h2">Size</Typography>
+
+          <Box sx={{ mt: 2, px: 3 }}>
+            <Slider color="secondary" marks max={12} min={6} onChange={(_, value) => setSize(value as number)} step={1} value={size} />
+          </Box>
+        </Box>
+
         <Box sx={{ py: 2 }}>
           <Typography variant="h2">Color</Typography>
 

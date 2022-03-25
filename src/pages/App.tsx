@@ -1,4 +1,4 @@
-import { BOARD, GOAL, TODAY } from '../const'
+import { ANSWERS, BOARDS, TODAY } from '../const'
 import { Box, Grid, Paper } from '@mui/material'
 import { Cell } from '../components/Cell'
 import { Context } from '../context'
@@ -8,7 +8,7 @@ import { MenuButton } from '../components/MenuButton'
 import { Origin, ValidCells } from '../type'
 import { Score } from '../components/Score'
 import { Zig } from '../components/Zig'
-import { getDay, gtag, showConfetti } from '../function'
+import { calcCorners, calcPuzzleIndex, getDay, gtag, showConfetti } from '../function'
 import { useConstructor } from '../hooks/constructor'
 import { useContext } from '../hooks/context'
 
@@ -32,13 +32,21 @@ const styles = {
 // components
 
 const Prefs: FC = () => {
-  const { color } = useContext()
+  const { color, setCorners, setPath, setPuzzleIndex, size } = useContext()
 
   useEffect(() => {
     document.querySelector('html')!.style.filter = `grayscale(${(100 - color) / 100})`
 
     localStorage.setItem('color', String(color))
   }, [color])
+
+  useEffect(() => {
+    localStorage.setItem('size', String(size))
+
+    setCorners(calcCorners(size))
+    setPath([])
+    setPuzzleIndex(calcPuzzleIndex(size, TODAY))
+  }, [setCorners, setPath, setPuzzleIndex, size])
 
   return null
 }
@@ -50,16 +58,42 @@ export const App: FC = () => {
   const [isAnswerVisible] = useState(false)
   const [origin, setOrigin] = useState<Origin | null>(null)
   const [path, setPath] = useState<number[]>([])
+  const [size, setSize] = useState('size' in localStorage ? Number(localStorage.getItem('size')) : 6)
   const [validCells, setValidCells] = useState<ValidCells>(new Set())
+
+  const [puzzleIndex, setPuzzleIndex] = useState(calcPuzzleIndex(size, TODAY))
+  const [corners, setCorners] = useState(calcCorners(size))
+
+  const goal = useMemo(() => ANSWERS[puzzleIndex].reduce((accumulator, cell) => accumulator + cell, 0), [puzzleIndex])
+  const score = useMemo(() => path.reduce((accumulator, cell) => accumulator + cell, 0), [path])
+
+  const isPuzzleSolved = useMemo(() => score === goal, [goal, score])
 
   useConstructor(() => setInterval(() => getDay() !== day && location.reload(), 1000))
 
-  const score = useMemo(() => path.reduce((accumulator, cell) => accumulator + cell, 0), [path])
-  const isPuzzleSolved = useMemo(() => score === GOAL, [score])
-
   const context = useMemo(
-    () => ({ areNumbersVisible, color, isAnswerVisible, isPuzzleSolved, origin, path, score, setColor, setOrigin, setPath, setValidCells, validCells }),
-    [areNumbersVisible, color, isAnswerVisible, isPuzzleSolved, origin, path, score, validCells]
+    () => ({
+      areNumbersVisible,
+      color,
+      corners,
+      goal,
+      isAnswerVisible,
+      isPuzzleSolved,
+      origin,
+      path,
+      puzzleIndex,
+      score,
+      setColor,
+      setCorners,
+      setOrigin,
+      setPath,
+      setPuzzleIndex,
+      setSize,
+      setValidCells,
+      size,
+      validCells
+    }),
+    [areNumbersVisible, color, corners, goal, isAnswerVisible, isPuzzleSolved, origin, path, puzzleIndex, score, size, validCells]
   )
 
   useEffect(() => {
@@ -75,14 +109,14 @@ export const App: FC = () => {
   }, [isPuzzleSolved])
 
   useEffect(() => {
-    if (score === GOAL) {
+    if (score === goal) {
       if (!localStorage.getItem(TODAY)) {
         gtag(TODAY, { event_category: 'general' })
 
         localStorage.setItem(TODAY, '✓')
       }
     }
-  }, [score])
+  }, [goal, score])
 
   useEffect(() => {
     if (isPuzzleSolved) {
@@ -90,6 +124,7 @@ export const App: FC = () => {
     }
   }, [isPuzzleSolved])
 
+  console.log(puzzleIndex)
   return (
     <Context.Provider value={context}>
       <Prefs />
@@ -98,7 +133,7 @@ export const App: FC = () => {
         <Grid alignItems="center" display="flex" item justifyContent="center" xs={12}>
           <Paper elevation={3} onClick={event => event.stopPropagation()} sx={styles.paper}>
             <Box sx={styles.board}>
-              {BOARD.map((cell, index) => (
+              {BOARDS[puzzleIndex].map((cell, index) => (
                 <Cell cell={cell} index={index} key={cell} />
               ))}
             </Box>

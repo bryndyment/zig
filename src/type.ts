@@ -11,15 +11,22 @@ export interface CellProps {
 export interface ContextInterface {
   areNumbersVisible: boolean
   color: number
+  corners: Map<number, Origins>
+  goal: number
   isAnswerVisible: boolean
   isPuzzleSolved: boolean
   origin: Origin | null
   path: number[]
+  puzzleIndex: number
   score: number
   setColor: Dispatch<SetStateAction<number>>
+  setCorners: Dispatch<SetStateAction<Map<number, Origins>>>
   setOrigin: Dispatch<SetStateAction<Origin | null>>
   setPath: Dispatch<SetStateAction<number[]>>
+  setPuzzleIndex: Dispatch<SetStateAction<number>>
+  setSize: Dispatch<SetStateAction<number>>
   setValidCells: Dispatch<SetStateAction<ValidCells>>
+  size: number
   validCells: ValidCells
 }
 
