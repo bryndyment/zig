@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Link, Typography } from '@mui/material'
 import { FC } from 'react'
 import { Opening } from '../../hooks/opening'
 import { useMobileMediaQuery } from '../../hooks/mobileMediaQuery'
@@ -7,12 +7,19 @@ import { useMobileMediaQuery } from '../../hooks/mobileMediaQuery'
 
 interface AboutDialogParams {
   opening: Opening
+  prefsOpening: Opening
 }
 
 // components
 
-export const AboutDialog: FC<AboutDialogParams> = ({ opening }) => {
+export const AboutDialog: FC<AboutDialogParams> = ({ opening, prefsOpening }) => {
   const isMobile = useMobileMediaQuery()
+
+  const handleClick = () => {
+    opening.close()
+
+    prefsOpening.open()
+  }
 
   return (
     <Dialog fullWidth maxWidth="xs" onClose={opening.close} open={opening.isOpen}>
@@ -31,7 +38,9 @@ export const AboutDialog: FC<AboutDialogParams> = ({ opening }) => {
 
         <Typography>Aim for the highest sum, displayed bottom-right.</Typography>
 
-        <Typography>There’s a new puzzle each day.</Typography>
+        <Typography>
+          Seven new puzzles each day (check <Link onClick={handleClick}>prefs</Link>).
+        </Typography>
 
         <Typography>That’s it!</Typography>
       </DialogContent>

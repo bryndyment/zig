@@ -110,13 +110,15 @@ export const App: FC = () => {
 
   useEffect(() => {
     if (score === goal) {
-      if (!localStorage.getItem(TODAY)) {
-        gtag(TODAY, { event_category: 'general' })
+      const key = `${TODAY}_${String(size).padStart(2, '0')}`
 
-        localStorage.setItem(TODAY, '✓')
+      if (!localStorage.getItem(key)) {
+        gtag(key, { event_category: 'general' })
+
+        localStorage.setItem(key, '✓')
       }
     }
-  }, [goal, score])
+  }, [goal, score]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (isPuzzleSolved) {
@@ -124,7 +126,6 @@ export const App: FC = () => {
     }
   }, [isPuzzleSolved])
 
-  console.log(puzzleIndex)
   return (
     <Context.Provider value={context}>
       <Prefs />

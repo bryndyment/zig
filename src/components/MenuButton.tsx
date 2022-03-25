@@ -49,7 +49,7 @@ export const MenuButton: FC = () => {
         {/* <MenuItem onClick={statsOpening.open}>Stats</MenuItem> */}
       </Menu>
 
-      <AboutDialog opening={aboutOpening} />
+      <AboutDialog opening={aboutOpening} prefsOpening={prefsOpening} />
 
       <PrefsDialog opening={prefsOpening} />
     </>
