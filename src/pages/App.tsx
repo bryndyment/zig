@@ -56,7 +56,6 @@ export const App: FC = () => {
   const [color, setColor] = useState('color' in localStorage ? Number(localStorage.getItem('color')) : 100)
   const [day] = useState(getDay)
   const [destination, setDestination] = useState<Corner | null>(null)
-  const [isAnswerVisible] = useState(false)
   const [isInitial, setIsInitial] = useState(true)
   const [origin, setOrigin] = useState<Corner | null>(null)
   const [path, setPath] = useState<number[]>([])
@@ -69,7 +68,7 @@ export const App: FC = () => {
   const goal = useMemo(() => ANSWERS[puzzleIndex].reduce((accumulator, cell) => accumulator + cell, 0), [puzzleIndex])
   const score = useMemo(() => path.reduce((accumulator, cell) => accumulator + cell, 0), [path])
 
-  const isPuzzleSolved = useMemo(() => score === goal, [goal, score])
+  const isPuzzleSolved = useMemo(() => Boolean(localStorage.getItem(TODAY) || score === goal), [goal, score])
 
   useConstructor(() => setInterval(() => getDay() !== day && location.reload(), 1000))
 
@@ -80,7 +79,6 @@ export const App: FC = () => {
       corners,
       destination,
       goal,
-      isAnswerVisible,
       isInitial,
       isPuzzleSolved,
       origin,
@@ -99,7 +97,7 @@ export const App: FC = () => {
       size,
       validCells
     }),
-    [areNumbersVisible, color, corners, destination, goal, isAnswerVisible, isInitial, isPuzzleSolved, origin, path, puzzleIndex, score, size, validCells]
+    [areNumbersVisible, color, corners, destination, goal, isInitial, isPuzzleSolved, origin, path, puzzleIndex, score, size, validCells]
   )
 
   useEffect(() => {
@@ -116,12 +114,10 @@ export const App: FC = () => {
 
   useEffect(() => {
     if (score === goal) {
-      const key = `${TODAY}_${String(size).padStart(2, '0')}`
+      if (!localStorage.getItem(TODAY)) {
+        localStorage.setItem(TODAY, String(size))
 
-      if (!localStorage.getItem(key)) {
-        gtag(key, { event_category: 'general' })
-
-        localStorage.setItem(key, '✓')
+        gtag(TODAY, { value: size })
       }
     }
   }, [goal, score]) // eslint-disable-line react-hooks/exhaustive-deps

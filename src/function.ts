@@ -1,7 +1,7 @@
 import { Corner, ValidCells } from './type'
 import { Corners } from './enum'
 import { Dispatch, SetStateAction } from 'react'
-import { RED, YELLOW } from './const'
+import { ORANGE, YELLOW } from './const'
 import confetti from 'canvas-confetti'
 
 // functions
@@ -26,7 +26,7 @@ export const calcCorners = (size: number) =>
     [size ** 2 - 1, Corners.BOTTOM_RIGHT]
   ])
 
-export const calcPuzzleIndex = (size: number, today: string) => Math.floor(Number(today) - 20220325) * 7 + size - 6
+export const calcPuzzleIndex = (size: number, today: string) => Math.floor(Number(today) - 20220326) * 7 + size - 6
 
 export const getDay = () => Number(new Date().toLocaleString('sv').slice(8, 10))
 
@@ -35,9 +35,9 @@ export const gtag = (...args: any[]) => (window as any).gtag?.('event', ...args)
 export const randomize = (date: string) => (Math.floor(mulberry32(date) * 100000) % 4) + 1
 
 export const showConfetti = () => {
-  const colors = [RED, YELLOW]
+  const colors = [ORANGE, YELLOW]
 
-  const end = Date.now() + 5 * 1000
+  const end = Date.now() + 1000
 
   ;(function frame() {
     confetti({

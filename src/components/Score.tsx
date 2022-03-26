@@ -1,6 +1,6 @@
 import { Box } from '@mui/material'
 import { FC } from 'react'
-import { RED } from '../const'
+import { ORANGE } from '../const'
 import { useContext } from '../hooks/context'
 
 // styles
@@ -8,7 +8,7 @@ import { useContext } from '../hooks/context'
 const styles = {
   box: {
     bottom: 9.5,
-    color: RED,
+    color: ORANGE,
     fontFamily: 'bungee',
     fontSize: 25,
     fontWeight: 500,
@@ -20,7 +20,7 @@ const styles = {
 // exports
 
 export const Score: FC = () => {
-  const { score } = useContext()
+  const { goal, isPuzzleSolved, score } = useContext()
 
-  return <Box sx={styles.box}>{score}</Box>
+  return <Box sx={styles.box}>{isPuzzleSolved ? goal : score}</Box>
 }

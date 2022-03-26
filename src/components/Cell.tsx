@@ -1,4 +1,4 @@
-import { ANSWERS, BOARDS, DESTINATION, RED, YELLOW } from '../const'
+import { ANSWERS, BOARDS, DESTINATION, ORANGE, YELLOW } from '../const'
 import { Box } from '@mui/material'
 import { CellProps } from '../type'
 import { Corners } from '../enum'
@@ -31,7 +31,6 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
     areNumbersVisible,
     corners,
     destination,
-    isAnswerVisible,
     isInitial,
     isPuzzleSolved,
     origin,
@@ -79,25 +78,20 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
     }
   }
 
+  const backgroundColor = (isPuzzleSolved ? ANSWERS[puzzleIndex] : path).includes(cell) ? ORANGE : YELLOW
+  const opacity = (cell / BOARDS[puzzleIndex].length) * (backgroundColor === ORANGE ? 0.5 : 0.8) + (backgroundColor === ORANGE ? 0.5 : 0.2)
+
   return (
     <Box onClick={event => event.stopPropagation()} onMouseOver={isMobile ? undefined : handlePath} sx={{ ...styles.cellWrapper, width: `${100 / size}%` }}>
       <Box
         onClick={isMobile ? handlePath : handleCorner}
         sx={{
           ...styles.cell,
-          ...(!isAnswerVisible && (validCells.has(index) || path.includes(cell)) && { cursor: 'pointer' }),
+          ...(!isPuzzleSolved && (validCells.has(index) || path.includes(cell)) && { cursor: 'pointer' }),
           ...(!isPuzzleSolved && { borderRadius: '35%' }),
           ...(areNumbersVisible && { color: '#fff' }),
-          ...{
-            backgroundColor: isAnswerVisible
-              ? ANSWERS[puzzleIndex].includes(cell)
-                ? RED
-                : YELLOW
-              : (isInitial && corners.has(index)) || path.includes(cell) || corners.get(index) === destination
-              ? RED
-              : YELLOW
-          },
-          ...((!isInitial || !corners.has(index)) && { opacity: (cell / BOARDS[puzzleIndex].length) * 0.75 + 0.25 })
+          backgroundColor,
+          opacity
         }}
       >
         {cell}

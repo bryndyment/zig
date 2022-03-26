@@ -1903,8 +1903,9 @@ export const DESTINATION = new Map([
   [Corners.TOP_RIGHT, Corners.BOTTOM_LEFT]
 ])
 
-export const RED = '#ff5c00'
 export const TODAY = new Date().toLocaleString('sv').slice(0, 10).replace(/\D/g, '')
-export const YELLOW = '#ffbc00'
 
+export const GRAY = '#bdbdbd'
+export const ORANGE = '#ff5c00'
 export const RANDOM = randomize(TODAY)
+export const YELLOW = '#ffbc00'

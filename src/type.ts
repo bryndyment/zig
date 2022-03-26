@@ -14,7 +14,6 @@ export interface ContextInterface {
   corners: Map<number, Corner>
   destination: Corner | null
   goal: number
-  isAnswerVisible: boolean
   isInitial: boolean
   isPuzzleSolved: boolean
   origin: Corner | null
