@@ -12,6 +12,7 @@ import { Zig } from '../components/Zig'
 import { calcCorners, calcPuzzleIndex, getDay, gtag, showConfetti } from '../function'
 import { useConstructor } from '../hooks/constructor'
 import { useContext } from '../hooks/context'
+import { useMobileMediaQuery } from '../hooks/mobileMediaQuery'
 
 // styles
 
@@ -53,6 +54,8 @@ const Prefs: FC = () => {
 }
 
 export const App: FC = () => {
+  const isMobile = useMobileMediaQuery()
+
   const [areNumbersVisible, setAreNumbersVisible] = useState(true)
   const [color, setColor] = useState('color' in localStorage ? Number(localStorage.getItem('color')) : 100)
   const [day] = useState(getDay)
@@ -134,7 +137,7 @@ export const App: FC = () => {
 
       <Grid container height="100%" justifyContent="center" onClick={() => setPath([])}>
         <Grid alignItems="center" display="flex" item justifyContent="center" xs={12}>
-          <Paper elevation={3} onClick={event => event.stopPropagation()} sx={styles.paper}>
+          <Paper elevation={3} onClick={event => event.stopPropagation()} square={isMobile} sx={styles.paper}>
             <Box sx={styles.board}>
               {BOARDS[puzzleIndex].map((cell, index) => (
                 <Cell cell={cell} index={index} key={cell} />

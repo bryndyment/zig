@@ -15,6 +15,7 @@ const styles = {
     alignItems: 'center',
     color: 'transparent',
     display: 'flex',
+    fontFamily: 'lucida grande',
     fontSize: [13, 16],
     fontWeight: 'bold',
     justifyContent: 'center',

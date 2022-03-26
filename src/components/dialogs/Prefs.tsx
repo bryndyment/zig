@@ -10,7 +10,7 @@ import { useContext } from '../../hooks/context'
 const styles = {
   size: {
     '&': { color: GRAY },
-    '&::after': { content: '" (disabled until tomorrow)"', fontFamily: 'lucida grande', fontWeight: 'bold' }
+    '&::after': { content: '" (disabled until tomorrow)"', fontSize: 14, textTransform: 'none' }
   }
 }
 
@@ -38,7 +38,7 @@ export const PrefsDialog: FC<PrefsDialogParams> = ({ opening }) => {
           </Box>
         </Box>
 
-        <Box sx={{ py: 2 }}>
+        <Box sx={{ pb: 2, pt: 1 }}>
           <Typography sx={{ ...(status === Statuses.COMPLETE && styles.size) }} variant="h2">
             Size
           </Typography>
