@@ -33,7 +33,7 @@ export const PrefsDialog: FC<PrefsDialogParams> = ({ opening }) => {
         <Box sx={{ py: 2 }}>
           <Typography variant="h2">Color</Typography>
 
-          <Box sx={{ mt: 2, px: 3 }}>
+          <Box sx={{ mt: 2, px: 2 }}>
             <Slider color="secondary" marks max={100} min={0} onChange={(_, value) => setColor(value as number)} step={10} value={color} />
           </Box>
         </Box>
@@ -43,7 +43,7 @@ export const PrefsDialog: FC<PrefsDialogParams> = ({ opening }) => {
             Size
           </Typography>
 
-          <Box sx={{ mt: 2, px: 3 }}>
+          <Box sx={{ mt: 2, px: 2 }}>
             <Slider
               color="secondary"
               disabled={status === Statuses.COMPLETE}
