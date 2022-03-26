@@ -1,6 +1,7 @@
-import { ANSWERS, BOARDS, ORANGE, YELLOW } from '../const'
+import { ANSWERS, BOARDS, DESTINATION, RED, YELLOW } from '../const'
 import { Box } from '@mui/material'
 import { CellProps } from '../type'
+import { Corners } from '../enum'
 import { FC } from 'react'
 import { isEmpty } from 'lodash'
 import { updateValidCells } from '../function'
@@ -26,8 +27,23 @@ const styles = {
 // exports
 
 export const Cell: FC<CellProps> = ({ cell, index }) => {
-  const { areNumbersVisible, corners, isAnswerVisible, isPuzzleSolved, origin, path, puzzleIndex, setOrigin, setPath, setValidCells, size, validCells } =
-    useContext()
+  const {
+    areNumbersVisible,
+    corners,
+    destination,
+    isAnswerVisible,
+    isInitial,
+    isPuzzleSolved,
+    origin,
+    path,
+    puzzleIndex,
+    setDestination,
+    setOrigin,
+    setPath,
+    setValidCells,
+    size,
+    validCells
+  } = useContext()
 
   const isMobile = useMobileMediaQuery()
 
@@ -36,6 +52,8 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
       const origin = corners.get(index)
 
       if (origin) {
+        setDestination(DESTINATION.get(origin)!)
+
         setOrigin(origin)
 
         setPath([cell])
@@ -70,8 +88,16 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
           ...(!isAnswerVisible && (validCells.has(index) || path.includes(cell)) && { cursor: 'pointer' }),
           ...(!isPuzzleSolved && { borderRadius: '35%' }),
           ...(areNumbersVisible && { color: '#fff' }),
-          ...{ backgroundColor: isAnswerVisible ? (ANSWERS[puzzleIndex].includes(cell) ? ORANGE : YELLOW) : path.includes(cell) ? ORANGE : YELLOW },
-          opacity: (cell / BOARDS[puzzleIndex].length) * 0.75 + 0.25
+          ...{
+            backgroundColor: isAnswerVisible
+              ? ANSWERS[puzzleIndex].includes(cell)
+                ? RED
+                : YELLOW
+              : (isInitial && corners.has(index)) || path.includes(cell) || corners.get(index) === destination
+              ? RED
+              : YELLOW
+          },
+          ...((!isInitial || !corners.has(index)) && { opacity: (cell / BOARDS[puzzleIndex].length) * 0.75 + 0.25 })
         }}
       >
         {cell}

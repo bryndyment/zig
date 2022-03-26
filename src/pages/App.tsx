@@ -2,10 +2,10 @@ import { ANSWERS, BOARDS, TODAY } from '../const'
 import { Box, Grid, Paper } from '@mui/material'
 import { Cell } from '../components/Cell'
 import { Context } from '../context'
+import { Corner, ValidCells } from '../type'
 import { FC, useEffect, useMemo, useState } from 'react'
 import { Goal } from '../components/Goal'
 import { MenuButton } from '../components/MenuButton'
-import { Origin, ValidCells } from '../type'
 import { Score } from '../components/Score'
 import { Zig } from '../components/Zig'
 import { calcCorners, calcPuzzleIndex, getDay, gtag, showConfetti } from '../function'
@@ -55,8 +55,10 @@ export const App: FC = () => {
   const [areNumbersVisible, setAreNumbersVisible] = useState(true)
   const [color, setColor] = useState('color' in localStorage ? Number(localStorage.getItem('color')) : 100)
   const [day] = useState(getDay)
+  const [destination, setDestination] = useState<Corner | null>(null)
   const [isAnswerVisible] = useState(false)
-  const [origin, setOrigin] = useState<Origin | null>(null)
+  const [isInitial, setIsInitial] = useState(true)
+  const [origin, setOrigin] = useState<Corner | null>(null)
   const [path, setPath] = useState<number[]>([])
   const [size, setSize] = useState('size' in localStorage ? Number(localStorage.getItem('size')) : 6)
   const [validCells, setValidCells] = useState<ValidCells>(new Set())
@@ -76,8 +78,10 @@ export const App: FC = () => {
       areNumbersVisible,
       color,
       corners,
+      destination,
       goal,
       isAnswerVisible,
+      isInitial,
       isPuzzleSolved,
       origin,
       path,
@@ -85,6 +89,8 @@ export const App: FC = () => {
       score,
       setColor,
       setCorners,
+      setDestination,
+      setIsInitial,
       setOrigin,
       setPath,
       setPuzzleIndex,
@@ -93,7 +99,7 @@ export const App: FC = () => {
       size,
       validCells
     }),
-    [areNumbersVisible, color, corners, goal, isAnswerVisible, isPuzzleSolved, origin, path, puzzleIndex, score, size, validCells]
+    [areNumbersVisible, color, corners, destination, goal, isAnswerVisible, isInitial, isPuzzleSolved, origin, path, puzzleIndex, score, size, validCells]
   )
 
   useEffect(() => {
@@ -125,6 +131,12 @@ export const App: FC = () => {
       showConfetti()
     }
   }, [isPuzzleSolved])
+
+  useEffect(() => {
+    if (isInitial && path.length) {
+      setIsInitial(false)
+    }
+  }, [isInitial, path])
 
   return (
     <Context.Provider value={context}>

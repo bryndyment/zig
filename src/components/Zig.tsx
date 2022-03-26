@@ -1,13 +1,13 @@
 import { Box } from '@mui/material'
 import { FC } from 'react'
-import { ORANGE } from '../const'
+import { RED } from '../const'
 
 // exports
 
 export const Zig: FC = () => (
   <Box
     sx={{
-      color: ORANGE,
+      color: RED,
       fontFamily: 'bungee',
       fontSize: 25,
       fontWeight: 500,

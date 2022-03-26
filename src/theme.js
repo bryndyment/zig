@@ -1,4 +1,4 @@
-import { ORANGE, YELLOW } from './const'
+import { RED, YELLOW } from './const'
 import { createTheme } from '@mui/material/styles'
 
 // constants
@@ -30,7 +30,7 @@ export const theme = createTheme({
       styleOverrides: {
         root: {
           borderBottom: '1px solid #e0e0e0',
-          color: ORANGE,
+          color: RED,
           fontFamily: 'bungee',
           fontSize: 25,
           margin: '8px 16px 4px',
@@ -55,7 +55,7 @@ export const theme = createTheme({
     MuiMenuItem: {
       styleOverrides: {
         root: {
-          '&': { color: ORANGE, fontFamily: 'bungee' },
+          '&': { color: RED, fontFamily: 'bungee' },
           '&:hover, &.Mui-focusVisible': { backgroundColor: '#fdefcf' }
         }
       }
@@ -68,7 +68,7 @@ export const theme = createTheme({
   },
   palette: {
     primary: {
-      main: ORANGE
+      main: RED
     },
     secondary: {
       main: YELLOW

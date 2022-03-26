@@ -1,7 +1,7 @@
+import { Corner, ValidCells } from './type'
+import { Corners } from './enum'
 import { Dispatch, SetStateAction } from 'react'
-import { ORANGE, YELLOW } from './const'
-import { Origin, ValidCells } from './type'
-import { Origins } from './enum'
+import { RED, YELLOW } from './const'
 import confetti from 'canvas-confetti'
 
 // functions
@@ -20,10 +20,10 @@ const mulberry32 = (seed: any) => {
 
 export const calcCorners = (size: number) =>
   new Map([
-    [0, Origins.TOP_LEFT],
-    [size - 1, Origins.TOP_RIGHT],
-    [size ** 2 - size, Origins.BOTTOM_LEFT],
-    [size ** 2 - 1, Origins.BOTTOM_RIGHT]
+    [0, Corners.TOP_LEFT],
+    [size - 1, Corners.TOP_RIGHT],
+    [size ** 2 - size, Corners.BOTTOM_LEFT],
+    [size ** 2 - 1, Corners.BOTTOM_RIGHT]
   ])
 
 export const calcPuzzleIndex = (size: number, today: string) => Math.floor(Number(today) - 20220325) * 7 + size - 6
@@ -35,7 +35,7 @@ export const gtag = (...args: any[]) => (window as any).gtag?.('event', ...args)
 export const randomize = (date: string) => (Math.floor(mulberry32(date) * 100000) % 4) + 1
 
 export const showConfetti = () => {
-  const colors = [ORANGE, YELLOW]
+  const colors = [RED, YELLOW]
 
   const end = Date.now() + 5 * 1000
 
@@ -61,11 +61,11 @@ export const showConfetti = () => {
   })()
 }
 
-export const updateValidCells = (index: number, origin: Origin, setValidCells: Dispatch<SetStateAction<ValidCells>>, size: number) => {
+export const updateValidCells = (index: number, origin: Corner, setValidCells: Dispatch<SetStateAction<ValidCells>>, size: number) => {
   const validCells: ValidCells = new Set()
 
   switch (origin) {
-    case Origins.TOP_LEFT:
+    case Corners.TOP_LEFT:
       if (index + size < size ** 2) {
         validCells.add(index + size)
       }
@@ -75,7 +75,7 @@ export const updateValidCells = (index: number, origin: Origin, setValidCells: D
       }
       break
 
-    case Origins.TOP_RIGHT:
+    case Corners.TOP_RIGHT:
       if (index + size < size ** 2) {
         validCells.add(index + size)
       }
@@ -85,7 +85,7 @@ export const updateValidCells = (index: number, origin: Origin, setValidCells: D
       }
       break
 
-    case Origins.BOTTOM_LEFT:
+    case Corners.BOTTOM_LEFT:
       if (index + 1 > size) {
         validCells.add(index - size)
       }
@@ -95,7 +95,7 @@ export const updateValidCells = (index: number, origin: Origin, setValidCells: D
       }
       break
 
-    case Origins.BOTTOM_RIGHT:
+    case Corners.BOTTOM_RIGHT:
       if (index + 1 > size) {
         validCells.add(index - size)
       }
