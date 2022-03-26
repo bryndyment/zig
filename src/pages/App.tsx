@@ -7,6 +7,7 @@ import { FC, useEffect, useMemo, useState } from 'react'
 import { Goal } from '../components/Goal'
 import { MenuButton } from '../components/MenuButton'
 import { Score } from '../components/Score'
+import { Statuses } from '../enum'
 import { Zig } from '../components/Zig'
 import { calcCorners, calcPuzzleIndex, getDay, gtag, showConfetti } from '../function'
 import { useConstructor } from '../hooks/constructor'
@@ -55,11 +56,11 @@ export const App: FC = () => {
   const [areNumbersVisible, setAreNumbersVisible] = useState(true)
   const [color, setColor] = useState('color' in localStorage ? Number(localStorage.getItem('color')) : 100)
   const [day] = useState(getDay)
-  const [destination, setDestination] = useState<Corner | null>(null)
-  const [isInitial, setIsInitial] = useState(true)
-  const [origin, setOrigin] = useState<Corner | null>(null)
+  const [from, setFrom] = useState<Corner | null>(null)
   const [path, setPath] = useState<number[]>([])
   const [size, setSize] = useState('size' in localStorage ? Number(localStorage.getItem('size')) : 6)
+  const [status, setStatus] = useState(localStorage.getItem(TODAY) ? Statuses.COMPLETE : Statuses.INITIAL)
+  const [to, setTo] = useState<Corner | null>(null)
   const [validCells, setValidCells] = useState<ValidCells>(new Set())
 
   const [puzzleIndex, setPuzzleIndex] = useState(calcPuzzleIndex(size, TODAY))
@@ -68,8 +69,6 @@ export const App: FC = () => {
   const goal = useMemo(() => ANSWERS[puzzleIndex].reduce((accumulator, cell) => accumulator + cell, 0), [puzzleIndex])
   const score = useMemo(() => path.reduce((accumulator, cell) => accumulator + cell, 0), [path])
 
-  const isPuzzleSolved = useMemo(() => Boolean(localStorage.getItem(TODAY) || score === goal), [goal, score])
-
   useConstructor(() => setInterval(() => getDay() !== day && location.reload(), 1000))
 
   const context = useMemo(
@@ -77,27 +76,26 @@ export const App: FC = () => {
       areNumbersVisible,
       color,
       corners,
-      destination,
+      from,
       goal,
-      isInitial,
-      isPuzzleSolved,
-      origin,
       path,
       puzzleIndex,
       score,
       setColor,
       setCorners,
-      setDestination,
-      setIsInitial,
-      setOrigin,
+      setFrom,
       setPath,
       setPuzzleIndex,
       setSize,
+      setStatus,
+      setTo,
       setValidCells,
       size,
+      status,
+      to,
       validCells
     }),
-    [areNumbersVisible, color, corners, destination, goal, isInitial, isPuzzleSolved, origin, path, puzzleIndex, score, size, validCells]
+    [areNumbersVisible, color, corners, from, goal, path, puzzleIndex, score, size, status, to, validCells]
   )
 
   useEffect(() => {
@@ -110,29 +108,25 @@ export const App: FC = () => {
     document.addEventListener('keydown', handleKeyDown)
 
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [isPuzzleSolved])
+  }, [])
 
   useEffect(() => {
-    if (score === goal) {
-      if (!localStorage.getItem(TODAY)) {
-        localStorage.setItem(TODAY, String(size))
+    if (status === Statuses.INITIAL && score) {
+      setStatus(Statuses.IN_PROGRESS)
+    } else if (status === Statuses.IN_PROGRESS && score === goal) {
+      setStatus(Statuses.COMPLETE)
 
-        gtag(TODAY, { value: size })
-      }
+      localStorage.setItem(TODAY, String(size))
+
+      gtag(TODAY, { value: size })
     }
   }, [goal, score]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (isPuzzleSolved) {
+    if (status === Statuses.COMPLETE) {
       showConfetti()
     }
-  }, [isPuzzleSolved])
-
-  useEffect(() => {
-    if (isInitial && path.length) {
-      setIsInitial(false)
-    }
-  }, [isInitial, path])
+  }, [status])
 
   return (
     <Context.Provider value={context}>

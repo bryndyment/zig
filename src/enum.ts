@@ -6,3 +6,9 @@ export enum Corners {
   TOP_LEFT,
   TOP_RIGHT
 }
+
+export enum Statuses {
+  INITIAL,
+  IN_PROGRESS,
+  COMPLETE
+}

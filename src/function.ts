@@ -61,10 +61,10 @@ export const showConfetti = () => {
   })()
 }
 
-export const updateValidCells = (index: number, origin: Corner, setValidCells: Dispatch<SetStateAction<ValidCells>>, size: number) => {
+export const updateValidCells = (index: number, from: Corner, setValidCells: Dispatch<SetStateAction<ValidCells>>, size: number) => {
   const validCells: ValidCells = new Set()
 
-  switch (origin) {
+  switch (from) {
     case Corners.TOP_LEFT:
       if (index + size < size ** 2) {
         validCells.add(index + size)

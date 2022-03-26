@@ -1,8 +1,8 @@
 import { ANSWERS, BOARDS, DESTINATION, ORANGE, YELLOW } from '../const'
 import { Box } from '@mui/material'
 import { CellProps } from '../type'
-import { Corners } from '../enum'
 import { FC } from 'react'
+import { Statuses } from '../enum'
 import { isEmpty } from 'lodash'
 import { updateValidCells } from '../function'
 import { useContext } from '../hooks/context'
@@ -27,58 +27,43 @@ const styles = {
 // exports
 
 export const Cell: FC<CellProps> = ({ cell, index }) => {
-  const {
-    areNumbersVisible,
-    corners,
-    destination,
-    isInitial,
-    isPuzzleSolved,
-    origin,
-    path,
-    puzzleIndex,
-    setDestination,
-    setOrigin,
-    setPath,
-    setValidCells,
-    size,
-    validCells
-  } = useContext()
+  const { areNumbersVisible, corners, from, path, puzzleIndex, setFrom, setPath, setTo, setValidCells, size, status, validCells } = useContext()
 
   const isMobile = useMobileMediaQuery()
 
   const handleCorner = () => {
-    if (!isPuzzleSolved) {
-      const origin = corners.get(index)
+    if (status !== Statuses.COMPLETE) {
+      const corner = corners.get(index)
 
-      if (origin) {
-        setDestination(DESTINATION.get(origin)!)
+      if (corner) {
+        setFrom(corner)
 
-        setOrigin(origin)
+        setTo(DESTINATION.get(corner)!)
 
         setPath([cell])
 
-        updateValidCells(index, origin, setValidCells, size)
+        updateValidCells(index, corner, setValidCells, size)
       }
     }
   }
 
   const handlePath = () => {
-    if (!isPuzzleSolved) {
+    if (status !== Statuses.COMPLETE) {
       if (validCells.has(index)) {
         setPath([...path, cell])
 
-        updateValidCells(index, origin!, setValidCells, size)
+        updateValidCells(index, from!, setValidCells, size)
       } else if (path.includes(cell)) {
         setPath(path.slice(0, path.findIndex(number => number === cell) + 1))
 
-        updateValidCells(index, origin!, setValidCells, size)
+        updateValidCells(index, from!, setValidCells, size)
       } else if (isEmpty(path) || isMobile) {
         handleCorner()
       }
     }
   }
 
-  const backgroundColor = (isPuzzleSolved ? ANSWERS[puzzleIndex] : path).includes(cell) ? ORANGE : YELLOW
+  const backgroundColor = (status === Statuses.COMPLETE ? ANSWERS[puzzleIndex] : path).includes(cell) ? ORANGE : YELLOW
   const opacity = (cell / BOARDS[puzzleIndex].length) * (backgroundColor === ORANGE ? 0.5 : 0.8) + (backgroundColor === ORANGE ? 0.5 : 0.2)
 
   return (
@@ -87,8 +72,8 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
         onClick={isMobile ? handlePath : handleCorner}
         sx={{
           ...styles.cell,
-          ...(!isPuzzleSolved && (validCells.has(index) || path.includes(cell)) && { cursor: 'pointer' }),
-          ...(!isPuzzleSolved && { borderRadius: '35%' }),
+          ...(status !== Statuses.COMPLETE && (validCells.has(index) || path.includes(cell)) && { cursor: 'pointer' }),
+          ...(status !== Statuses.COMPLETE && { borderRadius: '35%' }),
           ...(areNumbersVisible && { color: '#fff' }),
           backgroundColor,
           opacity
