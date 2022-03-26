@@ -39,8 +39,10 @@ export const AboutDialog: FC<AboutDialogParams> = ({ opening, prefsOpening }) =>
         <Typography>Aim for the highest sum, displayed bottom-right.</Typography>
 
         <Typography>
-          Seven new puzzles each day (check <Link onClick={handleClick}>prefs</Link>).
+          Too easy? Change the <Link onClick={handleClick}>size</Link>.
         </Typography>
+
+        <Typography>There’s a new puzzle each day.</Typography>
 
         <Typography>That’s it!</Typography>
       </DialogContent>
