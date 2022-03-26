@@ -61,6 +61,9 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
     }
   }
 
+  const backgroundColor = (isAnswerVisible ? ANSWERS[puzzleIndex] : path).includes(cell) ? ORANGE : YELLOW
+  const opacity = (cell / BOARDS[puzzleIndex].length) * (backgroundColor === ORANGE ? 0.5 : 0.8) + (backgroundColor === ORANGE ? 0.5 : 0.2)
+
   return (
     <Box onClick={event => event.stopPropagation()} onMouseOver={isMobile ? undefined : handlePath} sx={{ ...styles.cellWrapper, width: `${100 / size}%` }}>
       <Box
@@ -70,8 +73,8 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
           ...(!isAnswerVisible && (validCells.has(index) || path.includes(cell)) && { cursor: 'pointer' }),
           ...(!isPuzzleSolved && { borderRadius: '35%' }),
           ...(areNumbersVisible && { color: '#fff' }),
-          ...{ backgroundColor: isAnswerVisible ? (ANSWERS[puzzleIndex].includes(cell) ? ORANGE : YELLOW) : path.includes(cell) ? ORANGE : YELLOW },
-          opacity: (cell / BOARDS[puzzleIndex].length) * 0.75 + 0.25
+          backgroundColor,
+          opacity
         }}
       >
         {cell}
