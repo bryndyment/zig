@@ -47,7 +47,7 @@ export const theme = createTheme({
     MuiLink: {
       styleOverrides: {
         root: {
-          '&': { cursor: 'pointer', fontFamily: 'bungee', fontSize: 14, marginLeft: '1px', textDecoration: 'none', textTransform: 'uppercase' },
+          '&': { cursor: 'pointer', fontWeight: 'bold', textDecoration: 'none' },
           '&:hover': { textDecoration: 'underline' }
         }
       }
@@ -62,7 +62,7 @@ export const theme = createTheme({
     },
     MuiTypography: {
       styleOverrides: {
-        h2: { color: YELLOW, fontFamily: 'monospace', fontSize: 20, fontWeight: 'bold', textTransform: 'uppercase' }
+        h2: { color: YELLOW, fontSize: 19, fontWeight: 900, letterSpacing: 0.5, textTransform: 'uppercase' }
       }
     }
   },
