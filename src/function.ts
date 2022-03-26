@@ -37,7 +37,7 @@ export const randomize = (date: string) => (Math.floor(mulberry32(date) * 100000
 export const showConfetti = () => {
   const colors = [ORANGE, YELLOW]
 
-  const end = Date.now() + 3000
+  const end = Date.now() + 1000
 
   ;(function frame() {
     confetti({
