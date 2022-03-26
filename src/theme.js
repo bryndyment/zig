@@ -62,7 +62,7 @@ export const theme = createTheme({
     },
     MuiTypography: {
       styleOverrides: {
-        h2: { color: YELLOW, fontFamily: 'bungee', fontSize: 16 }
+        h2: { color: YELLOW, fontFamily: 'monospace', fontSize: 20, fontWeight: 'bold', textTransform: 'uppercase' }
       }
     }
   },

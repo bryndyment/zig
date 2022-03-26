@@ -2,6 +2,7 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Slider,
 import { FC } from 'react'
 import { GRAY } from '../../const'
 import { Opening } from '../../hooks/opening'
+import { Statuses } from '../../enum'
 import { useContext } from '../../hooks/context'
 
 // styles
@@ -9,7 +10,7 @@ import { useContext } from '../../hooks/context'
 const styles = {
   size: {
     '&': { color: GRAY },
-    '&::after': { content: '" (disabled until tomorrow)"', fontFamily: 'lucida grande', fontWeight: 'bold' }
+    '&::after': { content: '" (disabled until tomorrow)"', fontSize: 14, textTransform: 'none' }
   }
 }
 
@@ -22,7 +23,7 @@ interface PrefsDialogParams {
 // components
 
 export const PrefsDialog: FC<PrefsDialogParams> = ({ opening }) => {
-  const { color, isPuzzleSolved, setColor, setSize, size } = useContext()
+  const { color, setColor, setSize, size, status } = useContext()
 
   return (
     <Dialog fullWidth maxWidth="xs" onClose={opening.close} open={opening.isOpen}>
@@ -37,15 +38,15 @@ export const PrefsDialog: FC<PrefsDialogParams> = ({ opening }) => {
           </Box>
         </Box>
 
-        <Box sx={{ py: 2 }}>
-          <Typography sx={{ ...(isPuzzleSolved && styles.size) }} variant="h2">
+        <Box sx={{ pb: 2, pt: 1 }}>
+          <Typography sx={{ ...(status === Statuses.COMPLETE && styles.size) }} variant="h2">
             Size
           </Typography>
 
           <Box sx={{ mt: 2, px: 3 }}>
             <Slider
               color="secondary"
-              disabled={isPuzzleSolved}
+              disabled={status === Statuses.COMPLETE}
               marks
               max={12}
               min={6}

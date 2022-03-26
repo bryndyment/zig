@@ -1,6 +1,7 @@
 import { Box } from '@mui/material'
 import { FC } from 'react'
 import { ORANGE } from '../const'
+import { Statuses } from '../enum'
 import { useContext } from '../hooks/context'
 
 // styles
@@ -20,7 +21,7 @@ const styles = {
 // exports
 
 export const Score: FC = () => {
-  const { goal, isPuzzleSolved, score } = useContext()
+  const { goal, score, status } = useContext()
 
-  return <Box sx={styles.box}>{isPuzzleSolved ? goal : score}</Box>
+  return <Box sx={styles.box}>{status === Statuses.COMPLETE ? goal : score}</Box>
 }

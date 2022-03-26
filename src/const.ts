@@ -1,3 +1,4 @@
+import { Corners } from './enum'
 import { randomize } from './function'
 
 // constants
@@ -1895,7 +1896,12 @@ export const BOARDS = [
   ]
 ]
 
-// exports
+export const DESTINATION = new Map([
+  [Corners.BOTTOM_LEFT, Corners.TOP_RIGHT],
+  [Corners.BOTTOM_RIGHT, Corners.TOP_LEFT],
+  [Corners.TOP_LEFT, Corners.BOTTOM_RIGHT],
+  [Corners.TOP_RIGHT, Corners.BOTTOM_LEFT]
+])
 
 export const TODAY = new Date().toLocaleString('sv').slice(0, 10).replace(/\D/g, '')
 

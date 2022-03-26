@@ -1,5 +1,5 @@
+import { Corners, Statuses } from './enum'
 import { Dispatch, SetStateAction } from 'react'
-import { Origins } from './enum'
 
 // exports
 
@@ -11,24 +11,28 @@ export interface CellProps {
 export interface ContextInterface {
   areNumbersVisible: boolean
   color: number
-  corners: Map<number, Origins>
+  corners: Map<number, Corner>
+  from: Corner | null
   goal: number
-  isPuzzleSolved: boolean
-  origin: Origin | null
   path: number[]
   puzzleIndex: number
   score: number
   setColor: Dispatch<SetStateAction<number>>
-  setCorners: Dispatch<SetStateAction<Map<number, Origins>>>
-  setOrigin: Dispatch<SetStateAction<Origin | null>>
+  setCorners: Dispatch<SetStateAction<Map<number, Corner>>>
+  setFrom: Dispatch<SetStateAction<Corner | null>>
   setPath: Dispatch<SetStateAction<number[]>>
   setPuzzleIndex: Dispatch<SetStateAction<number>>
   setSize: Dispatch<SetStateAction<number>>
+  setTo: Dispatch<SetStateAction<Corner | null>>
   setValidCells: Dispatch<SetStateAction<ValidCells>>
   size: number
+  status: Status
+  to: Corner | null
   validCells: ValidCells
 }
 
-export type Origin = Origins
+export type Corner = Corners
+
+export type Status = Statuses
 
 export type ValidCells = Set<number>
