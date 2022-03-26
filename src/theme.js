@@ -47,7 +47,7 @@ export const theme = createTheme({
     MuiLink: {
       styleOverrides: {
         root: {
-          '&': { cursor: 'pointer', fontFamily: 'bungee', textDecoration: 'none', textTransform: 'uppercase' },
+          '&': { cursor: 'pointer', fontFamily: 'bungee', fontSize: 14, marginLeft: '1px', textDecoration: 'none', textTransform: 'uppercase' },
           '&:hover': { textDecoration: 'underline' }
         }
       }

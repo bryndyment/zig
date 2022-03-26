@@ -110,12 +110,10 @@ export const App: FC = () => {
 
   useEffect(() => {
     if (score === goal) {
-      const key = `${TODAY}_${String(size).padStart(2, '0')}`
+      if (!localStorage.getItem(TODAY)) {
+        localStorage.setItem(TODAY, String(size))
 
-      if (!localStorage.getItem(key)) {
-        gtag(key, { event_category: 'general' })
-
-        localStorage.setItem(key, '✓')
+        gtag(TODAY, { value: size })
       }
     }
   }, [goal, score]) // eslint-disable-line react-hooks/exhaustive-deps

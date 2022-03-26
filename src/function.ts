@@ -26,7 +26,7 @@ export const calcCorners = (size: number) =>
     [size ** 2 - 1, Origins.BOTTOM_RIGHT]
   ])
 
-export const calcPuzzleIndex = (size: number, today: string) => Math.floor(Number(today) - 20220325) * 7 + size - 6
+export const calcPuzzleIndex = (size: number, today: string) => Math.floor(Number(today) - 20220326) * 7 + size - 6
 
 export const getDay = () => Number(new Date().toLocaleString('sv').slice(8, 10))
 
