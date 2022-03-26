@@ -66,7 +66,7 @@ export const App: FC = () => {
   const goal = useMemo(() => ANSWERS[puzzleIndex].reduce((accumulator, cell) => accumulator + cell, 0), [puzzleIndex])
   const score = useMemo(() => path.reduce((accumulator, cell) => accumulator + cell, 0), [path])
 
-  const isPuzzleSolved = useMemo(() => score === goal, [goal, score])
+  const isPuzzleSolved = useMemo(() => Boolean(localStorage.getItem(TODAY) || score === goal), [goal, score])
 
   useConstructor(() => setInterval(() => getDay() !== day && location.reload(), 1000))
 

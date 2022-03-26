@@ -20,7 +20,7 @@ const styles = {
 // exports
 
 export const Score: FC = () => {
-  const { score } = useContext()
+  const { goal, isPuzzleSolved, score } = useContext()
 
-  return <Box sx={styles.box}>{score}</Box>
+  return <Box sx={styles.box}>{isPuzzleSolved ? goal : score}</Box>
 }
