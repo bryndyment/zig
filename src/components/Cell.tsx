@@ -26,8 +26,7 @@ const styles = {
 // exports
 
 export const Cell: FC<CellProps> = ({ cell, index }) => {
-  const { areNumbersVisible, corners, isAnswerVisible, isPuzzleSolved, origin, path, puzzleIndex, setOrigin, setPath, setValidCells, size, validCells } =
-    useContext()
+  const { areNumbersVisible, corners, isPuzzleSolved, origin, path, puzzleIndex, setOrigin, setPath, setValidCells, size, validCells } = useContext()
 
   const isMobile = useMobileMediaQuery()
 
@@ -61,7 +60,7 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
     }
   }
 
-  const backgroundColor = (isAnswerVisible ? ANSWERS[puzzleIndex] : path).includes(cell) ? ORANGE : YELLOW
+  const backgroundColor = (isPuzzleSolved ? ANSWERS[puzzleIndex] : path).includes(cell) ? ORANGE : YELLOW
   const opacity = (cell / BOARDS[puzzleIndex].length) * (backgroundColor === ORANGE ? 0.5 : 0.8) + (backgroundColor === ORANGE ? 0.5 : 0.2)
 
   return (
@@ -70,7 +69,7 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
         onClick={isMobile ? handlePath : handleCorner}
         sx={{
           ...styles.cell,
-          ...(!isAnswerVisible && (validCells.has(index) || path.includes(cell)) && { cursor: 'pointer' }),
+          ...(!isPuzzleSolved && (validCells.has(index) || path.includes(cell)) && { cursor: 'pointer' }),
           ...(!isPuzzleSolved && { borderRadius: '35%' }),
           ...(areNumbersVisible && { color: '#fff' }),
           backgroundColor,

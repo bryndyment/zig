@@ -13,7 +13,6 @@ export interface ContextInterface {
   color: number
   corners: Map<number, Origins>
   goal: number
-  isAnswerVisible: boolean
   isPuzzleSolved: boolean
   origin: Origin | null
   path: number[]
