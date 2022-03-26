@@ -55,7 +55,6 @@ export const App: FC = () => {
   const [areNumbersVisible, setAreNumbersVisible] = useState(true)
   const [color, setColor] = useState('color' in localStorage ? Number(localStorage.getItem('color')) : 100)
   const [day] = useState(getDay)
-  const [isAnswerVisible] = useState(false)
   const [origin, setOrigin] = useState<Origin | null>(null)
   const [path, setPath] = useState<number[]>([])
   const [size, setSize] = useState('size' in localStorage ? Number(localStorage.getItem('size')) : 6)
@@ -77,7 +76,6 @@ export const App: FC = () => {
       color,
       corners,
       goal,
-      isAnswerVisible,
       isPuzzleSolved,
       origin,
       path,
@@ -93,7 +91,7 @@ export const App: FC = () => {
       size,
       validCells
     }),
-    [areNumbersVisible, color, corners, goal, isAnswerVisible, isPuzzleSolved, origin, path, puzzleIndex, score, size, validCells]
+    [areNumbersVisible, color, corners, goal, isPuzzleSolved, origin, path, puzzleIndex, score, size, validCells]
   )
 
   useEffect(() => {
