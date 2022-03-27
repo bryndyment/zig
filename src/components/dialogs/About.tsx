@@ -1,4 +1,4 @@
-import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Link, Typography } from '@mui/material'
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItem, Typography } from '@mui/material'
 import { FC } from 'react'
 import { Opening } from '../../hooks/opening'
 import { useMobileMediaQuery } from '../../hooks/mobileMediaQuery'
@@ -7,44 +7,38 @@ import { useMobileMediaQuery } from '../../hooks/mobileMediaQuery'
 
 interface AboutDialogParams {
   opening: Opening
-  prefsOpening: Opening
+}
+
+// styles
+
+const styles = {
+  list: { listStyleType: 'disc', mb: 0, pb: 0.5 },
+  listItem: { display: 'list-item', ml: 3, pl: 0.4 }
 }
 
 // components
 
-export const AboutDialog: FC<AboutDialogParams> = ({ opening, prefsOpening }) => {
+export const AboutDialog: FC<AboutDialogParams> = ({ opening }) => {
   const isMobile = useMobileMediaQuery()
-
-  const handleClick = () => {
-    opening.close()
-
-    prefsOpening.open()
-  }
 
   return (
     <Dialog fullWidth maxWidth="xs" onClose={opening.close} open={opening.isOpen}>
       <DialogTitle>About!</DialogTitle>
 
       <DialogContent>
-        <Typography>{isMobile ? 'Tap on' : 'Hover over'} any corner.</Typography>
+        <List sx={styles.list}>
+          <ListItem sx={styles.listItem}>{isMobile ? 'tap on' : 'hover over'} any corner</ListItem>
 
-        <Typography>{isMobile ? 'Tap' : 'Move'} horizontally and vertically and connect to the other highlighted corner.</Typography>
+          <ListItem sx={styles.listItem}>{isMobile ? 'tap' : 'move'} horizontally and vertically and connect to the other highlighted corner</ListItem>
 
-        <Typography></Typography>
+          <ListItem sx={styles.listItem}>as you {isMobile ? 'tap' : 'move'}, your path will highlight</ListItem>
 
-        <Typography>As you {isMobile ? 'tap' : 'move'}, your path will highlight.</Typography>
+          <ListItem sx={styles.listItem}>the sum of your path is displayed bottom-left</ListItem>
 
-        <Typography>The sum of the highlighted cells is displayed bottom-left.</Typography>
+          <ListItem sx={styles.listItem}>try to match the highest sum, displayed bottom-right</ListItem>
+        </List>
 
-        <Typography>Aim for the highest sum, displayed bottom-right.</Typography>
-
-        <Typography>
-          Too easy? Change the <Link onClick={handleClick}>size</Link>.
-        </Typography>
-
-        <Typography>There’s a new puzzle each day.</Typography>
-
-        <Typography>That’s it!</Typography>
+        <Typography>There’s a new puzzle each day!</Typography>
       </DialogContent>
 
       <DialogActions>
