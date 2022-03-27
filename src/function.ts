@@ -1,7 +1,7 @@
+import { BOARDS, ORANGE, TODAY, YELLOW } from './const'
 import { Corner, ValidCells } from './type'
 import { Corners } from './enum'
 import { Dispatch, SetStateAction } from 'react'
-import { ORANGE, YELLOW } from './const'
 import confetti from 'canvas-confetti'
 
 // functions
@@ -18,6 +18,13 @@ const mulberry32 = (seed: any) => {
 
 // exports
 
+export const calcCornerIndices = (puzzleIndex: number, size: number) => [
+  BOARDS[puzzleIndex][0],
+  BOARDS[puzzleIndex][size - 1],
+  BOARDS[puzzleIndex][size ** 2 - size],
+  BOARDS[puzzleIndex][size ** 2 - 1]
+]
+
 export const calcCorners = (size: number) =>
   new Map([
     [0, Corners.TOP_LEFT],
@@ -26,7 +33,7 @@ export const calcCorners = (size: number) =>
     [size ** 2 - 1, Corners.BOTTOM_RIGHT]
   ])
 
-export const calcPuzzleIndex = (size: number, today: string) => Math.floor(Number(today) - 20220326) * 7 + size - 6
+export const calcPuzzleIndex = (size: number) => Math.floor(Number(TODAY) - 20220326) * 7 + size - 6
 
 export const getDay = () => Number(new Date().toLocaleString('sv').slice(8, 10))
 

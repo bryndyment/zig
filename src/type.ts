@@ -11,6 +11,7 @@ export interface CellProps {
 export interface ContextInterface {
   areNumbersVisible: boolean
   color: number
+  cornerIndices: number[]
   corners: Map<number, Corner>
   from: Corner | null
   goal: number
@@ -18,6 +19,7 @@ export interface ContextInterface {
   puzzleIndex: number
   score: number
   setColor: Dispatch<SetStateAction<number>>
+  setCornerIndices: Dispatch<SetStateAction<number[]>>
   setCorners: Dispatch<SetStateAction<Map<number, Corner>>>
   setFrom: Dispatch<SetStateAction<Corner | null>>
   setPath: Dispatch<SetStateAction<number[]>>
