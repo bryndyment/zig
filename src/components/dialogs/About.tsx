@@ -26,9 +26,9 @@ export const AboutDialog: FC<AboutDialogParams> = ({ opening, prefsOpening }) =>
       <DialogTitle>About!</DialogTitle>
 
       <DialogContent>
-        <Typography>{isMobile ? 'Tap on' : 'Hover over'} any corner. It will highlight.</Typography>
+        <Typography>{isMobile ? 'Tap on' : 'Hover over'} any corner.</Typography>
 
-        <Typography>{isMobile ? 'Tap' : 'Move'} horizontally and vertically toward the diagonally opposite corner.</Typography>
+        <Typography>{isMobile ? 'Tap' : 'Move'} horizontally and vertically and connect to the other highlighted corner.</Typography>
 
         <Typography></Typography>
 
