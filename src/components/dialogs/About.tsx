@@ -12,8 +12,8 @@ interface AboutDialogParams {
 // styles
 
 const styles = {
-  list: { listStyleType: 'disc', mb: 0, pb: 0.5 },
-  listItem: { display: 'list-item', ml: 3, pl: 0.4 }
+  list: { listStyleType: 'disc', py: 0.5 },
+  listItem: { display: 'list-item', ml: 2.8, pb: 0.4, pl: 0.4 }
 }
 
 // components
@@ -38,7 +38,7 @@ export const AboutDialog: FC<AboutDialogParams> = ({ opening }) => {
           <ListItem sx={styles.listItem}>try to match the highest sum, displayed bottom-right</ListItem>
         </List>
 
-        <Typography>There’s a new puzzle each day!</Typography>
+        <Typography>There’s a new puzzle each day …</Typography>
       </DialogContent>
 
       <DialogActions>
