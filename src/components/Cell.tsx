@@ -28,7 +28,7 @@ const styles = {
 // exports
 
 export const Cell: FC<CellProps> = ({ cell, index }) => {
-  const { areNumbersVisible, corners, from, path, puzzleIndex, setFrom, setPath, setTo, setValidCells, size, status, validCells } = useContext()
+  const { areNumbersVisible, cornerIndices, corners, from, path, puzzleIndex, setFrom, setPath, setTo, setValidCells, size, status, validCells } = useContext()
 
   const isMobile = useMobileMediaQuery()
 
@@ -36,7 +36,7 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
     if (status !== Statuses.COMPLETE) {
       const corner = corners.get(index)
 
-      if (corner) {
+      if (corner && !path.includes(cell)) {
         setFrom(corner)
 
         setTo(DESTINATION.get(corner)!)
@@ -64,7 +64,7 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
     }
   }
 
-  const backgroundColor = (status === Statuses.COMPLETE ? ANSWERS[puzzleIndex] : path).includes(cell) ? ORANGE : YELLOW
+  const backgroundColor = (status === Statuses.COMPLETE ? ANSWERS[puzzleIndex] : isEmpty(path) ? cornerIndices : path).includes(cell) ? ORANGE : YELLOW
   const opacity = (cell / BOARDS[puzzleIndex].length) * (backgroundColor === ORANGE ? 0.5 : 0.8) + (backgroundColor === ORANGE ? 0.5 : 0.2)
 
   return (

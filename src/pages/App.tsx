@@ -9,7 +9,7 @@ import { MenuButton } from '../components/MenuButton'
 import { Score } from '../components/Score'
 import { Statuses } from '../enum'
 import { Zig } from '../components/Zig'
-import { calcCorners, calcPuzzleIndex, getDay, gtag, showConfetti } from '../function'
+import { calcCornerIndices, calcCorners, calcPuzzleIndex, getDay, gtag, showConfetti } from '../function'
 import { useConstructor } from '../hooks/constructor'
 import { useContext } from '../hooks/context'
 import { useMobileMediaQuery } from '../hooks/mobileMediaQuery'
@@ -34,7 +34,7 @@ const styles = {
 // components
 
 const Prefs: FC = () => {
-  const { color, setCorners, setPath, setPuzzleIndex, size } = useContext()
+  const { color, setCornerIndices, setCorners, setPath, setPuzzleIndex, size } = useContext()
 
   useEffect(() => {
     document.querySelector('html')!.style.filter = `grayscale(${(100 - color) / 100})`
@@ -45,10 +45,13 @@ const Prefs: FC = () => {
   useEffect(() => {
     localStorage.setItem('size', String(size))
 
+    const puzzleIndex = calcPuzzleIndex(size)
+
+    setCornerIndices(calcCornerIndices(puzzleIndex, size))
     setCorners(calcCorners(size))
     setPath([])
-    setPuzzleIndex(calcPuzzleIndex(size, TODAY))
-  }, [setCorners, setPath, setPuzzleIndex, size])
+    setPuzzleIndex(puzzleIndex)
+  }, [setCornerIndices, setCorners, setPath, setPuzzleIndex, size])
 
   return null
 }
@@ -66,8 +69,10 @@ export const App: FC = () => {
   const [to, setTo] = useState<Corner | null>(null)
   const [validCells, setValidCells] = useState<ValidCells>(new Set())
 
-  const [puzzleIndex, setPuzzleIndex] = useState(calcPuzzleIndex(size, TODAY))
+  const [puzzleIndex, setPuzzleIndex] = useState(calcPuzzleIndex(size))
   const [corners, setCorners] = useState(calcCorners(size))
+
+  const [cornerIndices, setCornerIndices] = useState(calcCornerIndices(puzzleIndex, size))
 
   const goal = useMemo(() => ANSWERS[puzzleIndex].reduce((accumulator, cell) => accumulator + cell, 0), [puzzleIndex])
   const score = useMemo(() => path.reduce((accumulator, cell) => accumulator + cell, 0), [path])
@@ -78,6 +83,7 @@ export const App: FC = () => {
     () => ({
       areNumbersVisible,
       color,
+      cornerIndices,
       corners,
       from,
       goal,
@@ -85,6 +91,7 @@ export const App: FC = () => {
       puzzleIndex,
       score,
       setColor,
+      setCornerIndices,
       setCorners,
       setFrom,
       setPath,
@@ -98,7 +105,7 @@ export const App: FC = () => {
       to,
       validCells
     }),
-    [areNumbersVisible, color, corners, from, goal, path, puzzleIndex, score, size, status, to, validCells]
+    [areNumbersVisible, color, cornerIndices, corners, from, goal, path, puzzleIndex, score, size, status, to, validCells]
   )
 
   useEffect(() => {
