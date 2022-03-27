@@ -12,7 +12,7 @@ interface AboutDialogParams {
 // styles
 
 const styles = {
-  list: { listStyleType: 'disc', py: 0.5 },
+  list: { listStyleType: 'disc', pb: 0.5, pt: 1 },
   listItem: { display: 'list-item', ml: 2.8, pb: 0.4, pl: 0.4 }
 }
 
@@ -26,6 +26,8 @@ export const AboutDialog: FC<AboutDialogParams> = ({ opening }) => {
       <DialogTitle>About!</DialogTitle>
 
       <DialogContent>
+        <Typography>A daily find-the-best-path puzzle …</Typography>
+
         <List sx={styles.list}>
           <ListItem sx={styles.listItem}>{isMobile ? 'tap on' : 'hover over'} any corner</ListItem>
 
@@ -38,7 +40,7 @@ export const AboutDialog: FC<AboutDialogParams> = ({ opening }) => {
           <ListItem sx={styles.listItem}>try to match the highest sum, displayed bottom-right</ListItem>
         </List>
 
-        <Typography>There’s a new puzzle each day …</Typography>
+        <Typography>… and a new puzzle each day.</Typography>
       </DialogContent>
 
       <DialogActions>
