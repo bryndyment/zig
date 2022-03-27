@@ -35,6 +35,19 @@ export const calcCorners = (size: number) =>
 
 export const calcPuzzleIndex = (size: number) => Math.floor(Number(TODAY) - 20220326) * 7 + size - 6
 
+export const calcToCell = (fromIndex: number, puzzleIndex: number, size: number) => {
+  switch (fromIndex) {
+    case 0:
+      return BOARDS[puzzleIndex][size ** 2 - 1]
+    case size - 1:
+      return BOARDS[puzzleIndex][size ** 2 - size]
+    case size ** 2 - size:
+      return BOARDS[puzzleIndex][size - 1]
+  }
+
+  return BOARDS[puzzleIndex][0]
+}
+
 export const getDay = () => Number(new Date().toLocaleString('sv').slice(8, 10))
 
 export const gtag = (...args: any[]) => (window as any).gtag?.('event', ...args)

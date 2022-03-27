@@ -3,6 +3,7 @@ import { Button, Menu, MenuItem } from '@mui/material'
 import { FC } from 'react'
 import { ReactComponent as MenuIcon } from '../assets/images/menu.svg'
 import { PrefsDialog } from './dialogs/Prefs'
+import { useConstructor } from '../hooks/constructor'
 import { useOpening } from '../hooks/opening'
 
 // styles
@@ -26,7 +27,12 @@ export const MenuButton: FC = () => {
   const aboutOpening = useOpening()
   const menuOpening = useOpening()
   const prefsOpening = useOpening()
-  // const statsOpening = useOpening()
+
+  useConstructor(() => {
+    if (!localStorage.getItem('size')) {
+      aboutOpening.open()
+    }
+  })
 
   return (
     <>
@@ -45,8 +51,6 @@ export const MenuButton: FC = () => {
         <MenuItem onClick={aboutOpening.open}>About</MenuItem>
 
         <MenuItem onClick={prefsOpening.open}>Prefs</MenuItem>
-
-        {/* <MenuItem onClick={statsOpening.open}>Stats</MenuItem> */}
       </Menu>
 
       <AboutDialog opening={aboutOpening} prefsOpening={prefsOpening} />

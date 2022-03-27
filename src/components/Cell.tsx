@@ -3,8 +3,8 @@ import { Box } from '@mui/material'
 import { CellProps } from '../type'
 import { FC } from 'react'
 import { Statuses } from '../enum'
+import { calcToCell, updateValidCells } from '../function'
 import { isEmpty } from 'lodash'
-import { updateValidCells } from '../function'
 import { useContext } from '../hooks/context'
 import { useMobileMediaQuery } from '../hooks/mobileMediaQuery'
 
@@ -41,7 +41,7 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
 
         setTo(DESTINATION.get(corner)!)
 
-        setPath([cell])
+        setPath([calcToCell(index, puzzleIndex, size), cell])
 
         updateValidCells(index, corner, setValidCells, size)
       }
@@ -50,11 +50,11 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
 
   const handlePath = () => {
     if (status !== Statuses.COMPLETE) {
-      if (validCells.has(index)) {
+      if (validCells.has(index) && path[0] !== cell) {
         setPath([...path, cell])
 
         updateValidCells(index, from!, setValidCells, size)
-      } else if (path.includes(cell)) {
+      } else if ([...path.slice(1)].includes(cell)) {
         setPath(path.slice(0, path.findIndex(number => number === cell) + 1))
 
         updateValidCells(index, from!, setValidCells, size)
