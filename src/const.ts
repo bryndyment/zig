@@ -1,5 +1,5 @@
 import { Corners } from './enum'
-import { randomize } from './function'
+import { randomize } from './func'
 
 // constants
 
