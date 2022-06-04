@@ -33,7 +33,7 @@ export const calcCorners = (size: number) =>
     [size ** 2 - 1, Corners.BOTTOM_RIGHT]
   ])
 
-export const calcPuzzleIndex = (size: number) => Math.floor(Number(TODAY) - 20220501) * 7 + size - 6
+export const calcPuzzleIndex = (size: number) => Math.floor(Number(TODAY) - 20220604) * 7 + size - 6
 
 export const calcToCell = (fromIndex: number, puzzleIndex: number, size: number) => {
   switch (fromIndex) {
