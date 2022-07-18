@@ -5,7 +5,7 @@
   "dependencies": {
     "@emotion/react": "11.9.3",
     "@emotion/styled": "11.9.3",
-    "@mui/material": "5.9.0",
+    "@mui/material": "5.9.1",
     "@types/canvas-confetti": "1.4.3",
     "@types/lodash": "4.14.182",
     "@types/node": "17.0.16",
