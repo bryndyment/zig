@@ -7,7 +7,7 @@
     "@emotion/styled": "11.10.0",
     "@mui/material": "5.10.1",
     "@types/canvas-confetti": "1.4.3",
-    "@types/lodash": "4.14.183",
+    "@types/lodash": "4.14.184",
     "@types/node": "17.0.16",
     "@types/react": "17.0.48",
     "@types/react-dom": "17.0.17",
