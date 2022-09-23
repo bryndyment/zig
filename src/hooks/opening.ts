@@ -22,7 +22,7 @@ export const useOpening = (
 
   const close = useCallback(() => setOpening({ anchor: null, isOpen: false }), [])
 
-  const open = useCallback((event = {}) => {
+  const open = useCallback((event: any = {}) => {
     const { currentTarget = null } = event
 
     setOpening({ anchor: currentTarget, isOpen: true })
