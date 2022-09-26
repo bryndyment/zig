@@ -1,7 +1,6 @@
 import { Corners, Statuses } from './enum'
 import { Dispatch, SetStateAction } from 'react'
-
-// exports
+import { Opening } from './hooks/opening'
 
 export interface CellProps {
   cell: number
@@ -16,6 +15,7 @@ export interface ContextInterface {
   from: Corner | null
   goal: number
   path: number[]
+  prefsOpening: Opening
   puzzleIndex: number
   score: number
   setColor: Dispatch<SetStateAction<number>>

@@ -2,9 +2,15 @@ import { AboutDialog } from './dialogs/About'
 import { Button, Menu, MenuItem } from '@mui/material'
 import { FC } from 'react'
 import { ReactComponent as MenuIcon } from '../assets/images/menu.svg'
+import { Opening, useOpening } from '../hooks/opening'
 import { PrefsDialog } from './dialogs/Prefs'
 import { useConstructor } from '../hooks/constructor'
-import { useOpening } from '../hooks/opening'
+
+// types
+
+interface MenuButtonProps {
+  prefsOpening: Opening
+}
 
 // styles
 
@@ -21,12 +27,11 @@ const styles = {
   }
 }
 
-// exports
+// components
 
-export const MenuButton: FC = () => {
+export const MenuButton: FC<MenuButtonProps> = ({ prefsOpening }) => {
   const aboutOpening = useOpening()
   const menuOpening = useOpening()
-  const prefsOpening = useOpening()
 
   useConstructor(() => {
     if (!localStorage.getItem('size')) {

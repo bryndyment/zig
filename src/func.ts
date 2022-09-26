@@ -4,20 +4,6 @@ import { Corners } from './enum'
 import { Dispatch, SetStateAction } from 'react'
 import confetti from 'canvas-confetti'
 
-// functions
-
-const mulberry32 = (seed: any) => {
-  let t = (seed += 0x6d2b79f5)
-
-  t = Math.imul(t ^ (t >>> 15), t | 1)
-
-  t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
-
-  return ((t ^ (t >>> 14)) >>> 0) / 4294967296
-}
-
-// exports
-
 export const calcCornerIndices = (puzzleIndex: number, size: number) => [
   BOARDS[puzzleIndex][0],
   BOARDS[puzzleIndex][size - 1],
@@ -64,6 +50,16 @@ export const calcToCell = (fromIndex: number, puzzleIndex: number, size: number)
 export const getDay = () => Number(new Date().toLocaleString('sv').slice(8, 10))
 
 export const gtag = (...args: any[]) => (window as any).gtag?.('event', ...args)
+
+const mulberry32 = (seed: any) => {
+  let t = (seed += 0x6d2b79f5)
+
+  t = Math.imul(t ^ (t >>> 15), t | 1)
+
+  t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
+
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296
+}
 
 export const randomize = (date: string) => (Math.floor(mulberry32(date) * 100000) % 4) + 1
 

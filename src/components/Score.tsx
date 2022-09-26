@@ -18,7 +18,7 @@ const styles = {
   }
 }
 
-// exports
+// components
 
 export const Score: FC = () => {
   const { goal, score, status } = useContext()

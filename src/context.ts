@@ -1,6 +1,6 @@
 import { ContextInterface } from './type'
 import { createContext } from 'react'
 
-// exports
+// components
 
 export const Context = createContext<ContextInterface | null>(null)

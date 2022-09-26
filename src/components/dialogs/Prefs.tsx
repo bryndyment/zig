@@ -1,18 +1,7 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, Slider, Typography } from '@mui/material'
 import { FC } from 'react'
-import { GRAY } from '../../const'
 import { Opening } from '../../hooks/opening'
-import { Statuses } from '../../enum'
 import { useContext } from '../../hooks/context'
-
-// styles
-
-const styles = {
-  size: {
-    '&': { color: GRAY },
-    '&::after': { content: '" (disabled until tomorrow)"', fontSize: 14, textTransform: 'none' }
-  }
-}
 
 // types
 
@@ -23,7 +12,7 @@ interface PrefsDialogParams {
 // components
 
 export const PrefsDialog: FC<PrefsDialogParams> = ({ opening }) => {
-  const { color, setColor, setSize, size, status } = useContext()
+  const { color, setColor, setSize, size } = useContext()
 
   return (
     <Dialog fullWidth maxWidth="xs" onClose={opening.close} open={opening.isOpen}>
@@ -39,21 +28,10 @@ export const PrefsDialog: FC<PrefsDialogParams> = ({ opening }) => {
         </Box>
 
         <Box sx={{ pb: 2, pt: 1 }}>
-          <Typography sx={{ ...(status === Statuses.COMPLETE && styles.size) }} variant="h2">
-            Size
-          </Typography>
+          <Typography variant="h2">Size</Typography>
 
           <Box sx={{ mt: 2, px: 2 }}>
-            <Slider
-              color="secondary"
-              disabled={status === Statuses.COMPLETE}
-              marks
-              max={12}
-              min={6}
-              onChange={(_, value) => setSize(value as number)}
-              step={1}
-              value={size}
-            />
+            <Slider color="secondary" marks max={12} min={6} onChange={(_, value) => setSize(value as number)} step={1} value={size} />
           </Box>
         </Box>
       </DialogContent>

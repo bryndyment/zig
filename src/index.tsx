@@ -1,11 +1,11 @@
 import { App } from './pages/App'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { CssBaseline, ThemeProvider } from '@mui/material'
+import { createRoot } from 'react-dom/client'
 import { theme } from './theme'
 import React from 'react'
-import ReactDOM from 'react-dom'
 
-ReactDOM.render(
+createRoot(document.getElementById('app')!).render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider theme={theme}>
@@ -16,6 +16,5 @@ ReactDOM.render(
         </Routes>
       </ThemeProvider>
     </BrowserRouter>
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 )

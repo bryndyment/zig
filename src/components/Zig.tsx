@@ -2,7 +2,7 @@ import { Box } from '@mui/material'
 import { FC } from 'react'
 import { ORANGE } from '../const'
 
-// exports
+// components
 
 export const Zig: FC = () => (
   <Box

@@ -13,6 +13,7 @@ import { calcCornerIndices, calcCorners, calcPuzzleIndex, getDay, gtag, showConf
 import { useConstructor } from '../hooks/constructor'
 import { useContext } from '../hooks/context'
 import { useMobileMediaQuery } from '../hooks/mobileMediaQuery'
+import { useOpening } from '../hooks/opening'
 
 // styles
 
@@ -58,6 +59,7 @@ const Prefs: FC = () => {
 
 export const App: FC = () => {
   const isMobile = useMobileMediaQuery()
+  const prefsOpening = useOpening()
 
   const [areNumbersVisible, setAreNumbersVisible] = useState(true)
   const [color, setColor] = useState('color' in localStorage ? Number(localStorage.getItem('color')) : 100)
@@ -65,7 +67,7 @@ export const App: FC = () => {
   const [from, setFrom] = useState<Corner | null>(null)
   const [path, setPath] = useState<number[]>([])
   const [size, setSize] = useState('size' in localStorage ? Number(localStorage.getItem('size')) : 6)
-  const [status, setStatus] = useState(localStorage.getItem(TODAY) ? Statuses.COMPLETE : Statuses.INITIAL)
+  const [status, setStatus] = useState(localStorage.getItem(`${TODAY}_${String(size)}`) ? Statuses.COMPLETE : Statuses.INITIAL)
   const [to, setTo] = useState<Corner | null>(null)
   const [validCells, setValidCells] = useState<ValidCells>(new Set())
 
@@ -88,6 +90,7 @@ export const App: FC = () => {
       from,
       goal,
       path,
+      prefsOpening,
       puzzleIndex,
       score,
       setColor,
@@ -105,7 +108,7 @@ export const App: FC = () => {
       to,
       validCells
     }),
-    [areNumbersVisible, color, cornerIndices, corners, from, goal, path, puzzleIndex, score, size, status, to, validCells]
+    [areNumbersVisible, color, cornerIndices, corners, from, goal, path, prefsOpening, puzzleIndex, score, size, status, to, validCells]
   )
 
   useEffect(() => {
@@ -124,11 +127,14 @@ export const App: FC = () => {
     if (status === Statuses.INITIAL && score) {
       setStatus(Statuses.IN_PROGRESS)
     } else if (status === Statuses.IN_PROGRESS && score === goal) {
+      const key = `${TODAY}_${String(size)}`
+      const value = String(size)
+
       setStatus(Statuses.COMPLETE)
 
-      localStorage.setItem(TODAY, String(size))
+      localStorage.setItem(key, value)
 
-      gtag(TODAY, { value: size })
+      gtag(key, { value })
     }
   }, [goal, score]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -137,6 +143,8 @@ export const App: FC = () => {
       showConfetti()
     }
   }, [status])
+
+  useEffect(() => setStatus(localStorage.getItem(`${TODAY}_${String(size)}`) ? Statuses.COMPLETE : Statuses.INITIAL), [size])
 
   return (
     <Context.Provider value={context}>
@@ -153,7 +161,7 @@ export const App: FC = () => {
 
             <Goal />
 
-            <MenuButton />
+            <MenuButton prefsOpening={prefsOpening} />
 
             <Score />
 

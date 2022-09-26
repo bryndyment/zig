@@ -5,7 +5,7 @@ import { useMobileMediaQuery } from '../../hooks/mobileMediaQuery'
 
 // types
 
-interface AboutDialogParams {
+interface AboutDialogProps {
   opening: Opening
 }
 
@@ -18,7 +18,7 @@ const styles = {
 
 // components
 
-export const AboutDialog: FC<AboutDialogParams> = ({ opening }) => {
+export const AboutDialog: FC<AboutDialogProps> = ({ opening }) => {
   const isMobile = useMobileMediaQuery()
 
   return (

@@ -17,7 +17,7 @@ const styles = {
   }
 }
 
-// exports
+// components
 
 export const Goal: FC = () => {
   const { goal } = useContext()
