@@ -2,7 +2,6 @@ import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, List, L
 import { FC } from 'react'
 import { Opening } from '../../hooks/opening'
 import { WHITE, YELLOW } from '../../const'
-import { useMobileMediaQuery } from '../../hooks/mobileMediaQuery'
 
 // types
 
