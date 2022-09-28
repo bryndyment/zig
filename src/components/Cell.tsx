@@ -28,8 +28,23 @@ const styles = {
 // components
 
 export const Cell: FC<CellProps> = ({ cell, index }) => {
-  const { areNumbersVisible, cornerIndices, corners, from, path, prefsOpening, puzzleIndex, setFrom, setPath, setTo, setValidCells, size, status, validCells } =
-    useContext()
+  const {
+    areNumbersVisible,
+    cornerIndices,
+    corners,
+    from,
+    isKeyDown,
+    path,
+    prefsOpening,
+    puzzleIndex,
+    setFrom,
+    setPath,
+    setTo,
+    setValidCells,
+    size,
+    status,
+    validCells
+  } = useContext()
 
   const isMobile = useMobileMediaQuery()
 
@@ -77,7 +92,7 @@ export const Cell: FC<CellProps> = ({ cell, index }) => {
           ...(status !== Statuses.COMPLETE && (validCells.has(index) || path.includes(cell)) && { cursor: 'pointer' }),
           ...(status !== Statuses.COMPLETE && { borderRadius: '35%' }),
           ...(areNumbersVisible && { color: '#fff' }),
-          ...(prefsOpening.isOpen && { transition: 'none' }),
+          ...((isKeyDown || prefsOpening.isOpen) && { transition: 'none' }),
           backgroundColor,
           opacity
         }}

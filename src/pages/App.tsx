@@ -65,6 +65,7 @@ export const App: FC = () => {
   const [color, setColor] = useState('color' in localStorage ? Number(localStorage.getItem('color')) : 100)
   const [day] = useState(getDay)
   const [from, setFrom] = useState<Corner | null>(null)
+  const [isKeyDown, setIsKeyDown] = useState(false)
   const [path, setPath] = useState<number[]>([])
   const [size, setSize] = useState('size' in localStorage ? Number(localStorage.getItem('size')) : 6)
   const [status, setStatus] = useState(localStorage.getItem(`${TODAY}_${String(size)}`) ? Statuses.COMPLETE : Statuses.INITIAL)
@@ -89,6 +90,7 @@ export const App: FC = () => {
       corners,
       from,
       goal,
+      isKeyDown,
       path,
       prefsOpening,
       puzzleIndex,
@@ -108,20 +110,44 @@ export const App: FC = () => {
       to,
       validCells
     }),
-    [areNumbersVisible, color, cornerIndices, corners, from, goal, path, prefsOpening, puzzleIndex, score, size, status, to, validCells]
+    [areNumbersVisible, color, cornerIndices, corners, from, goal, isKeyDown, path, prefsOpening, puzzleIndex, score, size, status, to, validCells]
   )
 
   useEffect(() => {
+    const handleKeyDown = () => setIsKeyDown(true)
+    const handleKeyUp = () => setTimeout(() => setIsKeyDown(false), 100)
+
+    document.addEventListener('keydown', handleKeyDown)
+    document.addEventListener('keyup', handleKeyUp)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      document.removeEventListener('keyup', handleKeyUp)
+    }
+  }, [])
+
+  useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.code === 'KeyC') {
-        setAreNumbersVisible(areNumbersVisible => !areNumbersVisible)
+      switch (event.code) {
+        case 'ArrowLeft':
+          if (size > 6) {
+            setSize(current => current - 1)
+          }
+          break
+        case 'ArrowRight':
+          if (size < 12) {
+            setSize(current => current + 1)
+          }
+          break
+        case 'KeyC':
+          setAreNumbersVisible(current => !current)
       }
     }
 
     document.addEventListener('keydown', handleKeyDown)
 
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, [size])
 
   useEffect(() => {
     if (status === Statuses.INITIAL && score) {
@@ -139,10 +165,10 @@ export const App: FC = () => {
   }, [goal, score]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (status === Statuses.COMPLETE) {
+    if (!isKeyDown && !prefsOpening.isOpen && status === Statuses.COMPLETE) {
       showConfetti()
     }
-  }, [status])
+  }, [status]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => setStatus(localStorage.getItem(`${TODAY}_${String(size)}`) ? Statuses.COMPLETE : Statuses.INITIAL), [size])
 

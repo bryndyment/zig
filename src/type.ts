@@ -14,6 +14,7 @@ export interface ContextInterface {
   corners: Map<number, Corner>
   from: Corner | null
   goal: number
+  isKeyDown: boolean
   path: number[]
   prefsOpening: Opening
   puzzleIndex: number
