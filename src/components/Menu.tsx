@@ -1,6 +1,7 @@
 import { AboutDialog } from './dialogs/About'
-import { Button, Menu, MenuItem } from '@mui/material'
+import { Button, MenuItem, Menu as MuiMenu } from '@mui/material'
 import { FC } from 'react'
+import { KeysDialog } from './dialogs/Keys'
 import { ReactComponent as MenuIcon } from '../assets/images/menu.svg'
 import { Opening, useOpening } from '../hooks/opening'
 import { PrefsDialog } from './dialogs/Prefs'
@@ -8,7 +9,7 @@ import { useConstructor } from '../hooks/constructor'
 
 // types
 
-interface MenuButtonProps {
+interface MenuProps {
   prefsOpening: Opening
 }
 
@@ -29,8 +30,9 @@ const styles = {
 
 // components
 
-export const MenuButton: FC<MenuButtonProps> = ({ prefsOpening }) => {
+export const Menu: FC<MenuProps> = ({ prefsOpening }) => {
   const aboutOpening = useOpening()
+  const keysOpening = useOpening()
   const menuOpening = useOpening()
 
   useConstructor(() => {
@@ -45,7 +47,7 @@ export const MenuButton: FC<MenuButtonProps> = ({ prefsOpening }) => {
         <MenuIcon />
       </Button>
 
-      <Menu
+      <MuiMenu
         anchorEl={menuOpening.anchor}
         anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
         onClick={menuOpening.close}
@@ -55,10 +57,14 @@ export const MenuButton: FC<MenuButtonProps> = ({ prefsOpening }) => {
       >
         <MenuItem onClick={aboutOpening.open}>About</MenuItem>
 
+        <MenuItem onClick={keysOpening.open}>Keys</MenuItem>
+
         <MenuItem onClick={prefsOpening.open}>Prefs</MenuItem>
-      </Menu>
+      </MuiMenu>
 
       <AboutDialog opening={aboutOpening} />
+
+      <KeysDialog opening={keysOpening} />
 
       <PrefsDialog opening={prefsOpening} />
     </>

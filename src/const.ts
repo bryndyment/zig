@@ -1908,3 +1908,4 @@ export const TODAY = new Date().toLocaleString('sv').slice(0, 10).replace(/\D/g,
 export const ORANGE = '#ff5c00'
 export const RANDOM = randomize(TODAY)
 export const YELLOW = '#ffbc00'
+export const WHITE = '#fff'

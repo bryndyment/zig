@@ -5,7 +5,7 @@ import { Context } from '../context'
 import { Corner, ValidCells } from '../type'
 import { FC, useEffect, useMemo, useState } from 'react'
 import { Goal } from '../components/Goal'
-import { MenuButton } from '../components/MenuButton'
+import { Menu } from '../components/Menu'
 import { Score } from '../components/Score'
 import { Statuses } from '../enum'
 import { Zig } from '../components/Zig'
@@ -187,7 +187,7 @@ export const App: FC = () => {
 
             <Goal />
 
-            <MenuButton prefsOpening={prefsOpening} />
+            <Menu prefsOpening={prefsOpening} />
 
             <Score />
 
