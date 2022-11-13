@@ -6,7 +6,7 @@
     "@emotion/react": "11.10.5",
     "@emotion/styled": "11.10.5",
     "@mui/material": "5.10.13",
-    "@types/canvas-confetti": "1.4.3",
+    "@types/canvas-confetti": "1.6.0",
     "@types/lodash": "4.14.188",
     "@types/node": "18.11.9",
     "@types/react": "18.0.25",
