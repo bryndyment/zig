@@ -40,7 +40,7 @@ export const AboutDialog: FC<AboutDialogProps> = ({ opening }) => {
           <ListItem sx={styles.listItem}>try to match the highest sum, displayed bottom-right</ListItem>
         </List>
 
-        <Typography>… with a new puzzle each day.</Typography>
+        <Typography>… with a new puzzle each day!</Typography>
       </DialogContent>
 
       <DialogActions>
