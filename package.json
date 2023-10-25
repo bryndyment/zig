@@ -9,7 +9,7 @@
     "@types/canvas-confetti": "1.6.2",
     "@types/lodash": "4.14.200",
     "@types/node": "20.8.8",
-    "@types/react": "18.2.31",
+    "@types/react": "18.2.32",
     "@types/react-dom": "18.2.14",
     "@types/react-router-dom": "5.3.3",
     "@typescript-eslint/eslint-plugin": "5.62.0",
