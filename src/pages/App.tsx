@@ -1,4 +1,5 @@
 import { ANSWERS, BOARDS, TODAY } from '../const'
+import { Analytics } from '@vercel/analytics/react'
 import { Box, Grid, Paper } from '@mui/material'
 import { Cell } from '../components/Cell'
 import { Context } from '../context'
@@ -195,6 +196,8 @@ export const App: FC = () => {
           </Paper>
         </Grid>
       </Grid>
+
+      <Analytics />
     </Context.Provider>
   )
 }
