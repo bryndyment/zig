@@ -39,6 +39,11 @@
     "react-scripts": "5.0.1",
     "typescript": "4.9.5"
   },
+  "overrides": {
+    "react-scripts": {
+      "typescript": "^4 || ^5"
+    }
+  },
   "scripts": {
     "eslint": "eslint --ext .js,.jsx,.ts,.tsx --fix .",
     "start": "react-scripts start",
