@@ -8,7 +8,7 @@
     "@mui/material": "5.15.14",
     "@types/canvas-confetti": "1.6.4",
     "@types/lodash": "4.17.0",
-    "@types/node": "20.11.30",
+    "@types/node": "20.12.2",
     "@types/react": "18.2.73",
     "@types/react-dom": "18.2.23",
     "@types/react-router-dom": "5.3.3",
