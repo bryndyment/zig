@@ -1,0 +1,26 @@
+name: dev → live
+
+on: workflow_dispatch
+
+jobs:
+  merge:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: dev
+          token: ${{ secrets.TOKEN_REPO }}
+
+      - name: Set up Git identity
+        run: |
+          git config user.email bryndyment@gmail.com
+          git config user.name "Bryn Dyment"
+          
+      - name: Merge and push
+        run: |
+          git checkout live
+          git merge dev --no-edit
+          git push
