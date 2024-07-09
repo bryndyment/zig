@@ -1,8 +1,5 @@
 {
   "automerge": true,
-  "automergeSchedule": ["before 5am"],
   "extends": ["config:base"],
-  "major": { "automerge": false },
-  "schedule": ["before 4am"],
-  "timezone": "Asia/Tokyo"
+  "major": { "automerge": false }
 }
