@@ -1,7 +1,7 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItem, Typography } from '@mui/material'
 import { FC } from 'react'
-import { Opening } from '../../hooks/opening'
 import { WHITE, YELLOW } from '../../const'
+import { Opening } from '../../hooks/opening'
 
 // types
 

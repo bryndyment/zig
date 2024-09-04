@@ -1,8 +1,8 @@
-import { BOARDS, ORANGE, TODAY, YELLOW } from './const'
-import { Corner, ValidCells } from './type'
-import { Corners } from './enum'
-import { Dispatch, SetStateAction } from 'react'
 import confetti from 'canvas-confetti'
+import { Dispatch, SetStateAction } from 'react'
+import { BOARDS, ORANGE, TODAY, YELLOW } from './const'
+import { Corners } from './enum'
+import { Corner, ValidCells } from './type'
 
 export const calcCornerIndices = (puzzleIndex: number, size: number) => [
   BOARDS[puzzleIndex][0],
@@ -14,9 +14,9 @@ export const calcCornerIndices = (puzzleIndex: number, size: number) => [
 export const calcCorners = (size: number) =>
   new Map([
     [0, Corners.TOP_LEFT],
-    [size - 1, Corners.TOP_RIGHT],
+    [size ** 2 - 1, Corners.BOTTOM_RIGHT],
     [size ** 2 - size, Corners.BOTTOM_LEFT],
-    [size ** 2 - 1, Corners.BOTTOM_RIGHT]
+    [size - 1, Corners.TOP_RIGHT]
   ])
 
 export const calcPuzzleIndex = (size: number) =>
@@ -38,10 +38,10 @@ export const calcToCell = (fromIndex: number, puzzleIndex: number, size: number)
   switch (fromIndex) {
     case 0:
       return BOARDS[puzzleIndex][size ** 2 - 1]
-    case size - 1:
-      return BOARDS[puzzleIndex][size ** 2 - size]
     case size ** 2 - size:
       return BOARDS[puzzleIndex][size - 1]
+    case size - 1:
+      return BOARDS[puzzleIndex][size ** 2 - size]
   }
 
   return BOARDS[puzzleIndex][0]

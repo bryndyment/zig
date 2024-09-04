@@ -1,5 +1,5 @@
-import { ContextInterface } from './type'
 import { createContext } from 'react'
+import { ContextInterface } from './type'
 
 // components
 

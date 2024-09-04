@@ -1,20 +1,19 @@
-import { ANSWERS, BOARDS, TODAY } from '../const'
-import { Analytics } from '@vercel/analytics/react'
 import { Box, Grid, Paper } from '@mui/material'
-import { Cell } from '../components/Cell'
-import { Context } from '../context'
-import { Corner, ValidCells } from '../type'
 import { FC, useEffect, useMemo, useState } from 'react'
+import { Cell } from '../components/Cell'
 import { Goal } from '../components/Goal'
 import { Menu } from '../components/Menu'
 import { Score } from '../components/Score'
-import { Statuses } from '../enum'
 import { Zig } from '../components/Zig'
+import { ANSWERS, BOARDS, TODAY } from '../const'
+import { Context } from '../context'
+import { Statuses } from '../enum'
 import { calcCornerIndices, calcCorners, calcPuzzleIndex, getDay, gtag, showConfetti } from '../func'
 import { useConstructor } from '../hooks/constructor'
 import { useContext } from '../hooks/context'
 import { useMobileMediaQuery } from '../hooks/mobileMediaQuery'
 import { useOpening } from '../hooks/opening'
+import { Corner, ValidCells } from '../type'
 
 // styles
 
@@ -196,8 +195,6 @@ export const App: FC = () => {
           </Paper>
         </Grid>
       </Grid>
-
-      <Analytics />
     </Context.Provider>
   )
 }

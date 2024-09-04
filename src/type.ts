@@ -1,5 +1,5 @@
-import { Corners, Statuses } from './enum'
 import { Dispatch, SetStateAction } from 'react'
+import { Corners, Statuses } from './enum'
 import { Opening } from './hooks/opening'
 
 export interface CellProps {

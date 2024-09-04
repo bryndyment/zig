@@ -1,11 +1,11 @@
-import { AboutDialog } from './dialogs/About'
 import { Button, MenuItem, Menu as MuiMenu } from '@mui/material'
 import { FC } from 'react'
-import { KeysDialog } from './dialogs/Keys'
 import { ReactComponent as MenuIcon } from '../assets/images/menu.svg'
-import { Opening, useOpening } from '../hooks/opening'
-import { PrefsDialog } from './dialogs/Prefs'
 import { useConstructor } from '../hooks/constructor'
+import { Opening, useOpening } from '../hooks/opening'
+import { AboutDialog } from './dialogs/About'
+import { KeysDialog } from './dialogs/Keys'
+import { PrefsDialog } from './dialogs/Prefs'
 
 // types
 

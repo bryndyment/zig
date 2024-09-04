@@ -1,5 +1,5 @@
-import { theme } from '../theme'
 import { useMediaQuery } from '@mui/material'
+import { theme } from '../theme'
 
 // exported hooks
 

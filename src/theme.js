@@ -1,5 +1,5 @@
-import { ORANGE, YELLOW } from './const'
 import { createTheme } from '@mui/material/styles'
+import { ORANGE, YELLOW } from './const'
 
 // constants
 

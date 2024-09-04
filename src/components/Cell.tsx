@@ -1,12 +1,12 @@
-import { ANSWERS, BOARDS, DESTINATION, ORANGE, YELLOW } from '../const'
 import { Box } from '@mui/material'
-import { CellProps } from '../type'
+import { isEmpty } from 'lodash'
 import { FC } from 'react'
+import { ANSWERS, BOARDS, DESTINATION, ORANGE, YELLOW } from '../const'
 import { Statuses } from '../enum'
 import { calcToCell, updateValidCells } from '../func'
-import { isEmpty } from 'lodash'
 import { useContext } from '../hooks/context'
 import { useMobileMediaQuery } from '../hooks/mobileMediaQuery'
+import { CellProps } from '../type'
 
 // styles
 
