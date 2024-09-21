@@ -3,7 +3,7 @@ import { Button, MenuItem, Menu as MuiMenu } from '@mui/material'
 import { FC } from 'react'
 import { KeysDialog } from './dialogs/Keys'
 import { ReactComponent as MenuIcon } from '../assets/images/menu.svg'
-import { Opening, useOpening } from '../hooks/opening'
+import { Opening, useOpening } from '@hoologic/use-opening'
 import { PrefsDialog } from './dialogs/Prefs'
 import { useConstructor } from '../hooks/constructor'
 
