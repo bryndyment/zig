@@ -1,6 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItem, Typography } from '@mui/material'
 import { FC } from 'react'
-import { Opening } from '../../hooks/opening'
+import { Opening } from '@hoologic/use-opening'
 import { useMobileMediaQuery } from '../../hooks/mobileMediaQuery'
 
 // types

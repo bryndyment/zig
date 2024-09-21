@@ -14,7 +14,7 @@ import { calcCornerIndices, calcCorners, calcPuzzleIndex, getDay, gtag, showConf
 import { useConstructor } from '../hooks/constructor'
 import { useContext } from '../hooks/context'
 import { useMobileMediaQuery } from '../hooks/mobileMediaQuery'
-import { useOpening } from '../hooks/opening'
+import { useOpening } from '@hoologic/use-opening'
 
 // styles
 

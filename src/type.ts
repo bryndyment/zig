@@ -1,6 +1,6 @@
 import { Corners, Statuses } from './enum'
 import { Dispatch, SetStateAction } from 'react'
-import { Opening } from './hooks/opening'
+import { Opening } from '@hoologic/use-opening'
 
 export interface CellProps {
   cell: number

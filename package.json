@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "11.13.3",
     "@emotion/styled": "11.13.0",
+    "@hoologic/use-opening": "1.0.2",
     "@mui/material": "6.1.1",
     "@types/canvas-confetti": "1.6.4",
     "@types/lodash": "4.17.7",

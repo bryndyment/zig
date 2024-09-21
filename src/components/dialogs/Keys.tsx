@@ -1,6 +1,6 @@
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItem, Typography } from '@mui/material'
 import { FC } from 'react'
-import { Opening } from '../../hooks/opening'
+import { Opening } from '@hoologic/use-opening'
 import { WHITE, YELLOW } from '../../const'
 
 // types
