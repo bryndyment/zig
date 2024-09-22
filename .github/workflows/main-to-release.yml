@@ -3,24 +3,25 @@ name: main → release
 on: workflow_dispatch
 
 jobs:
-  merge:
+  main-to-release:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout
+      - name: Enforce `main` branch
+        run: |
+          if [ "${{ github.event.ref }}" != 'refs/heads/main' ]; then
+            echo 'Error: workflow can only be used from `main` branch'
+            exit 1
+          fi
+          echo '✔'
+
+      - name: Check out `main` branch
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-          ref: main
           token: ${{ secrets.TOKEN_REPO }}
 
-      - name: Set up Git identity
+      - name: Recreate `release` branch
         run: |
-          git config user.email bryndyment@gmail.com
-          git config user.name "Bryn Dyment"
-          
-      - name: Merge and push
-        run: |
-          git checkout release
-          git merge main --no-edit
-          git push
+          git push origin -d release || true
+          git checkout -b release
+          git push -u origin release
