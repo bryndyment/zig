@@ -8,7 +8,7 @@
     "@hoologic/use-opening": "1.0.2",
     "@mui/material": "6.1.2",
     "@types/canvas-confetti": "1.6.4",
-    "@types/lodash": "4.17.9",
+    "@types/lodash": "4.17.10",
     "@types/node": "20.16.10",
     "@types/react": "18.3.11",
     "@types/react-dom": "18.3.0",
