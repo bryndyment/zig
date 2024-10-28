@@ -1,0 +1,20 @@
+name: Prepare `deploy` branch
+
+on: workflow_dispatch
+
+jobs:
+  prepare-deploy-branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out `main` branch
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.REPO }}
+
+      - name: Prepare `deploy` branch
+        run: |
+          git fetch origin deploy
+          git checkout deploy
+          git reset --hard origin/main
+          git push -f origin deploy
