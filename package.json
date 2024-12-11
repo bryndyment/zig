@@ -9,7 +9,7 @@
     "@mui/material": "6.1.10",
     "@types/canvas-confetti": "1.6.4",
     "@types/lodash": "4.17.13",
-    "@types/node": "22.10.1",
+    "@types/node": "22.10.2",
     "@types/react": "19.0.1",
     "@types/react-dom": "19.0.2",
     "@types/react-router-dom": "5.3.3",
