@@ -7,7 +7,7 @@
     "@emotion/styled": "11.14.0",
     "@hoologic/use-opening": "1.0.2",
     "@mui/material": "6.2.1",
-    "@types/canvas-confetti": "1.6.4",
+    "@types/canvas-confetti": "1.9.0",
     "@types/lodash": "4.17.13",
     "@types/node": "22.10.2",
     "@types/react": "19.0.1",
