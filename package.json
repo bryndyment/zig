@@ -6,7 +6,7 @@
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.0",
     "@hoologic/use-opening": "1.0.2",
-    "@mui/material": "6.2.1",
+    "@mui/material": "6.3.0",
     "@types/canvas-confetti": "1.9.0",
     "@types/lodash": "4.17.13",
     "@types/node": "22.10.2",
