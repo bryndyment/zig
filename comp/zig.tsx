@@ -1,6 +1,8 @@
+'use client'
+
+import { ORANGE } from '@/util/const'
 import { Box } from '@mui/material'
 import { FC } from 'react'
-import { ORANGE } from '../const'
 
 // components
 

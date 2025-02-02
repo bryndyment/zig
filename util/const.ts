@@ -1,3 +1,5 @@
+import { amber, deepOrange } from '@mui/material/colors'
+import { MouseEvent } from 'react'
 import { Corners } from './enum'
 import { randomize } from './func'
 
@@ -1903,9 +1905,10 @@ export const DESTINATION = new Map([
   [Corners.TOP_RIGHT, Corners.BOTTOM_LEFT]
 ])
 
+export const STOP_PROPAGATION = (event: MouseEvent) => event.stopPropagation()
+
 export const TODAY = new Date().toLocaleString('sv').slice(0, 10).replace(/\D/g, '')
 
-export const ORANGE = '#ff5c00'
+export const AMBER = amber[500]
+export const ORANGE = deepOrange[500]
 export const RANDOM = randomize(TODAY)
-export const YELLOW = '#ffbc00'
-export const WHITE = '#fff'

@@ -1,19 +1,32 @@
-import { ORANGE, YELLOW } from './const'
-import { createTheme } from '@mui/material/styles'
+'use client'
+
+import { AMBER, ORANGE } from '@/util/const'
+import { createTheme } from '@mui/material'
 
 // constants
 
-export const theme = createTheme({
+export const THEME = createTheme({
   breakpoints: {
-    values: {
-      xl: 660,
-      xs: 0
-    }
+    values: { lg: 660, md: 660, sm: 660, xl: 660, xs: 0 }
   },
   components: {
     MuiButton: {
       styleOverrides: {
         root: { fontFamily: 'bungee' }
+      }
+    },
+    MuiCssBaseline: {
+      styleOverrides: {
+        '*': {
+          MozTapHighlightColor: 'transparent',
+          WebkitTapHighlightColor: 'transparent'
+        },
+        'html, body, div#app': {
+          height: '100%'
+        },
+        p: {
+          marginTop: '8px !important'
+        }
       }
     },
     MuiDialogActions: {
@@ -44,14 +57,6 @@ export const theme = createTheme({
         root: { marginBottom: '12px' }
       }
     },
-    MuiLink: {
-      styleOverrides: {
-        root: {
-          '&': { cursor: 'pointer', fontWeight: 'bold', textDecoration: 'none' },
-          '&:hover': { textDecoration: 'underline' }
-        }
-      }
-    },
     MuiMenuItem: {
       styleOverrides: {
         root: {
@@ -62,7 +67,7 @@ export const theme = createTheme({
     },
     MuiTypography: {
       styleOverrides: {
-        h2: { color: YELLOW, fontSize: 19, fontWeight: 900, letterSpacing: 0.5, textTransform: 'uppercase' }
+        h2: { color: AMBER, fontFamily: 'bungee', fontSize: 20, textTransform: 'uppercase' }
       }
     }
   },
@@ -71,7 +76,9 @@ export const theme = createTheme({
       main: ORANGE
     },
     secondary: {
-      main: YELLOW
+      main: AMBER
     }
   }
 })
+
+export const PALETTE = THEME.palette
