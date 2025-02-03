@@ -12,25 +12,28 @@ import { FC, useCallback, useMemo } from 'react'
 
 // types
 
-type _CellProps = { cell: number; index: number }
+type _CellProps = { cell: number; index: number; isPending: boolean }
 
 // constants
 
 const BOX_SX = {
   alignItems: 'center',
+  borderColor: common.white,
+  borderStyle: 'solid',
+  borderWidth: 0.5,
   color: 'transparent',
   display: 'flex',
   fontFamily: 'lucida grande',
   fontSize: [13, 16],
   fontWeight: 'bold',
   justifyContent: 'center',
-  transition: 'background-color 0.5s, border-radius 0.7s 0.1s, color 0.5s, opacity 0.5s',
+  transition: 'background-color 0.5s, border-color 0.5s, color 0.5s',
   width: '100%'
 } as const
 
 // components
 
-export const Cell: FC<_CellProps> = ({ cell, index }) => {
+export const Cell: FC<_CellProps> = ({ cell, index, isPending }) => {
   const {
     areNumbersVisible,
     cornerIndices,
@@ -97,11 +100,11 @@ export const Cell: FC<_CellProps> = ({ cell, index }) => {
         sx={{
           ...BOX_SX,
           ...(status !== Statuses.COMPLETE && (validCells.has(index) || path.includes(cell)) && { cursor: 'pointer' }),
-          ...(status !== Statuses.COMPLETE && { borderRadius: '35%' }),
+          ...(status === Statuses.COMPLETE && { borderColor: bgcolor }),
           ...(areNumbersVisible && { color: common.white }),
           ...((isKeyDown || prefsOpening.isOpen) && { transition: 'none' }),
           bgcolor,
-          opacity
+          opacity: isPending ? 0 : opacity
         }}
       >
         {cell}

@@ -1,6 +1,6 @@
 'use client'
 
-import { AMBER, ORANGE } from '@/util/const'
+import { AMBER, BACKGROUND, ORANGE } from '@/util/const'
 import { createTheme } from '@mui/material'
 
 // constants
@@ -57,11 +57,21 @@ export const THEME = createTheme({
         root: { marginBottom: '12px' }
       }
     },
+    MuiList: {
+      styleOverrides: {
+        root: { listStyleType: 'disc', marginLeft: 24, paddingBottom: 0 }
+      }
+    },
+    MuiListItem: {
+      styleOverrides: {
+        root: { display: 'list-item', paddingLeft: 4, paddingRight: 0 }
+      }
+    },
     MuiMenuItem: {
       styleOverrides: {
         root: {
           '&': { color: ORANGE, fontFamily: 'bungee' },
-          '&:hover, &.Mui-focusVisible': { backgroundColor: '#fdefcf' }
+          '&:hover, &.Mui-focusVisible': { backgroundColor: BACKGROUND }
         }
       }
     },

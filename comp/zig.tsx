@@ -13,8 +13,8 @@ export const Zig: FC = () => (
       fontFamily: 'bungee',
       fontSize: 25,
       fontWeight: 500,
+      left: 18.5,
       position: 'absolute',
-      right: 18.5,
       textTransform: 'uppercase',
       top: 11
     }}

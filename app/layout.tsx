@@ -1,5 +1,6 @@
 import type { Metadata } from 'next'
 import { Client } from '@/comp/client'
+import { BACKGROUND } from '@/util/const'
 import { Box } from '@mui/material'
 import { Bungee, Roboto } from 'next/font/google'
 import { FC, ReactNode } from 'react'
@@ -22,8 +23,8 @@ export const metadata: Metadata = {
 // layout
 
 const Layout: FC<_LayoutProps> = ({ children }) => (
-  <html className={`${BUNGEE.className} ${ROBOTO.className}`} lang="en-US" suppressHydrationWarning>
-    <Box component="body" sx={{ bgcolor: '#f9ebd1' }}>
+  <html className={`${BUNGEE.className} ${ROBOTO.className}`} lang="en-US">
+    <Box component="body" sx={{ bgcolor: BACKGROUND }}>
       <Client>{children}</Client>
     </Box>
   </html>

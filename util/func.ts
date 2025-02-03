@@ -51,20 +51,8 @@ export const calcToCell = (fromIndex: number, puzzleIndex: number, size: number)
 
 export const getDay = () => Number(new Date().toLocaleString('sv').slice(8, 10))
 
-const mulberry32 = (seed: any) => {
-  let t = (seed += 0x6d2b79f5)
-
-  t = Math.imul(t ^ (t >>> 15), t | 1)
-
-  t ^= t + Math.imul(t ^ (t >>> 7), t | 61)
-
-  return ((t ^ (t >>> 14)) >>> 0) / 4294967296
-}
-
-export const randomize = (date: string) => (Math.floor(mulberry32(date) * 100000) % 4) + 1
-
 export const showConfetti = (): void => {
-  const base = { colors: [ORANGE, AMBER], particleCount: 2, spread: 55 }
+  const base = { colors: [ORANGE, AMBER], particleCount: 4, spread: 99, velocity: 99 }
   const end = Date.now() + 1000
 
   const frame = () => {

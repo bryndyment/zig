@@ -24,9 +24,6 @@ const BOX_SX = {
   width: 24
 } as const
 
-const LIST_ITEM_SX = { display: 'list-item', ml: 2.8, pb: 0.4, pl: 0.4 } as const
-const LIST_SX = { listStyleType: 'disc', pb: 0.5, pt: 1 } as const
-
 // components
 
 export const KeysDialog: FC<_KeysDialogProps> = ({ opening }) => (
@@ -34,8 +31,8 @@ export const KeysDialog: FC<_KeysDialogProps> = ({ opening }) => (
     <DialogTitle>Keys</DialogTitle>
 
     <DialogContent>
-      <List sx={LIST_SX}>
-        <ListItem sx={LIST_ITEM_SX}>
+      <List>
+        <ListItem>
           <>the </>
 
           <Box sx={{ ...BOX_SX, fontWeight: 600 }}>C</Box>
@@ -43,7 +40,7 @@ export const KeysDialog: FC<_KeysDialogProps> = ({ opening }) => (
           <> key toggles the number display</>
         </ListItem>
 
-        <ListItem sx={LIST_ITEM_SX}>
+        <ListItem>
           <>the </>
 
           <Box sx={{ ...BOX_SX, fontSize: 14 }}>◄</Box>

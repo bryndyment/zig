@@ -1,9 +1,10 @@
-import { amber, deepOrange } from '@mui/material/colors'
+import { Corners } from '@/util/enum'
+import { amber, deepOrange, orange } from '@mui/material/colors'
 import { MouseEvent } from 'react'
-import { Corners } from './enum'
-import { randomize } from './func'
 
 // constants
+
+export const AMBER = amber[500]
 
 export const ANSWERS = [
   [28, 13, 30, 32, 31, 36, 22, 19, 34, 21, 10],
@@ -357,6 +358,8 @@ export const ANSWERS = [
   [18, 101, 71, 98, 89, 88, 62, 102, 17, 117, 74, 121, 38, 83, 81, 120, 39, 104, 108, 106, 47],
   [73, 108, 34, 143, 116, 66, 95, 112, 74, 85, 144, 92, 119, 127, 130, 140, 129, 118, 17, 94, 133, 38, 56]
 ]
+
+export const BACKGROUND = orange[50]
 
 export const BOARDS = [
   [7, 12, 2, 30, 13, 28, 1, 18, 4, 32, 9, 15, 24, 26, 36, 31, 14, 8, 17, 3, 22, 6, 35, 11, 21, 34, 19, 33, 25, 16, 10, 5, 23, 20, 29, 27],
@@ -1905,10 +1908,6 @@ export const DESTINATION = new Map([
   [Corners.TOP_RIGHT, Corners.BOTTOM_LEFT]
 ])
 
-export const STOP_PROPAGATION = (event: MouseEvent) => event.stopPropagation()
-
-export const TODAY = new Date().toLocaleString('sv').slice(0, 10).replace(/\D/g, '')
-
-export const AMBER = amber[500]
 export const ORANGE = deepOrange[500]
-export const RANDOM = randomize(TODAY)
+export const STOP_PROPAGATION = (event: MouseEvent) => event.stopPropagation()
+export const TODAY = new Date().toLocaleString('sv').slice(0, 10).replace(/\D/g, '')

@@ -11,7 +11,7 @@ import { FC } from 'react'
 
 // constants
 
-const BUTTON_SX = { cursor: 'pointer', height: 24.5, left: 21, minWidth: 0, p: 0, position: 'absolute', textDecoration: 'none', top: 20 } as const
+const BUTTON_SX = { cursor: 'pointer', height: 24.5, minWidth: 0, p: 0, position: 'absolute', right: 21, textDecoration: 'none', top: 20 } as const
 
 // components
 
@@ -30,9 +30,7 @@ export const Menu: FC = () => {
   const menuOpening = useOpening()
 
   useWhen(() => {
-    if (isClient && !localStorage.getItem('size')) {
-      aboutOpening.open()
-    }
+    if (isClient && !localStorage.getItem('size')) aboutOpening.open()
   }, [])
 
   return (
@@ -44,7 +42,7 @@ export const Menu: FC = () => {
       <MuiMenu
         anchorEl={menuOpening.anchor}
         anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-        MenuListProps={{ sx: { py: 0 } }}
+        MenuListProps={{ sx: { ml: 0, py: 0 } }}
         onClick={menuOpening.close}
         onClose={menuOpening.close}
         open={menuOpening.isOpen}
