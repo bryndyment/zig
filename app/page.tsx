@@ -40,7 +40,7 @@ const HomePage: FC = () => {
   }, [isClient, setCornerIndices, setCorners, setPath, setPuzzleIndex, size])
 
   return (
-    <Box onClick={() => setPath([])} sx={{ alignItems: 'center', display: 'flex', height: '100vh', justifyContent: 'center' }}>
+    <Box onClick={() => setPath([])} sx={{ alignItems: 'center', display: 'flex', height: '100%', justifyContent: 'center' }}>
       <Paper elevation={isMobile ? 0 : 3} onClick={STOP_PROPAGATION} square={isMobile} sx={PAPER_SX}>
         <Box sx={BOARD_SX}>
           {BOARDS[isPending ? currentPuzzleIndex : puzzleIndex].map((cell, index) => (
