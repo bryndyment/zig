@@ -52,7 +52,7 @@ export const calcToCell = (fromIndex: number, puzzleIndex: number, size: number)
 export const getDay = () => Number(new Date().toLocaleString('sv').slice(8, 10))
 
 export const showConfetti = (): void => {
-  const base = { colors: [ORANGE, AMBER], particleCount: 4, spread: 99, velocity: 99 }
+  const base = { colors: [ORANGE, AMBER], particleCount: 2, spread: 99 }
   const end = Date.now() + 1000
 
   const frame = () => {
