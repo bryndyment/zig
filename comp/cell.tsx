@@ -41,13 +41,13 @@ export const Cell: FC<_CellProps> = ({ cell, index, isPending }) => {
     from,
     isKeyDown,
     path,
-    prefsOpening,
     puzzleIndex,
     setFrom,
     setPath,
     setTo,
     setValidCells,
     size,
+    sizeOpening,
     status,
     validCells
   } = useAppContext()
@@ -69,13 +69,11 @@ export const Cell: FC<_CellProps> = ({ cell, index, isPending }) => {
 
   const handlePath = useCallback(() => {
     if (status !== Statuses.COMPLETE) {
-      if (validCells.has(index) && path[0] !== cell) {
+      if (!isEmpty(path) && validCells.has(index) && path[0] !== cell) {
         setPath([...path, cell])
-
         updateValidCells(index, from!, setValidCells, size)
-      } else if ([...path.slice(1)].includes(cell)) {
+      } else if (!isEmpty(path) && [...path.slice(1)].includes(cell)) {
         setPath(path.slice(0, path.findIndex(number => number === cell) + 1))
-
         updateValidCells(index, from!, setValidCells, size)
       } else if (isEmpty(path) || isMobile) {
         handleCorner()
@@ -102,7 +100,7 @@ export const Cell: FC<_CellProps> = ({ cell, index, isPending }) => {
           ...(status !== Statuses.COMPLETE && (validCells.has(index) || path.includes(cell)) && { cursor: 'pointer' }),
           ...(status === Statuses.COMPLETE && { borderColor: bgcolor }),
           ...(areNumbersVisible && { color: common.white }),
-          ...((isKeyDown || prefsOpening.isOpen) && { transition: 'none' }),
+          ...((isKeyDown || sizeOpening.isOpen) && { transition: 'none' }),
           bgcolor,
           opacity: isPending ? 0 : opacity
         }}

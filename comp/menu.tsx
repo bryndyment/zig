@@ -3,7 +3,7 @@
 import { AboutDialog } from '@/comp/aboutDialog'
 import { useAppContext } from '@/comp/appContext'
 import { KeysDialog } from '@/comp/keysDialog'
-import { PrefsDialog } from '@/comp/prefsDialog'
+import { SizeDialog } from '@/comp/sizeDialog'
 import { ORANGE } from '@/util/const'
 import { useOpening } from '@hoologic/use-opening'
 import { Button, MenuItem, Menu as MuiMenu } from '@mui/material'
@@ -24,7 +24,7 @@ const Icon: FC = () => (
 )
 
 export const Menu: FC = () => {
-  const { prefsOpening } = useAppContext()
+  const { sizeOpening } = useAppContext()
   const aboutOpening = useOpening()
   const keysOpening = useOpening()
   const menuOpening = useOpening()
@@ -52,14 +52,14 @@ export const Menu: FC = () => {
 
         <MenuItem onClick={keysOpening.open}>Keys</MenuItem>
 
-        <MenuItem onClick={prefsOpening.open}>Prefs</MenuItem>
+        <MenuItem onClick={sizeOpening.open}>Size</MenuItem>
       </MuiMenu>
 
       <AboutDialog opening={aboutOpening} />
 
       <KeysDialog opening={keysOpening} />
 
-      <PrefsDialog />
+      <SizeDialog />
     </>
   )
 }

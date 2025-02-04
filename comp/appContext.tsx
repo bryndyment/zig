@@ -21,7 +21,6 @@ type _AppContext = {
   goal: number
   isKeyDown: boolean
   path: number[]
-  prefsOpening: Opening
   puzzleIndex: number
   score: number
   setCornerIndices: Dispatch<SetStateAction<number[] | undefined>>
@@ -33,6 +32,7 @@ type _AppContext = {
   setTo: Dispatch<SetStateAction<Corner | null>>
   setValidCells: Dispatch<SetStateAction<ValidCells>>
   size: number
+  sizeOpening: Opening
   status: Status
   to: Corner | null
   validCells: ValidCells
@@ -51,7 +51,7 @@ export const useAppContext = () => useContextGuard(APP_CONTEXT)
 // components
 
 export const AppContext: FC<_AppContextProps> = ({ children }) => {
-  const prefsOpening = useOpening()
+  const sizeOpening = useOpening()
   const [areNumbersVisible, setAreNumbersVisible] = useState(true)
   const [cornerIndices, setCornerIndices] = useState<number[]>()
   const [corners, setCorners] = useState<Map<number, Corners>>()
@@ -94,7 +94,6 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
       goal,
       isKeyDown,
       path,
-      prefsOpening,
       puzzleIndex: puzzleIndex!,
       score,
       setCornerIndices,
@@ -107,11 +106,12 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
       setTo,
       setValidCells,
       size,
+      sizeOpening,
       status: status!,
       to,
       validCells
     }),
-    [areNumbersVisible, cornerIndices, corners, from, goal, isKeyDown, path, prefsOpening, puzzleIndex, score, size, status, to, validCells]
+    [areNumbersVisible, cornerIndices, corners, from, goal, isKeyDown, path, puzzleIndex, score, size, sizeOpening, status, to, validCells]
   )
 
   useEffect(() => {
@@ -167,7 +167,7 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
   }, [goal, score]) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    if (!isKeyDown && !prefsOpening.isOpen && status === Statuses.COMPLETE) {
+    if (!isKeyDown && !sizeOpening.isOpen && status === Statuses.COMPLETE) {
       showConfetti()
     }
   }, [status]) // eslint-disable-line react-hooks/exhaustive-deps
