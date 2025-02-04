@@ -20,30 +20,32 @@ const PAPER_SX = { p: [0, 8], transition: 'border-radius 0.5s 1s', userSelect: '
 // components
 
 const HomePage: FC = () => {
-  const { isClient, puzzleIndex, setCornerIndices, setCorners, setPath, setPuzzleIndex, size } = useAppContext()
+  const { puzzleIndex, setCornerIndices, setCorners, setPath, setPuzzleIndex, size } = useAppContext()
   const isMobile = useMobileMediaQuery()
-  const [currentPuzzleIndex, setCurrentPuzzleIndex] = useState(puzzleIndex)
+  const [outgoingPuzzleIndex, setOutgoingPuzzleIndex] = useState(puzzleIndex)
   const [isPending, startTransition] = useTransition()
 
   useEffect(() => {
-    if (isClient) localStorage.setItem('size', String(size))
+    if (size) {
+      localStorage.setItem('size', String(size))
 
-    const newPuzzleIndex = calcPuzzleIndex(size)
+      const newPuzzleIndex = calcPuzzleIndex(size)
 
-    startTransition(() => {
-      setCornerIndices(calcCornerIndices(newPuzzleIndex, size))
-      setCorners(calcCorners(size))
-      setCurrentPuzzleIndex(newPuzzleIndex)
-      setPath([])
-      setPuzzleIndex(newPuzzleIndex)
-    })
-  }, [isClient, setCornerIndices, setCorners, setPath, setPuzzleIndex, size])
+      startTransition(() => {
+        setCornerIndices(calcCornerIndices(newPuzzleIndex, size))
+        setCorners(calcCorners(size))
+        setOutgoingPuzzleIndex(newPuzzleIndex)
+        setPath([])
+        setPuzzleIndex(newPuzzleIndex)
+      })
+    }
+  }, [setCornerIndices, setCorners, setPath, setPuzzleIndex, size])
 
   return (
     <Box onClick={() => setPath([])} sx={{ alignItems: 'center', display: 'flex', height: '100%', justifyContent: 'center' }}>
       <Paper elevation={isMobile ? 0 : 3} onClick={STOP_PROPAGATION} square={isMobile} sx={PAPER_SX}>
         <Box sx={BOARD_SX}>
-          {BOARDS[isPending ? currentPuzzleIndex : puzzleIndex].map((cell, index) => (
+          {BOARDS[isPending ? outgoingPuzzleIndex : puzzleIndex].map((cell, index) => (
             <Cell cell={cell} index={index} isPending={isPending} key={cell} />
           ))}
         </Box>

@@ -5,8 +5,7 @@ import { Corners, Statuses } from '@/util/enum'
 import { calcCornerIndices, calcCorners, calcPuzzleIndex, getDay, showConfetti } from '@/util/func'
 import { useContextGuard } from '@hoologic/use-context-guard'
 import { Opening, useOpening } from '@hoologic/use-opening'
-import { useWhen } from '@hoologic/use-when'
-import { createContext, Dispatch, FC, ReactNode, SetStateAction, useEffect, useMemo, useState } from 'react'
+import { createContext, Dispatch, FC, ReactNode, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react'
 
 // types
 
@@ -20,17 +19,16 @@ type _AppContext = {
   corners: Map<number, Corner>
   from: Corner | null
   goal: number
-  isClient: boolean
   isKeyDown: boolean
   path: number[]
   prefsOpening: Opening
   puzzleIndex: number
   score: number
-  setCornerIndices: Dispatch<SetStateAction<number[]>>
-  setCorners: Dispatch<SetStateAction<Map<number, Corner>>>
+  setCornerIndices: Dispatch<SetStateAction<number[] | undefined>>
+  setCorners: Dispatch<SetStateAction<Map<number, Corner> | undefined>>
   setFrom: Dispatch<SetStateAction<Corner | null>>
   setPath: Dispatch<SetStateAction<number[]>>
-  setPuzzleIndex: Dispatch<SetStateAction<number>>
+  setPuzzleIndex: Dispatch<SetStateAction<number | undefined>>
   setSize: Dispatch<SetStateAction<number>>
   setTo: Dispatch<SetStateAction<Corner | null>>
   setValidCells: Dispatch<SetStateAction<ValidCells>>
@@ -40,7 +38,7 @@ type _AppContext = {
   validCells: ValidCells
 }
 
-type _AppContextProps = { children: ReactNode; isClient: boolean }
+type _AppContextProps = { children: ReactNode }
 
 // context
 
@@ -52,40 +50,52 @@ export const useAppContext = () => useContextGuard(APP_CONTEXT)
 
 // components
 
-export const AppContext: FC<_AppContextProps> = ({ children, isClient }) => {
+export const AppContext: FC<_AppContextProps> = ({ children }) => {
   const prefsOpening = useOpening()
   const [areNumbersVisible, setAreNumbersVisible] = useState(true)
+  const [cornerIndices, setCornerIndices] = useState<number[]>()
+  const [corners, setCorners] = useState<Map<number, Corners>>()
   const [day] = useState(getDay)
   const [from, setFrom] = useState<Corner | null>(null)
   const [isKeyDown, setIsKeyDown] = useState(false)
   const [path, setPath] = useState<number[]>([])
-  const [size, setSize] = useState(isClient && 'size' in localStorage ? Number(localStorage.getItem('size')) : 6)
-  const [status, setStatus] = useState(isClient && localStorage.getItem(`${TODAY}_${String(size)}`) ? Statuses.COMPLETE : Statuses.INITIAL)
+  const [puzzleIndex, setPuzzleIndex] = useState<number>()
+  const [size, setSize] = useState(0)
+  const [status, setStatus] = useState<Status>()
   const [to, setTo] = useState<Corner | null>(null)
   const [validCells, setValidCells] = useState<ValidCells>(new Set())
 
-  const [corners, setCorners] = useState(calcCorners(size))
-  const [puzzleIndex, setPuzzleIndex] = useState(calcPuzzleIndex(size))
-
-  const [cornerIndices, setCornerIndices] = useState(calcCornerIndices(puzzleIndex, size))
-
-  const goal = useMemo(() => ANSWERS[puzzleIndex].reduce((accumulator, cell) => accumulator + cell, 0), [puzzleIndex])
+  const goal = useMemo(() => (puzzleIndex === undefined ? 0 : ANSWERS[puzzleIndex].reduce((accumulator, cell) => accumulator + cell, 0)), [puzzleIndex])
   const score = useMemo(() => path.reduce((accumulator, cell) => accumulator + cell, 0), [path])
 
-  useWhen(() => setInterval(() => getDay() !== day && location.reload(), 1000), [])
+  useEffect(() => {
+    setInterval(() => getDay() !== day && location.reload(), 1000)
+  }, [day])
+
+  useEffect(() => setSize('size' in localStorage ? Number(localStorage.getItem('size')) : 6), [])
+  useEffect(() => setStatus(localStorage.getItem(`${TODAY}_${String(size)}`) ? Statuses.COMPLETE : Statuses.INITIAL), [size])
+
+  useEffect(() => {
+    if (size && !corners) {
+      const puzzleIndex = calcPuzzleIndex(size)
+
+      setCorners(calcCorners(size))
+      setCornerIndices(calcCornerIndices(puzzleIndex, size))
+      setPuzzleIndex(puzzleIndex)
+    }
+  }, [corners, size])
 
   const context = useMemo(
     () => ({
       areNumbersVisible,
-      cornerIndices,
-      corners,
+      cornerIndices: cornerIndices!,
+      corners: corners!,
       from,
       goal,
-      isClient,
       isKeyDown,
       path,
       prefsOpening,
-      puzzleIndex,
+      puzzleIndex: puzzleIndex!,
       score,
       setCornerIndices,
       setCorners,
@@ -97,11 +107,11 @@ export const AppContext: FC<_AppContextProps> = ({ children, isClient }) => {
       setTo,
       setValidCells,
       size,
-      status,
+      status: status!,
       to,
       validCells
     }),
-    [areNumbersVisible, cornerIndices, corners, from, goal, isClient, isKeyDown, path, prefsOpening, puzzleIndex, score, size, status, to, validCells]
+    [areNumbersVisible, cornerIndices, corners, from, goal, isKeyDown, path, prefsOpening, puzzleIndex, score, size, status, to, validCells]
   )
 
   useEffect(() => {
@@ -117,8 +127,8 @@ export const AppContext: FC<_AppContextProps> = ({ children, isClient }) => {
     }
   }, [])
 
-  useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
       switch (event.code) {
         case 'ArrowLeft':
           if (size > 6) {
@@ -133,12 +143,15 @@ export const AppContext: FC<_AppContextProps> = ({ children, isClient }) => {
         case 'KeyC':
           setAreNumbersVisible(current => !current)
       }
-    }
+    },
+    [size]
+  )
 
+  useEffect(() => {
     document.addEventListener('keydown', handleKeyDown)
 
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [size])
+  }, [handleKeyDown])
 
   useEffect(() => {
     if (status === Statuses.INITIAL && score) {
@@ -149,7 +162,7 @@ export const AppContext: FC<_AppContextProps> = ({ children, isClient }) => {
 
       setStatus(Statuses.COMPLETE)
 
-      if (isClient) localStorage.setItem(key, value)
+      localStorage.setItem(key, value)
     }
   }, [goal, score]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -159,7 +172,9 @@ export const AppContext: FC<_AppContextProps> = ({ children, isClient }) => {
     }
   }, [status]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => setStatus(isClient && localStorage.getItem(`${TODAY}_${String(size)}`) ? Statuses.COMPLETE : Statuses.INITIAL), [isClient, size])
+  useEffect(() => setStatus(localStorage.getItem(`${TODAY}_${String(size)}`) ? Statuses.COMPLETE : Statuses.INITIAL), [size])
+
+  if (!cornerIndices || !corners || puzzleIndex === undefined || !size || status === undefined) return null
 
   return <APP_CONTEXT.Provider value={context}>{children}</APP_CONTEXT.Provider>
 }

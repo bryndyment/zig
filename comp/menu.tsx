@@ -4,10 +4,10 @@ import { AboutDialog } from '@/comp/aboutDialog'
 import { useAppContext } from '@/comp/appContext'
 import { KeysDialog } from '@/comp/keysDialog'
 import { PrefsDialog } from '@/comp/prefsDialog'
+import { ORANGE } from '@/util/const'
 import { useOpening } from '@hoologic/use-opening'
-import { useWhen } from '@hoologic/use-when'
 import { Button, MenuItem, Menu as MuiMenu } from '@mui/material'
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 
 // constants
 
@@ -16,7 +16,7 @@ const BUTTON_SX = { cursor: 'pointer', height: 24.5, minWidth: 0, p: 0, position
 // components
 
 const Icon: FC = () => (
-  <svg fill="#ff5c00" height={24} width={30}>
+  <svg fill={ORANGE} height={24} width={30}>
     <rect height={6} rx={1.5} width={30} />
     <rect height={6} rx={1.5} width={30} y={9} />
     <rect height={6} rx={1.5} width={30} y={18} />
@@ -24,14 +24,14 @@ const Icon: FC = () => (
 )
 
 export const Menu: FC = () => {
-  const { isClient, prefsOpening } = useAppContext()
+  const { prefsOpening } = useAppContext()
   const aboutOpening = useOpening()
   const keysOpening = useOpening()
   const menuOpening = useOpening()
 
-  useWhen(() => {
-    if (isClient && !localStorage.getItem('size')) aboutOpening.open()
-  }, [])
+  useEffect(() => {
+    if (!localStorage.getItem('size')) aboutOpening.open()
+  }, [aboutOpening])
 
   return (
     <>
