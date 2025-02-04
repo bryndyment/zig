@@ -5,7 +5,6 @@ import { Corners, Statuses } from '@/util/enum'
 import { calcCornerIndices, calcCorners, calcPuzzleIndex, getDay, showConfetti } from '@/util/func'
 import { useContextGuard } from '@hoologic/use-context-guard'
 import { Opening, useOpening } from '@hoologic/use-opening'
-import { useWhen } from '@hoologic/use-when'
 import { createContext, Dispatch, FC, ReactNode, SetStateAction, useEffect, useMemo, useState } from 'react'
 
 // types
@@ -72,7 +71,9 @@ export const AppContext: FC<_AppContextProps> = ({ children, isClient }) => {
   const goal = useMemo(() => ANSWERS[puzzleIndex].reduce((accumulator, cell) => accumulator + cell, 0), [puzzleIndex])
   const score = useMemo(() => path.reduce((accumulator, cell) => accumulator + cell, 0), [path])
 
-  useWhen(() => setInterval(() => getDay() !== day && location.reload(), 1000), [])
+  useEffect(() => {
+    setInterval(() => getDay() !== day && location.reload(), 1000)
+  }, [day])
 
   const context = useMemo(
     () => ({
@@ -149,7 +150,7 @@ export const AppContext: FC<_AppContextProps> = ({ children, isClient }) => {
 
       setStatus(Statuses.COMPLETE)
 
-      if (isClient) localStorage.setItem(key, value)
+      localStorage.setItem(key, value)
     }
   }, [goal, score]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -159,7 +160,7 @@ export const AppContext: FC<_AppContextProps> = ({ children, isClient }) => {
     }
   }, [status]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => setStatus(isClient && localStorage.getItem(`${TODAY}_${String(size)}`) ? Statuses.COMPLETE : Statuses.INITIAL), [isClient, size])
+  useEffect(() => setStatus(localStorage.getItem(`${TODAY}_${String(size)}`) ? Statuses.COMPLETE : Statuses.INITIAL), [size])
 
   return <APP_CONTEXT.Provider value={context}>{children}</APP_CONTEXT.Provider>
 }

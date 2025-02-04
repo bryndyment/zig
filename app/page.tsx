@@ -20,13 +20,13 @@ const PAPER_SX = { p: [0, 8], transition: 'border-radius 0.5s 1s', userSelect: '
 // components
 
 const HomePage: FC = () => {
-  const { isClient, puzzleIndex, setCornerIndices, setCorners, setPath, setPuzzleIndex, size } = useAppContext()
+  const { puzzleIndex, setCornerIndices, setCorners, setPath, setPuzzleIndex, size } = useAppContext()
   const isMobile = useMobileMediaQuery()
   const [currentPuzzleIndex, setCurrentPuzzleIndex] = useState(puzzleIndex)
   const [isPending, startTransition] = useTransition()
 
   useEffect(() => {
-    if (isClient) localStorage.setItem('size', String(size))
+    localStorage.setItem('size', String(size))
 
     const newPuzzleIndex = calcPuzzleIndex(size)
 
@@ -37,7 +37,7 @@ const HomePage: FC = () => {
       setPath([])
       setPuzzleIndex(newPuzzleIndex)
     })
-  }, [isClient, setCornerIndices, setCorners, setPath, setPuzzleIndex, size])
+  }, [setCornerIndices, setCorners, setPath, setPuzzleIndex, size])
 
   return (
     <Box onClick={() => setPath([])} sx={{ alignItems: 'center', display: 'flex', height: '100vh', justifyContent: 'center' }}>
