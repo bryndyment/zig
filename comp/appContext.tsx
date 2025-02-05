@@ -22,6 +22,7 @@ type _AppContext = {
   isKeyDown: boolean
   path: number[]
   puzzleIndex: number
+  resetBoard: () => void
   score: number
   setCornerIndices: Dispatch<SetStateAction<number[] | undefined>>
   setCorners: Dispatch<SetStateAction<Map<number, Corner> | undefined>>
@@ -85,6 +86,38 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
     }
   }, [corners, size])
 
+  const resetBoard = useCallback(() => {
+    setPath([])
+
+    if (status === Statuses.COMPLETE) {
+      setStatus(Statuses.INITIAL)
+      localStorage.removeItem(`${TODAY}_${String(size)}`)
+    }
+  }, [size, status])
+
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      switch (event.code) {
+        case 'ArrowLeft':
+          if (size > 6) {
+            setSize(current => current - 1)
+          }
+          break
+        case 'ArrowRight':
+          if (size < 12) {
+            setSize(current => current + 1)
+          }
+          break
+        case 'KeyR':
+          resetBoard()
+          break
+        case 'KeyT':
+          setAreNumbersVisible(current => !current)
+      }
+    },
+    [resetBoard, size]
+  )
+
   const context = useMemo(
     () => ({
       areNumbersVisible,
@@ -95,6 +128,7 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
       isKeyDown,
       path,
       puzzleIndex: puzzleIndex!,
+      resetBoard,
       score,
       setCornerIndices,
       setCorners,
@@ -111,7 +145,7 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
       to,
       validCells
     }),
-    [areNumbersVisible, cornerIndices, corners, from, goal, isKeyDown, path, puzzleIndex, score, size, sizeOpening, status, to, validCells]
+    [areNumbersVisible, cornerIndices, corners, from, goal, isKeyDown, path, puzzleIndex, resetBoard, score, size, sizeOpening, status, to, validCells]
   )
 
   useEffect(() => {
@@ -126,26 +160,6 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
       document.removeEventListener('keyup', handleKeyUp)
     }
   }, [])
-
-  const handleKeyDown = useCallback(
-    (event: KeyboardEvent) => {
-      switch (event.code) {
-        case 'ArrowLeft':
-          if (size > 6) {
-            setSize(current => current - 1)
-          }
-          break
-        case 'ArrowRight':
-          if (size < 12) {
-            setSize(current => current + 1)
-          }
-          break
-        case 'KeyC':
-          setAreNumbersVisible(current => !current)
-      }
-    },
-    [size]
-  )
 
   useEffect(() => {
     document.addEventListener('keydown', handleKeyDown)
