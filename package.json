@@ -8,7 +8,6 @@
     "@emotion/styled": "11.14.0",
     "@hoologic/use-context-guard": "1.0.2",
     "@hoologic/use-opening": "1.0.3",
-    "@hoologic/use-when": "1.0.1",
     "@mui/material": "6.4.2",
     "canvas-confetti": "1.9.3",
     "lodash": "4.17.21",
@@ -17,10 +16,10 @@
     "react-dom": "19.0.0"
   },
   "devDependencies": {
-    "@eslint/compat": "1.2.6",
+    "@eslint/eslintrc": "3.2.0",
+    "@eslint/js": "9.19.0",
     "@next/eslint-plugin-next": "15.1.6",
     "@portabletext/react": "3.2.0",
-    "@sanity/client": "6.27.2",
     "@types/canvas-confetti": "1.9.0",
     "@types/lodash": "4.17.15",
     "@types/node": "22.13.1",
@@ -40,6 +39,9 @@
     "typescript-eslint": "8.23.0"
   },
   "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp"
+    ],
     "peerDependencyRules": {
       "allowedVersions": {
         "eslint-config-standard>eslint": "^9"

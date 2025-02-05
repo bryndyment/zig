@@ -35,9 +35,17 @@ export const KeysDialog: FC<_KeysDialogProps> = ({ opening }) => (
         <ListItem>
           <>the </>
 
-          <Box sx={{ ...BOX_SX, fontWeight: 600 }}>C</Box>
+          <Box sx={{ ...BOX_SX, fontWeight: 600 }}>N</Box>
 
           <> key toggles the number display</>
+        </ListItem>
+
+        <ListItem>
+          <>the </>
+
+          <Box sx={{ ...BOX_SX, fontWeight: 600 }}>R</Box>
+
+          <> key restarts the current board (clicking on the background also works)</>
         </ListItem>
 
         <ListItem>

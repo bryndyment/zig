@@ -20,7 +20,7 @@ const PAPER_SX = { p: [0, 8], transition: 'border-radius 0.5s 1s', userSelect: '
 // components
 
 const HomePage: FC = () => {
-  const { puzzleIndex, setCornerIndices, setCorners, setPath, setPuzzleIndex, size } = useAppContext()
+  const { puzzleIndex, resetBoard, setCornerIndices, setCorners, setPath, setPuzzleIndex, size } = useAppContext()
   const isMobile = useMobileMediaQuery()
   const [outgoingPuzzleIndex, setOutgoingPuzzleIndex] = useState(puzzleIndex)
   const [isPending, startTransition] = useTransition()
@@ -42,7 +42,7 @@ const HomePage: FC = () => {
   }, [setCornerIndices, setCorners, setPath, setPuzzleIndex, size])
 
   return (
-    <Box onClick={() => setPath([])} sx={{ alignItems: 'center', display: 'flex', height: '100%', justifyContent: 'center' }}>
+    <Box onClick={resetBoard} sx={{ alignItems: 'center', display: 'flex', height: '100%', justifyContent: 'center' }}>
       <Paper elevation={isMobile ? 0 : 3} onClick={STOP_PROPAGATION} square={isMobile} sx={PAPER_SX}>
         <Box sx={BOARD_SX}>
           {BOARDS[isPending ? outgoingPuzzleIndex : puzzleIndex].map((cell, index) => (
