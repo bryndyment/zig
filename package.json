@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "3.2.0",
-    "@eslint/js": "9.19.0",
+    "@eslint/js": "9.20.0",
     "@next/eslint-plugin-next": "15.1.6",
     "@portabletext/react": "3.2.1",
     "@types/canvas-confetti": "1.9.0",
@@ -25,7 +25,7 @@
     "@types/node": "22.13.1",
     "@types/react": "19.0.8",
     "@types/react-dom": "19.0.3",
-    "eslint": "9.19.0",
+    "eslint": "9.20.0",
     "eslint-config-prettier": "10.0.1",
     "eslint-config-standard": "17.1.0",
     "eslint-plugin-perfectionist": "4.8.0",
