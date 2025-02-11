@@ -1,13 +1,14 @@
 {
   "name": "zig",
-  "version": "1.0.0",
+  "author": "Bryn Dyment <bryndyment@gmail.com>",
   "private": true,
+  "version": "1.0.0",
   "dependencies": {
-    "@emotion/cache": "11.14.0",
     "@emotion/react": "11.14.0",
     "@emotion/styled": "11.14.0",
     "@hoologic/use-context-guard": "1.0.2",
     "@hoologic/use-opening": "1.0.3",
+    "@mui/icons-material": "6.4.3",
     "@mui/material": "6.4.3",
     "canvas-confetti": "1.9.3",
     "lodash": "4.17.21",
@@ -16,16 +17,14 @@
     "react-dom": "19.0.0"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "3.2.0",
-    "@eslint/js": "9.20.0",
+    "@eslint/compat": "1.2.6",
     "@next/eslint-plugin-next": "15.1.7",
-    "@portabletext/react": "3.2.1",
     "@types/canvas-confetti": "1.9.0",
     "@types/lodash": "4.17.15",
     "@types/node": "22.13.1",
     "@types/react": "19.0.8",
     "@types/react-dom": "19.0.3",
-    "eslint": "9.20.0",
+    "eslint": "9.14.0",
     "eslint-config-prettier": "10.0.1",
     "eslint-config-standard": "17.1.0",
     "eslint-plugin-perfectionist": "4.8.0",
@@ -34,24 +33,18 @@
     "eslint-plugin-react-hooks": "5.1.0",
     "husky": "9.1.7",
     "lint-staged": "15.4.3",
-    "prettier": "3.5.0",
     "typescript": "5.7.3",
     "typescript-eslint": "8.24.0"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "sharp"
-    ],
-    "peerDependencyRules": {
-      "allowedVersions": {
-        "eslint-config-standard>eslint": "^9"
-      }
+  "overrides": {
+    "eslint-config-standard": {
+      "eslint": "^9"
     }
   },
   "scripts": {
-    "build": "pnpm run clean && next build",
+    "build": "npm run clean && next build",
     "clean": "rm -rf .next",
-    "dev": "pnpm run clean && next dev",
+    "dev": "npm run clean && next dev",
     "prepare": "husky",
     "start": "next start"
   }

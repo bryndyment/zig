@@ -1,3 +1,4 @@
+import { fixupPluginRules } from '@eslint/compat'
 import { FlatCompat } from '@eslint/eslintrc'
 import eslintJs from '@eslint/js'
 import eslintPluginNext from '@next/eslint-plugin-next'
@@ -20,16 +21,16 @@ export default [
   eslintPluginPrettierRecommended,
   {
     plugins: {
-      '@next/next': eslintPluginNext,
-      'react-hooks': eslintPluginReactHooks
+      '@next/next': fixupPluginRules(eslintPluginNext),
+      'react-hooks': fixupPluginRules(eslintPluginReactHooks)
     },
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
+      'no-use-before-define': 'off',
       'perfectionist/sort-imports': ['error', { newlinesBetween: 'never' }],
       'prettier/prettier': ['error', { arrowParens: 'avoid', endOfLine: 'lf', printWidth: 160, semi: false, singleQuote: true, trailingComma: 'none' }],
       'react/react-in-jsx-scope': 'off',
       ...eslintPluginNext.configs.recommended.rules,
-      '@next/next/no-img-element': 'off',
       ...eslintPluginReactHooks.configs.recommended.rules
     },
     settings: {

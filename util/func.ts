@@ -7,10 +7,10 @@ import { Dispatch, SetStateAction } from 'react'
 // functions
 
 export const calcCornerIndices = (puzzleIndex: number, size: number) => [
-  BOARDS[puzzleIndex][0],
-  BOARDS[puzzleIndex][size - 1],
-  BOARDS[puzzleIndex][size ** 2 - size],
-  BOARDS[puzzleIndex][size ** 2 - 1]
+  BOARDS[puzzleIndex].numbers[0],
+  BOARDS[puzzleIndex].numbers[size - 1],
+  BOARDS[puzzleIndex].numbers[size ** 2 - size],
+  BOARDS[puzzleIndex].numbers[size ** 2 - 1]
 ]
 
 export const calcCorners = (size: number) =>
@@ -39,14 +39,14 @@ export const calcPuzzleIndex = (size: number) =>
 export const calcToCell = (fromIndex: number, puzzleIndex: number, size: number) => {
   switch (fromIndex) {
     case 0:
-      return BOARDS[puzzleIndex][size ** 2 - 1]
+      return BOARDS[puzzleIndex].numbers[size ** 2 - 1]
     case size ** 2 - size:
-      return BOARDS[puzzleIndex][size - 1]
+      return BOARDS[puzzleIndex].numbers[size - 1]
     case size - 1:
-      return BOARDS[puzzleIndex][size ** 2 - size]
+      return BOARDS[puzzleIndex].numbers[size ** 2 - size]
   }
 
-  return BOARDS[puzzleIndex][0]
+  return BOARDS[puzzleIndex].numbers[0]
 }
 
 export const getDay = () => Number(new Date().toLocaleString('sv').slice(8, 10))

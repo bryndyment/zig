@@ -8,6 +8,7 @@ import { ORANGE } from '@/util/const'
 import { useOpening } from '@hoologic/use-opening'
 import { Button, MenuItem, Menu as MuiMenu } from '@mui/material'
 import { FC, useEffect } from 'react'
+import { ShareDialog } from './shareDialog'
 
 // constants
 
@@ -28,7 +29,7 @@ export const Menu: FC = () => {
   const aboutOpening = useOpening()
   const keysOpening = useOpening()
   const menuOpening = useOpening()
-
+  const shareOpening = useOpening()
   useEffect(() => {
     if (!localStorage.getItem('size')) aboutOpening.open()
   }, [aboutOpening])
@@ -52,12 +53,16 @@ export const Menu: FC = () => {
 
         <MenuItem onClick={keysOpening.open}>Keys</MenuItem>
 
+        <MenuItem onClick={shareOpening.open}>Share</MenuItem>
+
         <MenuItem onClick={sizeOpening.open}>Size</MenuItem>
       </MuiMenu>
 
       <AboutDialog opening={aboutOpening} />
 
       <KeysDialog opening={keysOpening} />
+
+      <ShareDialog opening={shareOpening} />
 
       <SizeDialog />
     </>
