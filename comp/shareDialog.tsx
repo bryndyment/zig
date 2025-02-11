@@ -3,60 +3,60 @@
 import { useAppContext } from '@/comp/appContext'
 import { AMBER, BOARDS } from '@/util/const'
 import { Opening } from '@hoologic/use-opening'
-import { Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
 import { ContentCopy } from '@mui/icons-material'
+import { Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
 import { common } from '@mui/material/colors'
-import { FC } from 'react'
+import { FC, useMemo, useState } from 'react'
 
 // types
 
-type _ShareDialogProps = { opening:
-  Opening }
+type _ShareDialogProps = { opening: Opening }
 
 // components
 
-export const ShareDialog:  FC<_ShareDialogProps> = ({ opening }) => {
+export const ShareDialog: FC<_ShareDialogProps> = ({ opening }) => {
   const { puzzleIndex } = useAppContext()
+  const [isCopied, setIsCopied] = useState(false)
 
-  const handleCopy = () =>  {
+  const handleCopy = () => {
     navigator.clipboard.writeText(`https://zig.vercel.app/${BOARDS[puzzleIndex].id}`)
+    setIsCopied(true)
   }
+
+  useMemo(() => {
+    if (isCopied) {
+      const timer = setTimeout(() => setIsCopied(false), 1500)
+
+      return () => clearTimeout(timer)
+    }
+  }, [isCopied])
 
   return (
     <Dialog fullWidth maxWidth="xs" onClose={opening.close} open={opening.isOpen}>
       <DialogTitle>Share</DialogTitle>
 
       <DialogContent>
-        <Box
-          sx={{
-             alignItems: 'center',
-            display: 'flex',
-            justifyContent: 'center',
-            my: 2,
-            position:  'relative',
-          }}
-        >
+        <Box sx={{ m: 3, mt: 4, position: 'relative', textAlign: 'center' }}>
           <Chip
-            label={`https://zig.vercel.app/${BOARDS[puzzleIndex].id}`}
-            sx={{
-              bgcolor:  AMBER,
-              borderRadius: 1,
-              color: common.white,
-              fontWeight: 600
-            }}
+            label={
+              isCopied ? (
+                'Link copied!'
+              ) : (
+                <Box
+                  component="a"
+                  href={`https://zig.vercel.app/${BOARDS[puzzleIndex].id}`}
+                  rel="noreferrer"
+                  sx={{ color: 'inherit', textDecoration: 'none' }}
+                  target="_blank"
+                >
+                  {`https://zig.vercel.app/${BOARDS[puzzleIndex].id}`}
+                </Box>
+              )
+            }
+            sx={{ bgcolor: AMBER, borderRadius: 1, color: common.white, fontWeight: 600, minWidth: 222, mx: 1.25, textAlign: 'center' }}
           />
 
-          <ContentCopy
-            onClick={handleCopy}
-            sx={{
-              color: AMBER,
-              cursor: 'pointer',
-              position: 'absolute',
-              top: '50%',
-              right: 16,
-              transform: 'translateY(-50%)'
-            }}
-          />
+          <ContentCopy onClick={handleCopy} sx={{ color: AMBER, cursor: 'pointer', position: 'absolute', top: 5 }} />
         </Box>
       </DialogContent>
 

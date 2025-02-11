@@ -18,8 +18,6 @@
   },
   "devDependencies": {
     "@eslint/compat": "1.2.6",
-    "@eslint/eslintrc": "3.2.0",
-    "@eslint/js": "9.20.0",
     "@next/eslint-plugin-next": "15.1.7",
     "@types/canvas-confetti": "1.9.0",
     "@types/lodash": "4.17.15",
@@ -38,20 +36,15 @@
     "typescript": "5.7.3",
     "typescript-eslint": "8.24.0"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "sharp"
-    ],
-    "peerDependencyRules": {
-      "allowedVersions": {
-        "eslint-config-standard>eslint": "^9"
-      }
+  "overrides": {
+    "eslint-config-standard": {
+      "eslint": "^9"
     }
   },
   "scripts": {
-    "build": "pnpm run clean && next build",
+    "build": "npm run clean && next build",
     "clean": "rm -rf .next",
-    "dev": "pnpm run clean && next dev",
+    "dev": "npm run clean && next dev",
     "prepare": "husky",
     "start": "next start"
   }
