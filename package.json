@@ -8,6 +8,7 @@
     "@emotion/styled": "11.14.0",
     "@hoologic/use-context-guard": "1.0.2",
     "@hoologic/use-opening": "1.0.3",
+    "@mui/icons-material": "6.4.3",
     "@mui/material": "6.4.3",
     "canvas-confetti": "1.9.3",
     "lodash": "4.17.21",

@@ -45,7 +45,7 @@ const HomePage: FC = () => {
     <Box onClick={resetBoard} sx={{ alignItems: 'center', display: 'flex', height: '100%', justifyContent: 'center' }}>
       <Paper elevation={isMobile ? 0 : 3} onClick={STOP_PROPAGATION} square={isMobile} sx={PAPER_SX}>
         <Box sx={BOARD_SX}>
-          {BOARDS[isPending ? outgoingPuzzleIndex : puzzleIndex].map((cell, index) => (
+          {BOARDS[isPending ? outgoingPuzzleIndex : puzzleIndex].numbers.map((cell, index) => (
             <Cell cell={cell} index={index} isPending={isPending} key={cell} />
           ))}
         </Box>

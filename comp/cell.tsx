@@ -87,7 +87,7 @@ export const Cell: FC<_CellProps> = ({ cell, index, isPending }) => {
   )
 
   const opacity = useMemo(
-    () => (cell / BOARDS[puzzleIndex].length) * (bgcolor === ORANGE ? 0.5 : 0.8) + (bgcolor === ORANGE ? 0.5 : 0.2),
+    () => (cell / BOARDS[puzzleIndex].numbers.length) * (bgcolor === ORANGE ? 0.5 : 0.8) + (bgcolor === ORANGE ? 0.5 : 0.2),
     [bgcolor, cell, puzzleIndex]
   )
 
