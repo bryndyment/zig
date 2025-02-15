@@ -8,7 +8,7 @@ import { Score } from '@/comp/score'
 import { Zig } from '@/comp/zig'
 import { useMobileMediaQuery } from '@/hooks/mobileMediaQuery'
 import { BOARDS, STOP_PROPAGATION } from '@/util/const'
-import { calcCornerIndices, calcCorners, calcPuzzleIndex } from '@/util/func'
+import { calcCorners, calcPuzzleIndex, getCornerValues } from '@/util/func'
 import { Box, Paper } from '@mui/material'
 import { FC, useEffect, useState, useTransition } from 'react'
 
@@ -20,7 +20,7 @@ const PAPER_SX = { p: [0, 8], transition: 'border-radius 0.5s 1s', userSelect: '
 // components
 
 const HomePage: FC = () => {
-  const { puzzleIndex, resetBoard, setCornerIndices, setCorners, setPath, setPuzzleIndex, size } = useAppContext()
+  const { puzzleIndex, resetBoard, setCorners, setCornerValues, setPath, setPuzzleIndex, size } = useAppContext()
   const isMobile = useMobileMediaQuery()
   const [outgoingPuzzleIndex, setOutgoingPuzzleIndex] = useState(puzzleIndex)
   const [isPending, startTransition] = useTransition()
@@ -32,14 +32,14 @@ const HomePage: FC = () => {
       const newPuzzleIndex = calcPuzzleIndex(size)
 
       startTransition(() => {
-        setCornerIndices(calcCornerIndices(newPuzzleIndex, size))
+        setCornerValues(getCornerValues(newPuzzleIndex, size))
         setCorners(calcCorners(size))
         setOutgoingPuzzleIndex(newPuzzleIndex)
         setPath([])
         setPuzzleIndex(newPuzzleIndex)
       })
     }
-  }, [setCornerIndices, setCorners, setPath, setPuzzleIndex, size])
+  }, [setCornerValues, setCorners, setPath, setPuzzleIndex, size])
 
   return (
     <Box onClick={resetBoard} sx={{ alignItems: 'center', display: 'flex', height: '100%', justifyContent: 'center' }}>

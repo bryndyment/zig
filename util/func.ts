@@ -6,13 +6,6 @@ import { Dispatch, SetStateAction } from 'react'
 
 // functions
 
-export const calcCornerIndices = (puzzleIndex: number, size: number) => [
-  BOARDS[puzzleIndex][0],
-  BOARDS[puzzleIndex][size - 1],
-  BOARDS[puzzleIndex][size ** 2 - size],
-  BOARDS[puzzleIndex][size ** 2 - 1]
-]
-
 export const calcCorners = (size: number) =>
   new Map([
     [0, Corners.TOP_LEFT],
@@ -48,6 +41,13 @@ export const calcToCell = (fromIndex: number, puzzleIndex: number, size: number)
 
   return BOARDS[puzzleIndex][0]
 }
+
+export const getCornerValues = (puzzleIndex: number, size: number) => [
+  BOARDS[puzzleIndex][0],
+  BOARDS[puzzleIndex][size - 1],
+  BOARDS[puzzleIndex][size ** 2 - size],
+  BOARDS[puzzleIndex][size ** 2 - 1]
+]
 
 export const getDay = () => Number(new Date().toLocaleString('sv').slice(8, 10))
 

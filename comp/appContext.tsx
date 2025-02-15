@@ -2,7 +2,7 @@
 
 import { ANSWERS, TODAY } from '@/util/const'
 import { Corners, Statuses } from '@/util/enum'
-import { calcCornerIndices, calcCorners, calcPuzzleIndex, getDay, showConfetti } from '@/util/func'
+import { calcCorners, calcPuzzleIndex, getCornerValues, getDay, showConfetti } from '@/util/func'
 import { useContextGuard } from '@hoologic/use-context-guard'
 import { Opening, useOpening } from '@hoologic/use-opening'
 import { createContext, Dispatch, FC, ReactNode, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react'
@@ -15,8 +15,8 @@ export type ValidCells = Set<number>
 
 type _AppContext = {
   areNumbersVisible: boolean
-  cornerIndices: number[]
   corners: Map<number, Corner>
+  cornerValues: number[]
   from: Corner | null
   goal: number
   isKeyDown: boolean
@@ -24,8 +24,8 @@ type _AppContext = {
   puzzleIndex: number
   resetBoard: () => void
   score: number
-  setCornerIndices: Dispatch<SetStateAction<number[] | undefined>>
   setCorners: Dispatch<SetStateAction<Map<number, Corner> | undefined>>
+  setCornerValues: Dispatch<SetStateAction<number[] | undefined>>
   setFrom: Dispatch<SetStateAction<Corner | null>>
   setPath: Dispatch<SetStateAction<number[]>>
   setPuzzleIndex: Dispatch<SetStateAction<number | undefined>>
@@ -54,7 +54,7 @@ export const useAppContext = () => useContextGuard(APP_CONTEXT)
 export const AppContext: FC<_AppContextProps> = ({ children }) => {
   const sizeOpening = useOpening()
   const [areNumbersVisible, setAreNumbersVisible] = useState(true)
-  const [cornerIndices, setCornerIndices] = useState<number[]>()
+  const [cornerValues, setCornerValues] = useState<number[]>()
   const [corners, setCorners] = useState<Map<number, Corners>>()
   const [day] = useState(getDay)
   const [from, setFrom] = useState<Corner | null>(null)
@@ -81,7 +81,7 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
       const puzzleIndex = calcPuzzleIndex(size)
 
       setCorners(calcCorners(size))
-      setCornerIndices(calcCornerIndices(puzzleIndex, size))
+      setCornerValues(getCornerValues(puzzleIndex, size))
       setPuzzleIndex(puzzleIndex)
     }
   }, [corners, size])
@@ -121,8 +121,8 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
   const context = useMemo(
     () => ({
       areNumbersVisible,
-      cornerIndices: cornerIndices!,
       corners: corners!,
+      cornerValues: cornerValues!,
       from,
       goal,
       isKeyDown,
@@ -130,8 +130,8 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
       puzzleIndex: puzzleIndex!,
       resetBoard,
       score,
-      setCornerIndices,
       setCorners,
+      setCornerValues,
       setFrom,
       setPath,
       setPuzzleIndex,
@@ -145,7 +145,7 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
       to,
       validCells
     }),
-    [areNumbersVisible, cornerIndices, corners, from, goal, isKeyDown, path, puzzleIndex, resetBoard, score, size, sizeOpening, status, to, validCells]
+    [areNumbersVisible, cornerValues, corners, from, goal, isKeyDown, path, puzzleIndex, resetBoard, score, size, sizeOpening, status, to, validCells]
   )
 
   useEffect(() => {
@@ -188,7 +188,7 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
 
   useEffect(() => setStatus(localStorage.getItem(`${TODAY}_${String(size)}`) ? Statuses.COMPLETE : Statuses.INITIAL), [size])
 
-  if (!cornerIndices || !corners || puzzleIndex === undefined || !size || status === undefined) return null
+  if (!cornerValues || !corners || puzzleIndex === undefined || !size || status === undefined) return null
 
   return <APP_CONTEXT.Provider value={context}>{children}</APP_CONTEXT.Provider>
 }
