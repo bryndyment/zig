@@ -38,16 +38,6 @@
     "typescript": "5.7.3",
     "typescript-eslint": "8.24.0"
   },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "sharp"
-    ],
-    "peerDependencyRules": {
-      "allowedVersions": {
-        "eslint-config-standard>eslint": "^9"
-      }
-    }
-  },
   "scripts": {
     "build": "pnpm run clean && next build",
     "clean": "rm -rf .next",
