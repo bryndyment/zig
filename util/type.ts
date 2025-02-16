@@ -1,7 +1,5 @@
-import { Corners, Statuses } from '@/util/enum'
+import { Positions } from './enum'
 
-export type Corner = Corners
-
-export type Status = Statuses
-
-export type ValidCells = Set<number>
+export type _Corners = { positions: Map<number, Positions>; values: number[] }
+export type _Puzzle = { corners: _Corners; index: number }
+export type _ValidCells = Set<number>

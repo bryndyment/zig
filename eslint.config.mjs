@@ -24,7 +24,9 @@ export default [
       'react-hooks': eslintPluginReactHooks
     },
     rules: {
+      '@typescript-eslint/line-comment-position': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
+      'line-comment-position': 'off',
       'perfectionist/sort-imports': ['error', { newlinesBetween: 'never' }],
       'prettier/prettier': ['error', { arrowParens: 'avoid', endOfLine: 'lf', printWidth: 160, semi: false, singleQuote: true, trailingComma: 'none' }],
       'react/react-in-jsx-scope': 'off',
@@ -39,6 +41,6 @@ export default [
     }
   },
   {
-    ignores: ['.next']
+    ignores: ['.next', 'util/answers.ts', 'util/boards.ts']
   }
 ]

@@ -5,6 +5,7 @@ import { Opening } from '@hoologic/use-opening'
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItem } from '@mui/material'
 import { common } from '@mui/material/colors'
 import { FC } from 'react'
+import { useAppContext } from './appContext'
 
 // types
 
@@ -26,46 +27,52 @@ const BOX_SX = {
 
 // components
 
-export const KeysDialog: FC<_KeysDialogProps> = ({ opening }) => (
-  <Dialog fullWidth maxWidth="xs" onClose={opening.close} open={opening.isOpen}>
-    <DialogTitle>Keys</DialogTitle>
+export const KeysDialog: FC<_KeysDialogProps> = ({ opening }) => {
+  const { id } = useAppContext()
 
-    <DialogContent>
-      <List>
-        <ListItem>
-          <>the </>
+  return (
+    <Dialog fullWidth maxWidth="xs" onClose={opening.close} open={opening.isOpen}>
+      <DialogTitle>Keys</DialogTitle>
 
-          <Box sx={{ ...BOX_SX, fontWeight: 600 }}>N</Box>
+      <DialogContent>
+        <List>
+          <ListItem>
+            <>the </>
 
-          <> key toggles the number display</>
-        </ListItem>
+            <Box sx={{ ...BOX_SX, fontWeight: 600 }}>N</Box>
 
-        <ListItem>
-          <>the </>
+            <> key toggles the number display</>
+          </ListItem>
 
-          <Box sx={{ ...BOX_SX, fontWeight: 600 }}>R</Box>
+          <ListItem>
+            <>the </>
 
-          <> key restarts the current board (clicking on the background also works)</>
-        </ListItem>
+            <Box sx={{ ...BOX_SX, fontWeight: 600 }}>R</Box>
 
-        <ListItem>
-          <>the </>
+            <> key restarts the current board (clicking on the background also works)</>
+          </ListItem>
 
-          <Box sx={{ ...BOX_SX, fontSize: 14 }}>◄</Box>
+          {!id && (
+            <ListItem>
+              <>the </>
 
-          <> and </>
+              <Box sx={{ ...BOX_SX, fontSize: 14 }}>◄</Box>
 
-          <Box sx={{ ...BOX_SX, fontSize: 14 }}>►</Box>
+              <> and </>
 
-          <> keys cycle through the board sizes</>
-        </ListItem>
-      </List>
-    </DialogContent>
+              <Box sx={{ ...BOX_SX, fontSize: 14 }}>►</Box>
 
-    <DialogActions>
-      <Button color="primary" onClick={opening.close} variant="contained">
-        OK!
-      </Button>
-    </DialogActions>
-  </Dialog>
-)
+              <> keys cycle through the board sizes</>
+            </ListItem>
+          )}
+        </List>
+      </DialogContent>
+
+      <DialogActions>
+        <Button color="primary" onClick={opening.close} variant="contained">
+          OK!
+        </Button>
+      </DialogActions>
+    </Dialog>
+  )
+}

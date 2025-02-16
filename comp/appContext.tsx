@@ -1,42 +1,36 @@
 'use client'
 
-import { ANSWERS, TODAY } from '@/util/const'
-import { Corners, Statuses } from '@/util/enum'
-import { calcCorners, calcPuzzleIndex, getCornerValues, getDay, showConfetti } from '@/util/func'
+import { ANSWERS } from '@/util/answers'
+import { BOARDS } from '@/util/boards'
+import { Positions, Statuses } from '@/util/enum'
+import { getDay, getPuzzle, showConfetti } from '@/util/func'
+import { _Puzzle, _ValidCells } from '@/util/type'
 import { useContextGuard } from '@hoologic/use-context-guard'
 import { Opening, useOpening } from '@hoologic/use-opening'
 import { createContext, Dispatch, FC, ReactNode, SetStateAction, useCallback, useEffect, useMemo, useState } from 'react'
 
 // types
 
-export type Corner = Corners
-export type Status = Statuses
-export type ValidCells = Set<number>
-
 type _AppContext = {
   areNumbersVisible: boolean
-  corners: Map<number, Corner>
-  cornerValues: number[]
-  from: Corner | null
+  from: null | Positions
   goal: number
+  id?: false | number
   isKeyDown: boolean
-  path: number[]
-  puzzleIndex: number
+  pathValues: number[]
+  puzzle: _Puzzle
   resetBoard: () => void
   score: number
-  setCorners: Dispatch<SetStateAction<Map<number, Corner> | undefined>>
-  setCornerValues: Dispatch<SetStateAction<number[] | undefined>>
-  setFrom: Dispatch<SetStateAction<Corner | null>>
-  setPath: Dispatch<SetStateAction<number[]>>
-  setPuzzleIndex: Dispatch<SetStateAction<number | undefined>>
+  setFrom: Dispatch<SetStateAction<null | Positions>>
+  setId: Dispatch<SetStateAction<false | number | undefined>>
+  setPathValues: Dispatch<SetStateAction<number[]>>
+  setPuzzle: Dispatch<SetStateAction<_Puzzle | undefined>>
   setSize: Dispatch<SetStateAction<number>>
-  setTo: Dispatch<SetStateAction<Corner | null>>
-  setValidCells: Dispatch<SetStateAction<ValidCells>>
+  setValidCells: Dispatch<SetStateAction<_ValidCells>>
   size: number
   sizeOpening: Opening
-  status: Status
-  to: Corner | null
-  validCells: ValidCells
+  status: Statuses
+  validCells: _ValidCells
 }
 
 type _AppContextProps = { children: ReactNode }
@@ -54,49 +48,56 @@ export const useAppContext = () => useContextGuard(APP_CONTEXT)
 export const AppContext: FC<_AppContextProps> = ({ children }) => {
   const sizeOpening = useOpening()
   const [areNumbersVisible, setAreNumbersVisible] = useState(true)
-  const [cornerValues, setCornerValues] = useState<number[]>()
-  const [corners, setCorners] = useState<Map<number, Corners>>()
   const [day] = useState(getDay)
-  const [from, setFrom] = useState<Corner | null>(null)
+  const [from, setFrom] = useState<null | Positions>(null)
+  const [id, setId] = useState<false | number>()
   const [isKeyDown, setIsKeyDown] = useState(false)
-  const [path, setPath] = useState<number[]>([])
-  const [puzzleIndex, setPuzzleIndex] = useState<number>()
+  const [pathValues, setPathValues] = useState<number[]>([])
+  const [puzzle, setPuzzle] = useState<_Puzzle>()
   const [size, setSize] = useState(0)
-  const [status, setStatus] = useState<Status>()
-  const [to, setTo] = useState<Corner | null>(null)
-  const [validCells, setValidCells] = useState<ValidCells>(new Set())
+  const [status, setStatus] = useState<Statuses>()
+  const [validCells, setValidCells] = useState<_ValidCells>(new Set())
 
-  const goal = useMemo(() => (puzzleIndex === undefined ? 0 : ANSWERS[puzzleIndex].reduce((accumulator, cell) => accumulator + cell, 0)), [puzzleIndex])
-  const score = useMemo(() => path.reduce((accumulator, cell) => accumulator + cell, 0), [path])
-
-  useEffect(() => {
-    setInterval(() => getDay() !== day && location.reload(), 1000)
-  }, [day])
-
-  useEffect(() => setSize('size' in localStorage ? Number(localStorage.getItem('size')) : 6), [])
-  useEffect(() => setStatus(localStorage.getItem(`${TODAY}_${String(size)}`) ? Statuses.COMPLETE : Statuses.INITIAL), [size])
+  const goal = useMemo(() => (puzzle?.index === undefined ? 0 : ANSWERS[puzzle.index].reduce((previous, current) => previous + current, 0)), [puzzle?.index])
+  const score = useMemo(() => pathValues.reduce((previous, current) => previous + current, 0), [pathValues])
 
   useEffect(() => {
-    if (size && !corners) {
-      const puzzleIndex = calcPuzzleIndex(size)
-
-      setCorners(calcCorners(size))
-      setCornerValues(getCornerValues(puzzleIndex, size))
-      setPuzzleIndex(puzzleIndex)
+    if (id === false) {
+      setInterval(() => getDay() !== day && location.reload(), 1000)
     }
-  }, [corners, size])
+  }, [day, id])
+
+  useEffect(() => {
+    if (id === false) {
+      setSize('size' in localStorage ? Number(localStorage.getItem('size')) : 6)
+    }
+  }, [id])
+
+  useEffect(() => {
+    if (puzzle) {
+      setStatus(localStorage.getItem(`${BOARDS[puzzle.index].id}_${String(size)}`) ? Statuses.COMPLETE : Statuses.INITIAL)
+    }
+  }, [puzzle, size])
+
+  useEffect(() => {
+    if (!puzzle && size) {
+      setPuzzle(getPuzzle({ size }))
+    }
+  }, [puzzle, size])
 
   const resetBoard = useCallback(() => {
-    setPath([])
+    setPathValues([])
 
-    if (status === Statuses.COMPLETE) {
+    if (puzzle && status === Statuses.COMPLETE) {
       setStatus(Statuses.INITIAL)
-      localStorage.removeItem(`${TODAY}_${String(size)}`)
+      localStorage.removeItem(`${BOARDS[puzzle.index].id}_${String(size)}`)
     }
-  }, [size, status])
+  }, [puzzle, size, status])
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
+      if (id !== false) return
+
       switch (event.code) {
         case 'ArrowLeft':
           if (size > 6) {
@@ -115,37 +116,32 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
           setAreNumbersVisible(current => !current)
       }
     },
-    [resetBoard, size]
+    [id, resetBoard, size]
   )
 
   const context = useMemo(
     () => ({
       areNumbersVisible,
-      corners: corners!,
-      cornerValues: cornerValues!,
       from,
       goal,
+      id,
       isKeyDown,
-      path,
-      puzzleIndex: puzzleIndex!,
+      pathValues,
+      puzzle: puzzle!,
       resetBoard,
       score,
-      setCorners,
-      setCornerValues,
       setFrom,
-      setPath,
-      setPuzzleIndex,
+      setId,
+      setPathValues,
+      setPuzzle,
       setSize,
-      setStatus,
-      setTo,
       setValidCells,
       size,
       sizeOpening,
       status: status!,
-      to,
       validCells
     }),
-    [areNumbersVisible, cornerValues, corners, from, goal, isKeyDown, path, puzzleIndex, resetBoard, score, size, sizeOpening, status, to, validCells]
+    [areNumbersVisible, from, goal, id, isKeyDown, pathValues, puzzle, resetBoard, score, size, sizeOpening, status, validCells]
   )
 
   useEffect(() => {
@@ -170,8 +166,8 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
   useEffect(() => {
     if (status === Statuses.INITIAL && score) {
       setStatus(Statuses.IN_PROGRESS)
-    } else if (status === Statuses.IN_PROGRESS && score === goal) {
-      const key = `${TODAY}_${String(size)}`
+    } else if (puzzle && status === Statuses.IN_PROGRESS && score === goal) {
+      const key = `${BOARDS[puzzle.index].id}_${String(size)}`
       const value = String(size)
 
       setStatus(Statuses.COMPLETE)
@@ -186,9 +182,13 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
     }
   }, [status]) // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => setStatus(localStorage.getItem(`${TODAY}_${String(size)}`) ? Statuses.COMPLETE : Statuses.INITIAL), [size])
+  useEffect(() => {
+    if (puzzle) {
+      setStatus(localStorage.getItem(`${BOARDS[puzzle.index].id}_${String(size)}`) ? Statuses.COMPLETE : Statuses.INITIAL)
+    }
+  }, [puzzle, size])
 
-  if (!cornerValues || !corners || puzzleIndex === undefined || !size || status === undefined) return null
+  if (!puzzle || !size || !status || id === undefined) return null
 
   return <APP_CONTEXT.Provider value={context}>{children}</APP_CONTEXT.Provider>
 }

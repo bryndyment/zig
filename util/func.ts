@@ -1,20 +1,32 @@
-import { Corner, ValidCells } from '@/comp/appContext'
-import { AMBER, BOARDS, ORANGE, TODAY } from '@/util/const'
-import { Corners } from '@/util/enum'
+import { BOARDS } from '@/util/boards'
+import { AMBER, ORANGE, TODAY } from '@/util/const'
+import { Positions } from '@/util/enum'
 import confetti from 'canvas-confetti'
 import { Dispatch, SetStateAction } from 'react'
+import { _Puzzle, _ValidCells } from './type'
+
+// types
+
+type _GetPuzzleParams = { index: number; size?: never } | { index?: never; size: number }
 
 // functions
 
-export const calcCorners = (size: number) =>
-  new Map([
-    [0, Corners.TOP_LEFT],
-    [size ** 2 - 1, Corners.BOTTOM_RIGHT],
-    [size ** 2 - size, Corners.BOTTOM_LEFT],
-    [size - 1, Corners.TOP_RIGHT]
-  ])
+export const calcToCell = (fromIndex: number, puzzleIndex: number, size: number) => {
+  switch (fromIndex) {
+    case 0:
+      return BOARDS[puzzleIndex].values[size ** 2 - 1]
+    case size ** 2 - size:
+      return BOARDS[puzzleIndex].values[size - 1]
+    case size - 1:
+      return BOARDS[puzzleIndex].values[size ** 2 - size]
+  }
 
-export const calcPuzzleIndex = (size: number) =>
+  return BOARDS[puzzleIndex].values[0]
+}
+
+export const getDay = () => Number(new Date().toLocaleString('sv').slice(8, 10))
+
+export const getPuzzleIndex = (size: number) =>
   Math.floor(
     Number(TODAY) -
       Number(
@@ -29,27 +41,28 @@ export const calcPuzzleIndex = (size: number) =>
   size -
   6
 
-export const calcToCell = (fromIndex: number, puzzleIndex: number, size: number) => {
-  switch (fromIndex) {
-    case 0:
-      return BOARDS[puzzleIndex][size ** 2 - 1]
-    case size ** 2 - size:
-      return BOARDS[puzzleIndex][size - 1]
-    case size - 1:
-      return BOARDS[puzzleIndex][size ** 2 - size]
+export const getPuzzle = ({ index, size }: _GetPuzzleParams): _Puzzle => {
+  const puzzleIndex = index ?? getPuzzleIndex(size!)
+  const puzzleSize = size ?? Math.sqrt(BOARDS[puzzleIndex].values.length)
+
+  return {
+    corners: {
+      positions: new Map([
+        [0, Positions.TOP_LEFT],
+        [puzzleSize ** 2 - 1, Positions.BOTTOM_RIGHT],
+        [puzzleSize ** 2 - puzzleSize, Positions.BOTTOM_LEFT],
+        [puzzleSize - 1, Positions.TOP_RIGHT]
+      ]),
+      values: [
+        BOARDS[puzzleIndex].values[0],
+        BOARDS[puzzleIndex].values[puzzleSize - 1],
+        BOARDS[puzzleIndex].values[puzzleSize ** 2 - puzzleSize],
+        BOARDS[puzzleIndex].values[puzzleSize ** 2 - 1]
+      ]
+    },
+    index: puzzleIndex
   }
-
-  return BOARDS[puzzleIndex][0]
 }
-
-export const getCornerValues = (puzzleIndex: number, size: number) => [
-  BOARDS[puzzleIndex][0],
-  BOARDS[puzzleIndex][size - 1],
-  BOARDS[puzzleIndex][size ** 2 - size],
-  BOARDS[puzzleIndex][size ** 2 - 1]
-]
-
-export const getDay = () => Number(new Date().toLocaleString('sv').slice(8, 10))
 
 export const showConfetti = (): void => {
   const base = { colors: [ORANGE, AMBER], particleCount: 2, spread: 99 }
@@ -65,23 +78,23 @@ export const showConfetti = (): void => {
   frame()
 }
 
-export const updateValidCells = (index: number, from: Corner, setValidCells: Dispatch<SetStateAction<ValidCells>>, size: number) => {
-  const validCells: ValidCells = new Set()
+export const updateValidCells = (index: number, from: Positions, setValidCells: Dispatch<SetStateAction<_ValidCells>>, size: number) => {
+  const validCells: _ValidCells = new Set()
 
   switch (from) {
-    case Corners.BOTTOM_LEFT:
+    case Positions.BOTTOM_LEFT:
       if (index + 1 > size) validCells.add(index - size)
       if ((index + 1) % size) validCells.add(index + 1)
       break
-    case Corners.BOTTOM_RIGHT:
+    case Positions.BOTTOM_RIGHT:
       if (index + 1 > size) validCells.add(index - size)
       if (index % size) validCells.add(index - 1)
       break
-    case Corners.TOP_LEFT:
+    case Positions.TOP_LEFT:
       if (index + size < size ** 2) validCells.add(index + size)
       if ((index + 1) % size) validCells.add(index + 1)
       break
-    case Corners.TOP_RIGHT:
+    case Positions.TOP_RIGHT:
       if (index + size < size ** 2) validCells.add(index + size)
       if (index % size) validCells.add(index - 1)
   }
