@@ -9,13 +9,13 @@ import { Zig } from '@/comp/zig'
 import { useMobileMediaQuery } from '@/hooks/mobileMediaQuery'
 import { BOARDS } from '@/util/boards'
 import { STOP_PROPAGATION } from '@/util/const'
-import { getPuzzle, getPuzzleIndex } from '@/util/func'
+import { getPuzzle } from '@/util/func'
 import { Box, Paper } from '@mui/material'
-import { FC, useEffect, useState, useTransition } from 'react'
+import { FC, useEffect } from 'react'
 
 // types
 
-type _HomePageProps = { id?: false | number }
+type _HomePageProps = { id?: number }
 
 // constants
 
@@ -25,22 +25,17 @@ const PAPER_SX = { p: [0, 8], transition: 'border-radius 0.5s 1s', userSelect: '
 // components
 
 const HomePage: FC<_HomePageProps> = ({ id }) => {
-  const { puzzle, resetBoard, setId, setPathValues, setPuzzle, setSize, size } = useAppContext()
+  const { puzzle, resetBoard, setId, setPathValues, setPuzzle, setSize, size, status } = useAppContext()
   const isMobile = useMobileMediaQuery()
-  const [outgoingPuzzleIndex, setOutgoingPuzzleIndex] = useState(puzzle.index)
-  const [isPending, startTransition] = useTransition()
 
-  useEffect(() => setId(id || false), [id, setId])
+  useEffect(() => setId(id), [id, setId])
 
   useEffect(() => {
-    if (id === false && size) {
+    if (!id && size) {
       localStorage.setItem('size', String(size))
 
-      startTransition(() => {
-        setOutgoingPuzzleIndex(getPuzzleIndex(size))
-        setPathValues([])
-        setPuzzle(getPuzzle({ size }))
-      })
+      setPathValues([])
+      setPuzzle(getPuzzle({ size }))
     }
   }, [id, setPathValues, setPuzzle, size])
 
@@ -54,12 +49,14 @@ const HomePage: FC<_HomePageProps> = ({ id }) => {
     }
   }, [id, setPathValues, setPuzzle, setSize])
 
+  if (!puzzle || !size || !status) return null
+
   return (
     <Box onClick={resetBoard} sx={{ alignItems: 'center', display: 'flex', height: '100%', justifyContent: 'center' }}>
       <Paper elevation={isMobile ? 0 : 3} onClick={STOP_PROPAGATION} square={isMobile} sx={PAPER_SX}>
         <Box sx={BOARD_SX}>
-          {BOARDS[isPending ? outgoingPuzzleIndex : puzzle.index].values.map((cell, index) => (
-            <Cell cell={cell} index={index} isPending={isPending} key={cell} />
+          {BOARDS[puzzle.index].values.map((cell, index) => (
+            <Cell cell={cell} index={index} key={cell} />
           ))}
         </Box>
 

@@ -15,14 +15,14 @@ type _AppContext = {
   areNumbersVisible: boolean
   from: null | Positions
   goal: number
-  id?: false | number
+  id?: number
   isKeyDown: boolean
   pathValues: number[]
   puzzle: _Puzzle
   resetBoard: () => void
   score: number
   setFrom: Dispatch<SetStateAction<null | Positions>>
-  setId: Dispatch<SetStateAction<false | number | undefined>>
+  setId: Dispatch<SetStateAction<number | undefined>>
   setPathValues: Dispatch<SetStateAction<number[]>>
   setPuzzle: Dispatch<SetStateAction<_Puzzle | undefined>>
   setSize: Dispatch<SetStateAction<number>>
@@ -50,7 +50,7 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
   const [areNumbersVisible, setAreNumbersVisible] = useState(true)
   const [day] = useState(getDay)
   const [from, setFrom] = useState<null | Positions>(null)
-  const [id, setId] = useState<false | number>()
+  const [id, setId] = useState<number>()
   const [isKeyDown, setIsKeyDown] = useState(false)
   const [pathValues, setPathValues] = useState<number[]>([])
   const [puzzle, setPuzzle] = useState<_Puzzle>()
@@ -61,14 +61,48 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
   const goal = useMemo(() => (puzzle?.index === undefined ? 0 : ANSWERS[puzzle.index].reduce((previous, current) => previous + current, 0)), [puzzle?.index])
   const score = useMemo(() => pathValues.reduce((previous, current) => previous + current, 0), [pathValues])
 
+  const resetBoard = useCallback(() => {
+    setPathValues([])
+
+    if (puzzle && status === Statuses.COMPLETE) {
+      setStatus(Statuses.INITIAL)
+      localStorage.removeItem(`${BOARDS[puzzle.index].id}_${String(size)}`)
+    }
+  }, [puzzle, size, status])
+
+  const handleKeyDown = useCallback(
+    (event: KeyboardEvent) => {
+      if (event.metaKey) return
+
+      switch (event.code) {
+        case 'ArrowLeft':
+          if (!id && size > 6) {
+            setSize(current => current - 1)
+          }
+          break
+        case 'ArrowRight':
+          if (!id && size < 12) {
+            setSize(current => current + 1)
+          }
+          break
+        case 'KeyR':
+          resetBoard()
+          break
+        case 'KeyT':
+          setAreNumbersVisible(current => !current)
+      }
+    },
+    [id, resetBoard, size]
+  )
+
   useEffect(() => {
-    if (id === false) {
+    if (!id) {
       setInterval(() => getDay() !== day && location.reload(), 1000)
     }
   }, [day, id])
 
   useEffect(() => {
-    if (id === false) {
+    if (!id) {
       setSize('size' in localStorage ? Number(localStorage.getItem('size')) : 6)
     }
   }, [id])
@@ -84,65 +118,6 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
       setPuzzle(getPuzzle({ size }))
     }
   }, [puzzle, size])
-
-  const resetBoard = useCallback(() => {
-    setPathValues([])
-
-    if (puzzle && status === Statuses.COMPLETE) {
-      setStatus(Statuses.INITIAL)
-      localStorage.removeItem(`${BOARDS[puzzle.index].id}_${String(size)}`)
-    }
-  }, [puzzle, size, status])
-
-  const handleKeyDown = useCallback(
-    (event: KeyboardEvent) => {
-      if (id !== false) return
-
-      switch (event.code) {
-        case 'ArrowLeft':
-          if (size > 6) {
-            setSize(current => current - 1)
-          }
-          break
-        case 'ArrowRight':
-          if (size < 12) {
-            setSize(current => current + 1)
-          }
-          break
-        case 'KeyR':
-          resetBoard()
-          break
-        case 'KeyT':
-          setAreNumbersVisible(current => !current)
-      }
-    },
-    [id, resetBoard, size]
-  )
-
-  const context = useMemo(
-    () => ({
-      areNumbersVisible,
-      from,
-      goal,
-      id,
-      isKeyDown,
-      pathValues,
-      puzzle: puzzle!,
-      resetBoard,
-      score,
-      setFrom,
-      setId,
-      setPathValues,
-      setPuzzle,
-      setSize,
-      setValidCells,
-      size,
-      sizeOpening,
-      status: status!,
-      validCells
-    }),
-    [areNumbersVisible, from, goal, id, isKeyDown, pathValues, puzzle, resetBoard, score, size, sizeOpening, status, validCells]
-  )
 
   useEffect(() => {
     const handleKeyDown = () => setIsKeyDown(true)
@@ -188,7 +163,30 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
     }
   }, [puzzle, size])
 
-  if (!puzzle || !size || !status || id === undefined) return null
+  const context = useMemo(
+    () => ({
+      areNumbersVisible,
+      from,
+      goal,
+      id,
+      isKeyDown,
+      pathValues,
+      puzzle: puzzle!,
+      resetBoard,
+      score,
+      setFrom,
+      setId,
+      setPathValues,
+      setPuzzle,
+      setSize,
+      setValidCells,
+      size,
+      sizeOpening,
+      status: status!,
+      validCells
+    }),
+    [areNumbersVisible, from, goal, id, isKeyDown, pathValues, puzzle, resetBoard, score, size, sizeOpening, status, validCells]
+  )
 
   return <APP_CONTEXT.Provider value={context}>{children}</APP_CONTEXT.Provider>
 }

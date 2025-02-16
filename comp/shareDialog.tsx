@@ -13,6 +13,10 @@ import { FC, useMemo, useState } from 'react'
 
 type _ShareDialogProps = { opening: Opening }
 
+// constants
+
+const BASE_URL = process.env.NODE_ENV === 'development' ? 'http://localhost:3000' : 'https://zig.vercel.app'
+
 // components
 
 export const ShareDialog: FC<_ShareDialogProps> = ({ opening }) => {
@@ -20,7 +24,7 @@ export const ShareDialog: FC<_ShareDialogProps> = ({ opening }) => {
   const [isCopied, setIsCopied] = useState(false)
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(`https://zig.vercel.app/${BOARDS[puzzle.index].id}`)
+    navigator.clipboard.writeText(`${BASE_URL}/${BOARDS[puzzle.index].id}`)
     setIsCopied(true)
   }
 
@@ -45,16 +49,16 @@ export const ShareDialog: FC<_ShareDialogProps> = ({ opening }) => {
               ) : (
                 <Box
                   component="a"
-                  href={`https://zig.vercel.app/${BOARDS[puzzle.index].id}`}
+                  href={`${BASE_URL}/${BOARDS[puzzle.index].id}`}
                   rel="noreferrer"
                   sx={{ color: 'inherit', textDecoration: 'none' }}
                   target="_blank"
                 >
-                  {`https://zig.vercel.app/${BOARDS[puzzle.index].id}`}
+                  {`${BASE_URL.replace(/^https?:\/\//, '')}/${BOARDS[puzzle.index].id}`}
                 </Box>
               )
             }
-            sx={{ bgcolor: AMBER, borderRadius: 1, color: common.white, fontWeight: 600, minWidth: 222, mx: 1.25, textAlign: 'center' }}
+            sx={{ bgcolor: AMBER, borderRadius: 1, color: common.white, fontWeight: 600, minWidth: 180, mx: 1.25, textAlign: 'center' }}
           />
 
           <ContentCopy onClick={handleCopy} sx={{ color: AMBER, cursor: 'pointer', position: 'absolute', top: 5 }} />

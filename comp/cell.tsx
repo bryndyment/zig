@@ -14,7 +14,7 @@ import { FC, useCallback, useMemo } from 'react'
 
 // types
 
-type _CellProps = { cell: number; index: number; isPending: boolean }
+type _CellProps = { cell: number; index: number }
 
 // constants
 
@@ -35,7 +35,7 @@ const BOX_SX = {
 
 // components
 
-export const Cell: FC<_CellProps> = ({ cell, index, isPending }) => {
+export const Cell: FC<_CellProps> = ({ cell, index }) => {
   const { areNumbersVisible, from, isKeyDown, pathValues, puzzle, setFrom, setPathValues, setValidCells, size, sizeOpening, status, validCells } =
     useAppContext()
 
@@ -88,7 +88,7 @@ export const Cell: FC<_CellProps> = ({ cell, index, isPending }) => {
           ...(areNumbersVisible && { color: common.white }),
           ...((isKeyDown || sizeOpening.isOpen) && { transition: 'none' }),
           bgcolor,
-          opacity: isPending ? 0 : opacity
+          opacity
         }}
       >
         {cell}
