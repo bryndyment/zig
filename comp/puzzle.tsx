@@ -39,7 +39,7 @@ export const Puzzle: FC<_PuzzleProps> = ({ id }) => {
   }, [mode, setPathValues, setPuzzle, size])
 
   useEffect(() => {
-    if (mode === Modes.SHARED) {
+    if (id && mode === Modes.SHARED) {
       const index = BOARDS.findIndex(board => board.id === id)
       setPathValues([])
       setPuzzle(getPuzzle({ index }))
