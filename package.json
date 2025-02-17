@@ -8,8 +8,8 @@
     "@emotion/styled": "11.14.0",
     "@hoologic/use-context-guard": "1.0.2",
     "@hoologic/use-opening": "1.0.3",
-    "@mui/icons-material": "6.4.4",
-    "@mui/material": "6.4.3",
+    "@mui/icons-material": "^6.4.4",
+    "@mui/material": "^6.4.4",
     "canvas-confetti": "1.9.3",
     "lodash": "4.17.21",
     "next": "15.1.7",
@@ -38,6 +38,16 @@
     "prettier": "3.5.0",
     "typescript": "5.7.3",
     "typescript-eslint": "8.24.0"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "sharp"
+    ],
+    "peerDependencyRules": {
+      "allowedVersions": {
+        "eslint-config-standard>eslint": "^9"
+      }
+    }
   },
   "scripts": {
     "build": "pnpm run clean && next build",
