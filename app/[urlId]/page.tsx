@@ -1,6 +1,6 @@
 'use client'
 
-import HomePage from '@/app/page'
+import { Puzzle } from '@/comp/puzzle'
 import { BOARDS } from '@/util/boards'
 import { notFound } from 'next/navigation'
 import { FC, ReactNode, use, useEffect, useState } from 'react'
@@ -26,7 +26,7 @@ const SharedPage: FC<_SharedPageProps> = ({ params }) => {
       return
     }
 
-    setRender(<HomePage id={id} />)
+    setRender(<Puzzle id={id} />)
   }, [urlId])
 
   return render
