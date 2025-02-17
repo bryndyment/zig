@@ -36,7 +36,7 @@ export const THEME = createTheme({
     },
     MuiDialogContent: {
       styleOverrides: {
-        root: { padding: '0 16px' }
+        root: { padding: '0 16px 16px' }
       }
     },
     MuiDialogTitle: {

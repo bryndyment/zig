@@ -1,3 +1,9 @@
+export enum Modes {
+  UNKNOWN,
+  TODAY,
+  SHARED
+}
+
 export enum Positions {
   BOTTOM_LEFT = 1,
   BOTTOM_RIGHT,

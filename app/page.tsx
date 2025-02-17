@@ -9,6 +9,7 @@ import { Zig } from '@/comp/zig'
 import { useMobileMediaQuery } from '@/hooks/mobileMediaQuery'
 import { BOARDS } from '@/util/boards'
 import { STOP_PROPAGATION } from '@/util/const'
+import { Modes } from '@/util/enum'
 import { getPuzzle } from '@/util/func'
 import { Box, Paper } from '@mui/material'
 import { FC, useEffect } from 'react'
@@ -25,29 +26,27 @@ const PAPER_SX = { p: [0, 8], transition: 'border-radius 0.5s 1s', userSelect: '
 // components
 
 const HomePage: FC<_HomePageProps> = ({ id }) => {
-  const { puzzle, resetBoard, setId, setPathValues, setPuzzle, setSize, size, status } = useAppContext()
+  const { mode, puzzle, resetBoard, setMode, setPathValues, setPuzzle, setSize, size, status } = useAppContext()
   const isMobile = useMobileMediaQuery()
 
-  useEffect(() => setId(id), [id, setId])
+  useEffect(() => setMode(id ? Modes.SHARED : Modes.TODAY), [id, setMode])
 
   useEffect(() => {
-    if (!id && size) {
-      localStorage.setItem('size', String(size))
-
+    if (mode === Modes.TODAY && size) {
       setPathValues([])
       setPuzzle(getPuzzle({ size }))
     }
-  }, [id, setPathValues, setPuzzle, size])
+  }, [mode, setPathValues, setPuzzle, size])
 
   useEffect(() => {
-    if (id) {
+    if (mode === Modes.SHARED) {
       const index = BOARDS.findIndex(board => board.id === id)
 
       setPathValues([])
       setPuzzle(getPuzzle({ index }))
       setSize(Math.sqrt(BOARDS[index].values.length))
     }
-  }, [id, setPathValues, setPuzzle, setSize])
+  }, [id, mode, setPathValues, setPuzzle, setSize])
 
   if (!puzzle || !size || !status) return null
 

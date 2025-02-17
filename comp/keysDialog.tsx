@@ -1,6 +1,7 @@
 'use client'
 
 import { AMBER } from '@/util/const'
+import { Modes } from '@/util/enum'
 import { Opening } from '@hoologic/use-opening'
 import { Box, Button, Dialog, DialogActions, DialogContent, DialogTitle, List, ListItem } from '@mui/material'
 import { common } from '@mui/material/colors'
@@ -28,7 +29,7 @@ const BOX_SX = {
 // components
 
 export const KeysDialog: FC<_KeysDialogProps> = ({ opening }) => {
-  const { id } = useAppContext()
+  const { mode } = useAppContext()
 
   return (
     <Dialog fullWidth maxWidth="xs" onClose={opening.close} open={opening.isOpen}>
@@ -52,7 +53,7 @@ export const KeysDialog: FC<_KeysDialogProps> = ({ opening }) => {
             <> key restarts the current board (clicking on the background also works)</>
           </ListItem>
 
-          {!id && (
+          {mode === Modes.TODAY && (
             <ListItem>
               <>the </>
 

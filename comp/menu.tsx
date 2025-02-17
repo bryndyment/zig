@@ -5,6 +5,7 @@ import { useAppContext } from '@/comp/appContext'
 import { KeysDialog } from '@/comp/keysDialog'
 import { SizeDialog } from '@/comp/sizeDialog'
 import { ORANGE } from '@/util/const'
+import { Modes } from '@/util/enum'
 import { useOpening } from '@hoologic/use-opening'
 import { Button, MenuItem, Menu as MuiMenu } from '@mui/material'
 import { FC, useEffect } from 'react'
@@ -25,11 +26,9 @@ const Icon: FC = () => (
 )
 
 export const Menu: FC = () => {
-  const { id, sizeOpening } = useAppContext()
-  const aboutOpening = useOpening()
-  const keysOpening = useOpening()
+  const { aboutOpening, keysOpening, mode, shareOpening, sizeOpening } = useAppContext()
   const menuOpening = useOpening()
-  const shareOpening = useOpening()
+
   useEffect(() => {
     if (!localStorage.getItem('size')) aboutOpening.open()
   }, [aboutOpening])
@@ -55,7 +54,7 @@ export const Menu: FC = () => {
 
         <MenuItem onClick={shareOpening.open}>Share</MenuItem>
 
-        <MenuItem onClick={sizeOpening.open}>Size</MenuItem>
+        {mode === Modes.TODAY && <MenuItem onClick={sizeOpening.open}>Size</MenuItem>}
       </MuiMenu>
 
       <AboutDialog opening={aboutOpening} />
@@ -64,7 +63,7 @@ export const Menu: FC = () => {
 
       <ShareDialog opening={shareOpening} />
 
-      {!id && <SizeDialog />}
+      {mode === Modes.TODAY && <SizeDialog />}
     </>
   )
 }

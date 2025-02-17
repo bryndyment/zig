@@ -5,7 +5,7 @@ import { BOARDS } from '@/util/boards'
 import { AMBER } from '@/util/const'
 import { Opening } from '@hoologic/use-opening'
 import { ContentCopy } from '@mui/icons-material'
-import { Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
+import { Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material'
 import { common } from '@mui/material/colors'
 import { FC, useMemo, useState } from 'react'
 
@@ -41,7 +41,9 @@ export const ShareDialog: FC<_ShareDialogProps> = ({ opening }) => {
       <DialogTitle>Share</DialogTitle>
 
       <DialogContent>
-        <Box sx={{ m: 3, mt: 4, position: 'relative', textAlign: 'center' }}>
+        <Typography>Share the following link with friends!</Typography>
+
+        <Box sx={{ m: 3, mb: 0, position: 'relative', textAlign: 'center' }}>
           <Chip
             label={
               isCopied ? (

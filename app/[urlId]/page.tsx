@@ -7,12 +7,12 @@ import { FC, ReactNode, use, useEffect, useState } from 'react'
 
 // types
 
-type _SharedPageProps = { params: Promise<{ id: string }> }
+type _SharedPageProps = { params: Promise<{ urlId: string }> }
 
 // components
 
 const SharedPage: FC<_SharedPageProps> = ({ params }) => {
-  const { id: urlId } = use(params)
+  const { urlId } = use(params)
   const [render, setRender] = useState<ReactNode>(null)
 
   useEffect(() => {

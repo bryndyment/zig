@@ -1,9 +1,10 @@
 'use client'
 
+import { useSize } from '@/hooks/size'
 import { ANSWERS } from '@/util/answers'
 import { BOARDS } from '@/util/boards'
-import { Positions, Statuses } from '@/util/enum'
-import { getDay, getPuzzle, showConfetti } from '@/util/func'
+import { Modes, Positions, Statuses } from '@/util/enum'
+import { getDay, showConfetti } from '@/util/func'
 import { _Puzzle, _ValidCells } from '@/util/type'
 import { useContextGuard } from '@hoologic/use-context-guard'
 import { Opening, useOpening } from '@hoologic/use-opening'
@@ -12,21 +13,24 @@ import { createContext, Dispatch, FC, ReactNode, SetStateAction, useCallback, us
 // types
 
 type _AppContext = {
+  aboutOpening: Opening
   areNumbersVisible: boolean
   from: null | Positions
   goal: number
-  id?: number
   isKeyDown: boolean
+  keysOpening: Opening
+  mode: Modes
   pathValues: number[]
   puzzle: _Puzzle
   resetBoard: () => void
   score: number
   setFrom: Dispatch<SetStateAction<null | Positions>>
-  setId: Dispatch<SetStateAction<number | undefined>>
+  setMode: Dispatch<SetStateAction<Modes>>
   setPathValues: Dispatch<SetStateAction<number[]>>
   setPuzzle: Dispatch<SetStateAction<_Puzzle | undefined>>
   setSize: Dispatch<SetStateAction<number>>
   setValidCells: Dispatch<SetStateAction<_ValidCells>>
+  shareOpening: Opening
   size: number
   sizeOpening: Opening
   status: Statuses
@@ -46,17 +50,22 @@ export const useAppContext = () => useContextGuard(APP_CONTEXT)
 // components
 
 export const AppContext: FC<_AppContextProps> = ({ children }) => {
+  const aboutOpening = useOpening()
+  const keysOpening = useOpening()
+  const shareOpening = useOpening()
   const sizeOpening = useOpening()
+
   const [areNumbersVisible, setAreNumbersVisible] = useState(true)
   const [day] = useState(getDay)
   const [from, setFrom] = useState<null | Positions>(null)
-  const [id, setId] = useState<number>()
   const [isKeyDown, setIsKeyDown] = useState(false)
+  const [mode, setMode] = useState<Modes>(Modes.UNKNOWN)
   const [pathValues, setPathValues] = useState<number[]>([])
   const [puzzle, setPuzzle] = useState<_Puzzle>()
-  const [size, setSize] = useState(0)
   const [status, setStatus] = useState<Statuses>()
   const [validCells, setValidCells] = useState<_ValidCells>(new Set())
+
+  const { setSize, size } = useSize(mode)
 
   const goal = useMemo(() => (puzzle?.index === undefined ? 0 : ANSWERS[puzzle.index].reduce((previous, current) => previous + current, 0)), [puzzle?.index])
   const score = useMemo(() => pathValues.reduce((previous, current) => previous + current, 0), [pathValues])
@@ -66,25 +75,15 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
 
     if (puzzle && status === Statuses.COMPLETE) {
       setStatus(Statuses.INITIAL)
-      localStorage.removeItem(`${BOARDS[puzzle.index].id}_${String(size)}`)
+      localStorage.removeItem(String(BOARDS[puzzle.index].id))
     }
-  }, [puzzle, size, status])
+  }, [puzzle, status])
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (event.metaKey) return
 
       switch (event.code) {
-        case 'ArrowLeft':
-          if (!id && size > 6) {
-            setSize(current => current - 1)
-          }
-          break
-        case 'ArrowRight':
-          if (!id && size < 12) {
-            setSize(current => current + 1)
-          }
-          break
         case 'KeyR':
           resetBoard()
           break
@@ -92,32 +91,14 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
           setAreNumbersVisible(current => !current)
       }
     },
-    [id, resetBoard, size]
+    [resetBoard]
   )
 
   useEffect(() => {
-    if (!id) {
+    if (mode === Modes.TODAY) {
       setInterval(() => getDay() !== day && location.reload(), 1000)
     }
-  }, [day, id])
-
-  useEffect(() => {
-    if (!id) {
-      setSize('size' in localStorage ? Number(localStorage.getItem('size')) : 6)
-    }
-  }, [id])
-
-  useEffect(() => {
-    if (puzzle) {
-      setStatus(localStorage.getItem(`${BOARDS[puzzle.index].id}_${String(size)}`) ? Statuses.COMPLETE : Statuses.INITIAL)
-    }
-  }, [puzzle, size])
-
-  useEffect(() => {
-    if (!puzzle && size) {
-      setPuzzle(getPuzzle({ size }))
-    }
-  }, [puzzle, size])
+  }, [day, mode])
 
   useEffect(() => {
     const handleKeyDown = () => setIsKeyDown(true)
@@ -142,12 +123,9 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
     if (status === Statuses.INITIAL && score) {
       setStatus(Statuses.IN_PROGRESS)
     } else if (puzzle && status === Statuses.IN_PROGRESS && score === goal) {
-      const key = `${BOARDS[puzzle.index].id}_${String(size)}`
-      const value = String(size)
-
       setStatus(Statuses.COMPLETE)
 
-      localStorage.setItem(key, value)
+      localStorage.setItem(String(BOARDS[puzzle.index].id), String(score))
     }
   }, [goal, score]) // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -159,33 +137,54 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
 
   useEffect(() => {
     if (puzzle) {
-      setStatus(localStorage.getItem(`${BOARDS[puzzle.index].id}_${String(size)}`) ? Statuses.COMPLETE : Statuses.INITIAL)
+      setStatus(localStorage.getItem(String(BOARDS[puzzle.index].id)) ? Statuses.COMPLETE : Statuses.INITIAL)
     }
   }, [puzzle, size])
 
   const context = useMemo(
     () => ({
+      aboutOpening,
       areNumbersVisible,
       from,
       goal,
-      id,
       isKeyDown,
+      keysOpening,
+      mode,
       pathValues,
       puzzle: puzzle!,
       resetBoard,
       score,
       setFrom,
-      setId,
+      setMode,
       setPathValues,
       setPuzzle,
       setSize,
       setValidCells,
+      shareOpening,
       size,
       sizeOpening,
       status: status!,
       validCells
     }),
-    [areNumbersVisible, from, goal, id, isKeyDown, pathValues, puzzle, resetBoard, score, size, sizeOpening, status, validCells]
+    [
+      aboutOpening,
+      areNumbersVisible,
+      from,
+      goal,
+      isKeyDown,
+      keysOpening,
+      mode,
+      pathValues,
+      puzzle,
+      resetBoard,
+      score,
+      setSize,
+      shareOpening,
+      size,
+      sizeOpening,
+      status,
+      validCells
+    ]
   )
 
   return <APP_CONTEXT.Provider value={context}>{children}</APP_CONTEXT.Provider>
