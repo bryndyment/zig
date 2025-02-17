@@ -30,7 +30,10 @@ export const Menu: FC = () => {
   const menuOpening = useOpening()
 
   useEffect(() => {
-    if (!localStorage.getItem('size')) aboutOpening.open()
+    if (!localStorage.getItem('onboarded')) {
+      localStorage.setItem('onboarded', 'true')
+      aboutOpening.open()
+    }
   }, [aboutOpening])
 
   return (
