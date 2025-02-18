@@ -31,7 +31,7 @@ export const AboutDialog: FC<_AboutDialogProps> = ({ opening }) => {
       <DialogTitle>About</DialogTitle>
 
       <DialogContent>
-        <Typography>A find-the-best-path puzzle:</Typography>
+        <Typography>A daily find-the-best-path puzzle:</Typography>
 
         <List>
           <ListItem>{isMobile ? 'tap on' : 'hover over'} any highlighted corner</ListItem>
@@ -39,17 +39,19 @@ export const AboutDialog: FC<_AboutDialogProps> = ({ opening }) => {
           <ListItem>the sum of your path is displayed bottom-left</ListItem>
           <ListItem>try to match the highest-possible sum, displayed bottom-right</ListItem>
           <ListItem>
+            <>now with </>
+
             <Link onClick={handleSharingClick} sx={{ cursor: 'pointer' }}>
               sharing
             </Link>
 
-            <>, different </>
+            <> and different board </>
 
             <Link onClick={handleSizesClick} sx={{ cursor: 'pointer' }}>
               sizes
             </Link>
 
-            <>, and a new puzzle each day!</>
+            <>!</>
           </ListItem>
         </List>
       </DialogContent>
