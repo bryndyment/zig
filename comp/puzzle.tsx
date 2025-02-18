@@ -41,6 +41,7 @@ export const Puzzle: FC<_PuzzleProps> = ({ id }) => {
   useEffect(() => {
     if (id && mode === Modes.SHARED) {
       const index = BOARDS.findIndex(board => board.id === id)
+
       setPathValues([])
       setPuzzle(getPuzzle({ index }))
       setSize(Math.sqrt(BOARDS[index].values.length))
