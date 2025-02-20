@@ -83,11 +83,12 @@ export const AppContext: FC<_AppContextProps> = ({ children }) => {
       if (event.metaKey) return
 
       switch (event.code) {
+        case 'KeyN':
+          setAreNumbersVisible(current => !current)
+          break
         case 'KeyR':
           resetBoard()
           break
-        case 'KeyT':
-          setAreNumbersVisible(current => !current)
       }
     },
     [resetBoard]
