@@ -1,10 +1,9 @@
 'use client'
 
 import { useSize } from '@/hooks/size'
-import { ANSWERS } from '@/util/answers'
-import { BOARDS } from '@/util/boards'
 import { Modes, Positions, Statuses } from '@/util/enum'
 import { getDay, showConfetti } from '@/util/func'
+import { ANSWERS, BOARDS } from '@/util/puzzles'
 import { _Puzzle, _ValidCells } from '@/util/type'
 import { useContextGuard } from '@hoologic/use-context-guard'
 import { Opening, useOpening } from '@hoologic/use-opening'

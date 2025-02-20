@@ -41,6 +41,6 @@ export default [
     }
   },
   {
-    ignores: ['.next', 'util/answers.ts', 'util/boards.ts']
+    ignores: ['.next', 'util/answers.ts', 'util/boards.ts', 'util/puzzles.ts']
   }
 ]
