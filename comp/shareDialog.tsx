@@ -1,8 +1,8 @@
 'use client'
 
 import { useAppContext } from '@/comp/appContext'
-import { BOARDS } from '@/util/boards'
 import { AMBER } from '@/util/const'
+import { BOARDS } from '@/util/puzzles'
 import { Opening } from '@hoologic/use-opening'
 import { ContentCopy } from '@mui/icons-material'
 import { Box, Button, Chip, Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@mui/material'

@@ -1,6 +1,6 @@
-import { BOARDS } from '@/util/boards'
 import { AMBER, ORANGE, TODAY } from '@/util/const'
 import { Positions } from '@/util/enum'
+import { BOARDS } from '@/util/puzzles'
 import confetti from 'canvas-confetti'
 import { Dispatch, SetStateAction } from 'react'
 import { _Puzzle, _ValidCells } from './type'

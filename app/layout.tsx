@@ -23,11 +23,11 @@ export const metadata: Metadata = {
 // layout
 
 const Layout: FC<_LayoutProps> = ({ children }) => (
-  <html className={`${BUNGEE.className} ${ROBOTO.className}`} lang="en-US">
+  <Box className={`${BUNGEE.className} ${ROBOTO.className}`} component="html" lang="en-US">
     <Box component="body" sx={{ bgcolor: BACKGROUND }}>
       <Client>{children}</Client>
     </Box>
-  </html>
+  </Box>
 )
 
 export default Layout

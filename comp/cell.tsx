@@ -2,11 +2,10 @@
 
 import { useAppContext } from '@/comp/appContext'
 import { useMobileMediaQuery } from '@/hooks/mobileMediaQuery'
-import { ANSWERS } from '@/util/answers'
-import { BOARDS } from '@/util/boards'
 import { AMBER, ORANGE, STOP_PROPAGATION } from '@/util/const'
 import { Statuses } from '@/util/enum'
 import { calcToCell, updateValidCells } from '@/util/func'
+import { ANSWERS, BOARDS } from '@/util/puzzles'
 import { Box } from '@mui/material'
 import { common } from '@mui/material/colors'
 import { isEmpty } from 'lodash'

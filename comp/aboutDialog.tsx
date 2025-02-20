@@ -28,7 +28,7 @@ export const AboutDialog: FC<_AboutDialogProps> = ({ opening }) => {
 
   return (
     <Dialog fullWidth maxWidth="xs" onClose={opening.close} open={opening.isOpen}>
-      <DialogTitle>About</DialogTitle>
+      <DialogTitle>Zig!</DialogTitle>
 
       <DialogContent>
         <Typography>A daily find-the-best-path puzzle:</Typography>
