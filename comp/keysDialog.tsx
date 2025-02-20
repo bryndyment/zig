@@ -19,6 +19,7 @@ const BOX_SX = {
   bgcolor: AMBER,
   borderRadius: 1,
   color: common.white,
+  cursor: 'pointer',
   display: 'inline-flex',
   height: 24,
   justifyContent: 'center',
@@ -40,7 +41,9 @@ export const KeysDialog: FC<_KeysDialogProps> = ({ opening }) => {
           <ListItem>
             <>the </>
 
-            <Box sx={{ ...BOX_SX, fontWeight: 600 }}>N</Box>
+            <Box onClick={() => document.dispatchEvent(new KeyboardEvent('keydown', { code: 'KeyN' }))} sx={BOX_SX}>
+              N
+            </Box>
 
             <> key toggles the number display</>
           </ListItem>
@@ -48,7 +51,9 @@ export const KeysDialog: FC<_KeysDialogProps> = ({ opening }) => {
           <ListItem>
             <>the </>
 
-            <Box sx={{ ...BOX_SX, fontWeight: 600 }}>R</Box>
+            <Box onClick={() => document.dispatchEvent(new KeyboardEvent('keydown', { code: 'KeyR' }))} sx={BOX_SX}>
+              R
+            </Box>
 
             <> key restarts the current board (clicking on the background also works)</>
           </ListItem>
@@ -57,11 +62,15 @@ export const KeysDialog: FC<_KeysDialogProps> = ({ opening }) => {
             <ListItem>
               <>the </>
 
-              <Box sx={{ ...BOX_SX, fontSize: 14 }}>◄</Box>
+              <Box onClick={() => document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowLeft' }))} sx={BOX_SX}>
+                ◄
+              </Box>
 
               <> and </>
 
-              <Box sx={{ ...BOX_SX, fontSize: 14 }}>►</Box>
+              <Box onClick={() => document.dispatchEvent(new KeyboardEvent('keydown', { code: 'ArrowRight' }))} sx={BOX_SX}>
+                ►
+              </Box>
 
               <> keys cycle through the board sizes</>
             </ListItem>
