@@ -23,7 +23,7 @@
     "@portabletext/react": "3.2.1",
     "@types/canvas-confetti": "1.9.0",
     "@types/lodash": "4.17.15",
-    "@types/node": "22.13.4",
+    "@types/node": "22.13.5",
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
     "eslint": "9.20.1",
